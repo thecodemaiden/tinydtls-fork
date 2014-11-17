@@ -26,13 +26,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "dtls_config.h"
-
 #ifdef HAVE_ASSERT_H
 #include <assert.h>
-#else
-#define assert(x)
 #endif
 
 #include "debug.h"
@@ -65,12 +60,14 @@ static inline void
 dtls_hmac_context_free(dtls_hmac_context_t *ctx) {
   memb_free(&hmac_context_storage, ctx);
 }
+#endif /* WITH_CONTIKI */
 
 void
 dtls_hmac_storage_init() {
+#ifdef WITH_CONTIKI
   memb_init(&hmac_context_storage);
-}
 #endif /* WITH_CONTIKI */
+}
 
 void
 dtls_hmac_update(dtls_hmac_context_t *ctx,

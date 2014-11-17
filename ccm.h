@@ -23,9 +23,10 @@
  * SOFTWARE.
  */
 
-#ifndef _DTLS_CCM_H_
-#define _DTLS_CCM_H_
+#ifndef _CCM_H_
+#define _CCM_H_
 
+#include "config.h"
 #include "aes/rijndael.h"
 
 /* implementation of Counter Mode CBC-MAC, RFC 3610 */
@@ -56,14 +57,14 @@
  */
 long int
 dtls_ccm_encrypt_message(rijndael_ctx *ctx, size_t M, size_t L, 
-			 unsigned char nonce[DTLS_CCM_BLOCKSIZE], 
+			 unsigned char N[DTLS_CCM_BLOCKSIZE], 
 			 unsigned char *msg, size_t lm, 
 			 const unsigned char *aad, size_t la);
 
 long int
 dtls_ccm_decrypt_message(rijndael_ctx *ctx, size_t M, size_t L, 
-			 unsigned char nonce[DTLS_CCM_BLOCKSIZE], 
+			 unsigned char N[DTLS_CCM_BLOCKSIZE], 
 			 unsigned char *msg, size_t lm, 
 			 const unsigned char *aad, size_t la);
 
-#endif /* _DTLS_CCM_H_ */
+#endif /* _CCM_H_ */

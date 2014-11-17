@@ -1,0 +1,5081 @@
+# 1 "dtls.c"
+# 1 "<built-in>" 1
+# 1 "<built-in>" 3
+# 170 "<built-in>" 3
+# 1 "<command line>" 1
+# 1 "<built-in>" 2
+# 1 "dtls.c" 2
+# 26 "dtls.c"
+# 1 "./config.h" 1
+# 27 "dtls.c" 2
+# 1 "./dtls_time.h" 1
+# 34 "./dtls_time.h"
+# 1 "./config.h" 1
+# 35 "./dtls_time.h" 2
+
+
+# 1 "/usr/include/sys/time.h" 1 3 4
+# 67 "/usr/include/sys/time.h" 3 4
+# 1 "/usr/include/sys/cdefs.h" 1 3 4
+# 484 "/usr/include/sys/cdefs.h" 3 4
+# 1 "/usr/include/sys/_symbol_aliasing.h" 1 3 4
+# 485 "/usr/include/sys/cdefs.h" 2 3 4
+# 550 "/usr/include/sys/cdefs.h" 3 4
+# 1 "/usr/include/sys/_posix_availability.h" 1 3 4
+# 551 "/usr/include/sys/cdefs.h" 2 3 4
+# 68 "/usr/include/sys/time.h" 2 3 4
+# 1 "/usr/include/sys/_types.h" 1 3 4
+# 33 "/usr/include/sys/_types.h" 3 4
+# 1 "/usr/include/machine/_types.h" 1 3 4
+# 32 "/usr/include/machine/_types.h" 3 4
+# 1 "/usr/include/i386/_types.h" 1 3 4
+# 37 "/usr/include/i386/_types.h" 3 4
+typedef signed char __int8_t;
+
+
+
+typedef unsigned char __uint8_t;
+typedef short __int16_t;
+typedef unsigned short __uint16_t;
+typedef int __int32_t;
+typedef unsigned int __uint32_t;
+typedef long long __int64_t;
+typedef unsigned long long __uint64_t;
+
+typedef long __darwin_intptr_t;
+typedef unsigned int __darwin_natural_t;
+# 70 "/usr/include/i386/_types.h" 3 4
+typedef int __darwin_ct_rune_t;
+
+
+
+
+
+typedef union {
+ char __mbstate8[128];
+ long long _mbstateL;
+} __mbstate_t;
+
+typedef __mbstate_t __darwin_mbstate_t;
+
+
+typedef long int __darwin_ptrdiff_t;
+
+
+
+
+
+
+
+typedef long unsigned int __darwin_size_t;
+
+
+
+
+
+typedef __builtin_va_list __darwin_va_list;
+
+
+
+
+
+typedef int __darwin_wchar_t;
+
+
+
+
+typedef __darwin_wchar_t __darwin_rune_t;
+
+
+typedef int __darwin_wint_t;
+
+
+
+
+typedef unsigned long __darwin_clock_t;
+typedef __uint32_t __darwin_socklen_t;
+typedef long __darwin_ssize_t;
+typedef long __darwin_time_t;
+# 33 "/usr/include/machine/_types.h" 2 3 4
+# 34 "/usr/include/sys/_types.h" 2 3 4
+# 58 "/usr/include/sys/_types.h" 3 4
+struct __darwin_pthread_handler_rec
+{
+ void (*__routine)(void *);
+ void *__arg;
+ struct __darwin_pthread_handler_rec *__next;
+};
+struct _opaque_pthread_attr_t { long __sig; char __opaque[56]; };
+struct _opaque_pthread_cond_t { long __sig; char __opaque[40]; };
+struct _opaque_pthread_condattr_t { long __sig; char __opaque[8]; };
+struct _opaque_pthread_mutex_t { long __sig; char __opaque[56]; };
+struct _opaque_pthread_mutexattr_t { long __sig; char __opaque[8]; };
+struct _opaque_pthread_once_t { long __sig; char __opaque[8]; };
+struct _opaque_pthread_rwlock_t { long __sig; char __opaque[192]; };
+struct _opaque_pthread_rwlockattr_t { long __sig; char __opaque[16]; };
+struct _opaque_pthread_t { long __sig; struct __darwin_pthread_handler_rec *__cleanup_stack; char __opaque[1168]; };
+# 94 "/usr/include/sys/_types.h" 3 4
+typedef __int64_t __darwin_blkcnt_t;
+typedef __int32_t __darwin_blksize_t;
+typedef __int32_t __darwin_dev_t;
+typedef unsigned int __darwin_fsblkcnt_t;
+typedef unsigned int __darwin_fsfilcnt_t;
+typedef __uint32_t __darwin_gid_t;
+typedef __uint32_t __darwin_id_t;
+typedef __uint64_t __darwin_ino64_t;
+
+typedef __darwin_ino64_t __darwin_ino_t;
+
+
+
+typedef __darwin_natural_t __darwin_mach_port_name_t;
+typedef __darwin_mach_port_name_t __darwin_mach_port_t;
+typedef __uint16_t __darwin_mode_t;
+typedef __int64_t __darwin_off_t;
+typedef __int32_t __darwin_pid_t;
+typedef struct _opaque_pthread_attr_t
+   __darwin_pthread_attr_t;
+typedef struct _opaque_pthread_cond_t
+   __darwin_pthread_cond_t;
+typedef struct _opaque_pthread_condattr_t
+   __darwin_pthread_condattr_t;
+typedef unsigned long __darwin_pthread_key_t;
+typedef struct _opaque_pthread_mutex_t
+   __darwin_pthread_mutex_t;
+typedef struct _opaque_pthread_mutexattr_t
+   __darwin_pthread_mutexattr_t;
+typedef struct _opaque_pthread_once_t
+   __darwin_pthread_once_t;
+typedef struct _opaque_pthread_rwlock_t
+   __darwin_pthread_rwlock_t;
+typedef struct _opaque_pthread_rwlockattr_t
+   __darwin_pthread_rwlockattr_t;
+typedef struct _opaque_pthread_t
+   *__darwin_pthread_t;
+typedef __uint32_t __darwin_sigset_t;
+typedef __int32_t __darwin_suseconds_t;
+typedef __uint32_t __darwin_uid_t;
+typedef __uint32_t __darwin_useconds_t;
+typedef unsigned char __darwin_uuid_t[16];
+typedef char __darwin_uuid_string_t[37];
+# 69 "/usr/include/sys/time.h" 2 3 4
+# 1 "/usr/include/Availability.h" 1 3 4
+# 148 "/usr/include/Availability.h" 3 4
+# 1 "/usr/include/AvailabilityInternal.h" 1 3 4
+# 149 "/usr/include/Availability.h" 2 3 4
+# 70 "/usr/include/sys/time.h" 2 3 4
+
+
+
+
+
+# 1 "/usr/include/sys/_types/_fd_def.h" 1 3 4
+# 46 "/usr/include/sys/_types/_fd_def.h" 3 4
+typedef struct fd_set {
+ __int32_t fds_bits[((((1024) % ((sizeof(__int32_t) * 8))) == 0) ? ((1024) / ((sizeof(__int32_t) * 8))) : (((1024) / ((sizeof(__int32_t) * 8))) + 1))];
+} fd_set;
+
+
+
+static __inline int
+__darwin_fd_isset(int _n, const struct fd_set *_p)
+{
+ return (_p->fds_bits[(unsigned long)_n/(sizeof(__int32_t) * 8)] & ((__int32_t)(1<<((unsigned long)_n % (sizeof(__int32_t) * 8)))));
+}
+# 76 "/usr/include/sys/time.h" 2 3 4
+# 1 "/usr/include/sys/_types/_timespec.h" 1 3 4
+# 30 "/usr/include/sys/_types/_timespec.h" 3 4
+struct timespec
+{
+ __darwin_time_t tv_sec;
+ long tv_nsec;
+};
+# 77 "/usr/include/sys/time.h" 2 3 4
+# 1 "/usr/include/sys/_types/_timeval.h" 1 3 4
+# 30 "/usr/include/sys/_types/_timeval.h" 3 4
+struct timeval
+{
+ __darwin_time_t tv_sec;
+ __darwin_suseconds_t tv_usec;
+};
+# 78 "/usr/include/sys/time.h" 2 3 4
+
+# 1 "/usr/include/sys/_types/_time_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_time_t.h" 3 4
+typedef __darwin_time_t time_t;
+# 80 "/usr/include/sys/time.h" 2 3 4
+# 1 "/usr/include/sys/_types/_suseconds_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_suseconds_t.h" 3 4
+typedef __darwin_suseconds_t suseconds_t;
+# 81 "/usr/include/sys/time.h" 2 3 4
+
+
+
+
+
+struct itimerval {
+ struct timeval it_interval;
+ struct timeval it_value;
+};
+# 105 "/usr/include/sys/time.h" 3 4
+# 1 "/usr/include/sys/_types/_fd_setsize.h" 1 3 4
+# 106 "/usr/include/sys/time.h" 2 3 4
+# 1 "/usr/include/sys/_types/_fd_set.h" 1 3 4
+# 107 "/usr/include/sys/time.h" 2 3 4
+# 1 "/usr/include/sys/_types/_fd_clr.h" 1 3 4
+# 108 "/usr/include/sys/time.h" 2 3 4
+# 1 "/usr/include/sys/_types/_fd_isset.h" 1 3 4
+# 109 "/usr/include/sys/time.h" 2 3 4
+# 1 "/usr/include/sys/_types/_fd_zero.h" 1 3 4
+# 110 "/usr/include/sys/time.h" 2 3 4
+
+
+
+# 1 "/usr/include/sys/_types/_fd_copy.h" 1 3 4
+# 114 "/usr/include/sys/time.h" 2 3 4
+# 124 "/usr/include/sys/time.h" 3 4
+struct timezone {
+ int tz_minuteswest;
+ int tz_dsttime;
+};
+# 167 "/usr/include/sys/time.h" 3 4
+struct clockinfo {
+ int hz;
+ int tick;
+ int tickadj;
+ int stathz;
+ int profhz;
+};
+
+
+
+
+
+# 1 "/usr/include/time.h" 1 3 4
+# 66 "/usr/include/time.h" 3 4
+# 1 "/usr/include/_types.h" 1 3 4
+# 39 "/usr/include/_types.h" 3 4
+typedef int __darwin_nl_item;
+typedef int __darwin_wctrans_t;
+
+typedef __uint32_t __darwin_wctype_t;
+# 67 "/usr/include/time.h" 2 3 4
+
+
+# 1 "/usr/include/_structs.h" 1 3 4
+# 24 "/usr/include/_structs.h" 3 4
+# 1 "/usr/include/sys/_structs.h" 1 3 4
+# 25 "/usr/include/_structs.h" 2 3 4
+# 70 "/usr/include/time.h" 2 3 4
+# 1 "/usr/include/sys/_types/_null.h" 1 3 4
+# 71 "/usr/include/time.h" 2 3 4
+# 1 "/usr/include/sys/_types/_clock_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_clock_t.h" 3 4
+typedef __darwin_clock_t clock_t;
+# 72 "/usr/include/time.h" 2 3 4
+# 1 "/usr/include/sys/_types/_size_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_size_t.h" 3 4
+typedef __darwin_size_t size_t;
+# 73 "/usr/include/time.h" 2 3 4
+
+
+struct tm {
+ int tm_sec;
+ int tm_min;
+ int tm_hour;
+ int tm_mday;
+ int tm_mon;
+ int tm_year;
+ int tm_wday;
+ int tm_yday;
+ int tm_isdst;
+ long tm_gmtoff;
+ char *tm_zone;
+};
+# 98 "/usr/include/time.h" 3 4
+extern char *tzname[];
+
+
+extern int getdate_err;
+
+extern long timezone __asm("_" "timezone") ;
+
+extern int daylight;
+
+
+char *asctime(const struct tm *);
+clock_t clock(void) __asm("_" "clock") ;
+char *ctime(const time_t *);
+double difftime(time_t, time_t);
+struct tm *getdate(const char *);
+struct tm *gmtime(const time_t *);
+struct tm *localtime(const time_t *);
+time_t mktime(struct tm *) __asm("_" "mktime") ;
+size_t strftime(char * restrict, size_t, const char * restrict, const struct tm * restrict) __asm("_" "strftime") ;
+char *strptime(const char * restrict, const char * restrict, struct tm * restrict) __asm("_" "strptime") ;
+time_t time(time_t *);
+
+
+void tzset(void);
+
+
+
+char *asctime_r(const struct tm * restrict, char * restrict);
+char *ctime_r(const time_t *, char *);
+struct tm *gmtime_r(const time_t * restrict, struct tm * restrict);
+struct tm *localtime_r(const time_t * restrict, struct tm * restrict);
+
+
+time_t posix2time(time_t);
+
+
+
+void tzsetwall(void);
+time_t time2posix(time_t);
+time_t timelocal(struct tm * const);
+time_t timegm(struct tm * const);
+
+
+
+int nanosleep(const struct timespec *, struct timespec *) __asm("_" "nanosleep") ;
+# 179 "/usr/include/sys/time.h" 2 3 4
+
+
+
+
+
+int adjtime(const struct timeval *, struct timeval *);
+int futimes(int, const struct timeval *);
+int lutimes(const char *, const struct timeval *) __attribute__((availability(macosx,introduced=10.5)));
+int settimeofday(const struct timeval *, const struct timezone *);
+
+
+int getitimer(int, struct itimerval *);
+int gettimeofday(struct timeval * restrict, void * restrict);
+
+
+# 1 "/usr/include/sys/_select.h" 1 3 4
+# 39 "/usr/include/sys/_select.h" 3 4
+int select(int, fd_set * restrict, fd_set * restrict,
+  fd_set * restrict, struct timeval * restrict)
+
+
+
+
+  __asm("_" "select" "$1050")
+
+
+
+
+  ;
+# 194 "/usr/include/sys/time.h" 2 3 4
+
+int setitimer(int, const struct itimerval * restrict,
+  struct itimerval * restrict);
+int utimes(const char *, const struct timeval *);
+# 38 "./dtls_time.h" 2
+# 61 "./dtls_time.h"
+typedef unsigned int dtls_tick_t;
+
+
+
+
+
+
+
+void dtls_clock_init(void);
+void dtls_ticks(dtls_tick_t *t);
+# 28 "dtls.c" 2
+
+# 1 "/usr/include/stdio.h" 1 3 4
+# 71 "/usr/include/stdio.h" 3 4
+# 1 "/usr/include/sys/_types/_va_list.h" 1 3 4
+# 31 "/usr/include/sys/_types/_va_list.h" 3 4
+typedef __darwin_va_list va_list;
+# 72 "/usr/include/stdio.h" 2 3 4
+
+
+
+typedef __darwin_off_t fpos_t;
+# 86 "/usr/include/stdio.h" 3 4
+struct __sbuf {
+ unsigned char *_base;
+ int _size;
+};
+
+
+struct __sFILEX;
+# 120 "/usr/include/stdio.h" 3 4
+typedef struct __sFILE {
+ unsigned char *_p;
+ int _r;
+ int _w;
+ short _flags;
+ short _file;
+ struct __sbuf _bf;
+ int _lbfsize;
+
+
+ void *_cookie;
+ int (*_close)(void *);
+ int (*_read) (void *, char *, int);
+ fpos_t (*_seek) (void *, fpos_t, int);
+ int (*_write)(void *, const char *, int);
+
+
+ struct __sbuf _ub;
+ struct __sFILEX *_extra;
+ int _ur;
+
+
+ unsigned char _ubuf[3];
+ unsigned char _nbuf[1];
+
+
+ struct __sbuf _lb;
+
+
+ int _blksize;
+ fpos_t _offset;
+} FILE;
+
+
+extern FILE *__stdinp;
+extern FILE *__stdoutp;
+extern FILE *__stderrp;
+# 229 "/usr/include/stdio.h" 3 4
+void clearerr(FILE *);
+int fclose(FILE *);
+int feof(FILE *);
+int ferror(FILE *);
+int fflush(FILE *);
+int fgetc(FILE *);
+int fgetpos(FILE * restrict, fpos_t *);
+char *fgets(char * restrict, int, FILE *);
+
+
+
+FILE *fopen(const char * restrict, const char * restrict) __asm("_" "fopen");
+
+int fprintf(FILE * restrict, const char * restrict, ...) __attribute__((__format__ (__printf__, 2, 3)));
+int fputc(int, FILE *);
+int fputs(const char * restrict, FILE * restrict) __asm("_" "fputs") ;
+size_t fread(void * restrict, size_t, size_t, FILE * restrict);
+FILE *freopen(const char * restrict, const char * restrict,
+                 FILE * restrict) __asm("_" "freopen") ;
+int fscanf(FILE * restrict, const char * restrict, ...) __attribute__((__format__ (__scanf__, 2, 3)));
+int fseek(FILE *, long, int);
+int fsetpos(FILE *, const fpos_t *);
+long ftell(FILE *);
+size_t fwrite(const void * restrict, size_t, size_t, FILE * restrict) __asm("_" "fwrite") ;
+int getc(FILE *);
+int getchar(void);
+char *gets(char *);
+void perror(const char *);
+int printf(const char * restrict, ...) __attribute__((__format__ (__printf__, 1, 2)));
+int putc(int, FILE *);
+int putchar(int);
+int puts(const char *);
+int remove(const char *);
+int rename (const char *, const char *);
+void rewind(FILE *);
+int scanf(const char * restrict, ...) __attribute__((__format__ (__scanf__, 1, 2)));
+void setbuf(FILE * restrict, char * restrict);
+int setvbuf(FILE * restrict, char * restrict, int, size_t);
+int sprintf(char * restrict, const char * restrict, ...) __attribute__((__format__ (__printf__, 2, 3)));
+int sscanf(const char * restrict, const char * restrict, ...) __attribute__((__format__ (__scanf__, 2, 3)));
+FILE *tmpfile(void);
+
+
+__attribute__((deprecated("This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of tmpnam(3), it is highly recommended that you use mkstemp(3) instead.")))
+
+char *tmpnam(char *);
+int ungetc(int, FILE *);
+int vfprintf(FILE * restrict, const char * restrict, va_list) __attribute__((__format__ (__printf__, 2, 0)));
+int vprintf(const char * restrict, va_list) __attribute__((__format__ (__printf__, 1, 0)));
+int vsprintf(char * restrict, const char * restrict, va_list) __attribute__((__format__ (__printf__, 2, 0)));
+# 294 "/usr/include/stdio.h" 3 4
+char *ctermid(char *);
+
+
+
+
+
+FILE *fdopen(int, const char *) __asm("_" "fdopen");
+
+int fileno(FILE *);
+# 313 "/usr/include/stdio.h" 3 4
+int pclose(FILE *);
+
+
+
+FILE *popen(const char *, const char *) __asm("_" "popen");
+# 335 "/usr/include/stdio.h" 3 4
+int __srget(FILE *);
+int __svfscanf(FILE *, const char *, va_list) __attribute__((__format__ (__scanf__, 2, 0)));
+int __swbuf(int, FILE *);
+# 346 "/usr/include/stdio.h" 3 4
+inline __attribute__ ((__always_inline__)) int __sputc(int _c, FILE *_p) {
+ if (--_p->_w >= 0 || (_p->_w >= _p->_lbfsize && (char)_c != '\n'))
+  return (*_p->_p++ = _c);
+ else
+  return (__swbuf(_c, _p));
+}
+# 372 "/usr/include/stdio.h" 3 4
+void flockfile(FILE *);
+int ftrylockfile(FILE *);
+void funlockfile(FILE *);
+int getc_unlocked(FILE *);
+int getchar_unlocked(void);
+int putc_unlocked(int, FILE *);
+int putchar_unlocked(int);
+
+
+
+int getw(FILE *);
+int putw(int, FILE *);
+
+
+
+__attribute__((deprecated("This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of tempnam(3), it is highly recommended that you use mkstemp(3) instead.")))
+
+char *tempnam(const char *, const char *) __asm("_" "tempnam") ;
+# 409 "/usr/include/stdio.h" 3 4
+# 1 "/usr/include/sys/_types/_off_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_off_t.h" 3 4
+typedef __darwin_off_t off_t;
+# 410 "/usr/include/stdio.h" 2 3 4
+
+
+int fseeko(FILE *, off_t, int);
+off_t ftello(FILE *);
+
+
+
+
+
+int snprintf(char * restrict, size_t, const char * restrict, ...) __attribute__((__format__ (__printf__, 3, 4)));
+int vfscanf(FILE * restrict, const char * restrict, va_list) __attribute__((__format__ (__scanf__, 2, 0)));
+int vscanf(const char * restrict, va_list) __attribute__((__format__ (__scanf__, 1, 0)));
+int vsnprintf(char * restrict, size_t, const char * restrict, va_list) __attribute__((__format__ (__printf__, 3, 0)));
+int vsscanf(const char * restrict, const char * restrict, va_list) __attribute__((__format__ (__scanf__, 2, 0)));
+# 434 "/usr/include/stdio.h" 3 4
+# 1 "/usr/include/sys/_types/_ssize_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_ssize_t.h" 3 4
+typedef __darwin_ssize_t ssize_t;
+# 435 "/usr/include/stdio.h" 2 3 4
+
+
+int dprintf(int, const char * restrict, ...) __attribute__((__format__ (__printf__, 2, 3))) __attribute__((availability(macosx,introduced=10.7)));
+int vdprintf(int, const char * restrict, va_list) __attribute__((__format__ (__printf__, 2, 0))) __attribute__((availability(macosx,introduced=10.7)));
+ssize_t getdelim(char ** restrict, size_t * restrict, int, FILE * restrict) __attribute__((availability(macosx,introduced=10.7)));
+ssize_t getline(char ** restrict, size_t * restrict, FILE * restrict) __attribute__((availability(macosx,introduced=10.7)));
+# 450 "/usr/include/stdio.h" 3 4
+extern const int sys_nerr;
+extern const char *const sys_errlist[];
+
+int asprintf(char ** restrict, const char * restrict, ...) __attribute__((__format__ (__printf__, 2, 3)));
+char *ctermid_r(char *);
+char *fgetln(FILE *, size_t *);
+const char *fmtcheck(const char *, const char *);
+int fpurge(FILE *);
+void setbuffer(FILE *, char *, int);
+int setlinebuf(FILE *);
+int vasprintf(char ** restrict, const char * restrict, va_list) __attribute__((__format__ (__printf__, 2, 0)));
+FILE *zopen(const char *, const char *, int);
+
+
+
+
+
+FILE *funopen(const void *,
+                 int (*)(void *, char *, int),
+                 int (*)(void *, const char *, int),
+                 fpos_t (*)(void *, fpos_t, int),
+                 int (*)(void *));
+# 490 "/usr/include/stdio.h" 3 4
+# 1 "/usr/include/secure/_stdio.h" 1 3 4
+# 31 "/usr/include/secure/_stdio.h" 3 4
+# 1 "/usr/include/secure/_common.h" 1 3 4
+# 32 "/usr/include/secure/_stdio.h" 2 3 4
+# 42 "/usr/include/secure/_stdio.h" 3 4
+extern int __sprintf_chk (char * restrict, int, size_t,
+     const char * restrict, ...);
+# 52 "/usr/include/secure/_stdio.h" 3 4
+extern int __snprintf_chk (char * restrict, size_t, int, size_t,
+      const char * restrict, ...);
+
+
+
+
+
+
+
+extern int __vsprintf_chk (char * restrict, int, size_t,
+      const char * restrict, va_list);
+
+
+
+
+
+
+
+extern int __vsnprintf_chk (char * restrict, size_t, int, size_t,
+       const char * restrict, va_list);
+# 491 "/usr/include/stdio.h" 2 3 4
+# 30 "dtls.c" 2
+# 1 "/usr/include/stdlib.h" 1 3 4
+# 65 "/usr/include/stdlib.h" 3 4
+# 1 "/usr/include/sys/wait.h" 1 3 4
+# 79 "/usr/include/sys/wait.h" 3 4
+typedef enum {
+ P_ALL,
+ P_PID,
+ P_PGID
+} idtype_t;
+
+
+
+
+
+
+# 1 "/usr/include/sys/_types/_pid_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_pid_t.h" 3 4
+typedef __darwin_pid_t pid_t;
+# 90 "/usr/include/sys/wait.h" 2 3 4
+# 1 "/usr/include/sys/_types/_id_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_id_t.h" 3 4
+typedef __darwin_id_t id_t;
+# 91 "/usr/include/sys/wait.h" 2 3 4
+# 109 "/usr/include/sys/wait.h" 3 4
+# 1 "/usr/include/sys/signal.h" 1 3 4
+# 73 "/usr/include/sys/signal.h" 3 4
+# 1 "/usr/include/sys/appleapiopts.h" 1 3 4
+# 74 "/usr/include/sys/signal.h" 2 3 4
+
+
+
+
+
+
+
+# 1 "/usr/include/machine/signal.h" 1 3 4
+# 32 "/usr/include/machine/signal.h" 3 4
+# 1 "/usr/include/i386/signal.h" 1 3 4
+# 39 "/usr/include/i386/signal.h" 3 4
+typedef int sig_atomic_t;
+# 33 "/usr/include/machine/signal.h" 2 3 4
+# 82 "/usr/include/sys/signal.h" 2 3 4
+# 145 "/usr/include/sys/signal.h" 3 4
+# 1 "/usr/include/machine/_mcontext.h" 1 3 4
+# 29 "/usr/include/machine/_mcontext.h" 3 4
+# 1 "/usr/include/i386/_mcontext.h" 1 3 4
+# 33 "/usr/include/i386/_mcontext.h" 3 4
+# 1 "/usr/include/mach/i386/_structs.h" 1 3 4
+# 43 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_i386_thread_state
+{
+    unsigned int __eax;
+    unsigned int __ebx;
+    unsigned int __ecx;
+    unsigned int __edx;
+    unsigned int __edi;
+    unsigned int __esi;
+    unsigned int __ebp;
+    unsigned int __esp;
+    unsigned int __ss;
+    unsigned int __eflags;
+    unsigned int __eip;
+    unsigned int __cs;
+    unsigned int __ds;
+    unsigned int __es;
+    unsigned int __fs;
+    unsigned int __gs;
+};
+# 89 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_fp_control
+{
+    unsigned short __invalid :1,
+        __denorm :1,
+    __zdiv :1,
+    __ovrfl :1,
+    __undfl :1,
+    __precis :1,
+      :2,
+    __pc :2,
+
+
+
+
+
+    __rc :2,
+
+
+
+
+
+
+             :1,
+      :3;
+};
+typedef struct __darwin_fp_control __darwin_fp_control_t;
+# 147 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_fp_status
+{
+    unsigned short __invalid :1,
+        __denorm :1,
+    __zdiv :1,
+    __ovrfl :1,
+    __undfl :1,
+    __precis :1,
+    __stkflt :1,
+    __errsumm :1,
+    __c0 :1,
+    __c1 :1,
+    __c2 :1,
+    __tos :3,
+    __c3 :1,
+    __busy :1;
+};
+typedef struct __darwin_fp_status __darwin_fp_status_t;
+# 191 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_mmst_reg
+{
+ char __mmst_reg[10];
+ char __mmst_rsrv[6];
+};
+# 210 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_xmm_reg
+{
+ char __xmm_reg[16];
+};
+# 232 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_i386_float_state
+{
+ int __fpu_reserved[2];
+ struct __darwin_fp_control __fpu_fcw;
+ struct __darwin_fp_status __fpu_fsw;
+ __uint8_t __fpu_ftw;
+ __uint8_t __fpu_rsrv1;
+ __uint16_t __fpu_fop;
+ __uint32_t __fpu_ip;
+ __uint16_t __fpu_cs;
+ __uint16_t __fpu_rsrv2;
+ __uint32_t __fpu_dp;
+ __uint16_t __fpu_ds;
+ __uint16_t __fpu_rsrv3;
+ __uint32_t __fpu_mxcsr;
+ __uint32_t __fpu_mxcsrmask;
+ struct __darwin_mmst_reg __fpu_stmm0;
+ struct __darwin_mmst_reg __fpu_stmm1;
+ struct __darwin_mmst_reg __fpu_stmm2;
+ struct __darwin_mmst_reg __fpu_stmm3;
+ struct __darwin_mmst_reg __fpu_stmm4;
+ struct __darwin_mmst_reg __fpu_stmm5;
+ struct __darwin_mmst_reg __fpu_stmm6;
+ struct __darwin_mmst_reg __fpu_stmm7;
+ struct __darwin_xmm_reg __fpu_xmm0;
+ struct __darwin_xmm_reg __fpu_xmm1;
+ struct __darwin_xmm_reg __fpu_xmm2;
+ struct __darwin_xmm_reg __fpu_xmm3;
+ struct __darwin_xmm_reg __fpu_xmm4;
+ struct __darwin_xmm_reg __fpu_xmm5;
+ struct __darwin_xmm_reg __fpu_xmm6;
+ struct __darwin_xmm_reg __fpu_xmm7;
+ char __fpu_rsrv4[14*16];
+ int __fpu_reserved1;
+};
+
+
+struct __darwin_i386_avx_state
+{
+ int __fpu_reserved[2];
+ struct __darwin_fp_control __fpu_fcw;
+ struct __darwin_fp_status __fpu_fsw;
+ __uint8_t __fpu_ftw;
+ __uint8_t __fpu_rsrv1;
+ __uint16_t __fpu_fop;
+ __uint32_t __fpu_ip;
+ __uint16_t __fpu_cs;
+ __uint16_t __fpu_rsrv2;
+ __uint32_t __fpu_dp;
+ __uint16_t __fpu_ds;
+ __uint16_t __fpu_rsrv3;
+ __uint32_t __fpu_mxcsr;
+ __uint32_t __fpu_mxcsrmask;
+ struct __darwin_mmst_reg __fpu_stmm0;
+ struct __darwin_mmst_reg __fpu_stmm1;
+ struct __darwin_mmst_reg __fpu_stmm2;
+ struct __darwin_mmst_reg __fpu_stmm3;
+ struct __darwin_mmst_reg __fpu_stmm4;
+ struct __darwin_mmst_reg __fpu_stmm5;
+ struct __darwin_mmst_reg __fpu_stmm6;
+ struct __darwin_mmst_reg __fpu_stmm7;
+ struct __darwin_xmm_reg __fpu_xmm0;
+ struct __darwin_xmm_reg __fpu_xmm1;
+ struct __darwin_xmm_reg __fpu_xmm2;
+ struct __darwin_xmm_reg __fpu_xmm3;
+ struct __darwin_xmm_reg __fpu_xmm4;
+ struct __darwin_xmm_reg __fpu_xmm5;
+ struct __darwin_xmm_reg __fpu_xmm6;
+ struct __darwin_xmm_reg __fpu_xmm7;
+ char __fpu_rsrv4[14*16];
+ int __fpu_reserved1;
+ char __avx_reserved1[64];
+ struct __darwin_xmm_reg __fpu_ymmh0;
+ struct __darwin_xmm_reg __fpu_ymmh1;
+ struct __darwin_xmm_reg __fpu_ymmh2;
+ struct __darwin_xmm_reg __fpu_ymmh3;
+ struct __darwin_xmm_reg __fpu_ymmh4;
+ struct __darwin_xmm_reg __fpu_ymmh5;
+ struct __darwin_xmm_reg __fpu_ymmh6;
+ struct __darwin_xmm_reg __fpu_ymmh7;
+};
+# 402 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_i386_exception_state
+{
+ __uint16_t __trapno;
+ __uint16_t __cpu;
+ __uint32_t __err;
+ __uint32_t __faultvaddr;
+};
+# 422 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_x86_debug_state32
+{
+ unsigned int __dr0;
+ unsigned int __dr1;
+ unsigned int __dr2;
+ unsigned int __dr3;
+ unsigned int __dr4;
+ unsigned int __dr5;
+ unsigned int __dr6;
+ unsigned int __dr7;
+};
+# 454 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_x86_thread_state64
+{
+ __uint64_t __rax;
+ __uint64_t __rbx;
+ __uint64_t __rcx;
+ __uint64_t __rdx;
+ __uint64_t __rdi;
+ __uint64_t __rsi;
+ __uint64_t __rbp;
+ __uint64_t __rsp;
+ __uint64_t __r8;
+ __uint64_t __r9;
+ __uint64_t __r10;
+ __uint64_t __r11;
+ __uint64_t __r12;
+ __uint64_t __r13;
+ __uint64_t __r14;
+ __uint64_t __r15;
+ __uint64_t __rip;
+ __uint64_t __rflags;
+ __uint64_t __cs;
+ __uint64_t __fs;
+ __uint64_t __gs;
+};
+# 509 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_x86_float_state64
+{
+ int __fpu_reserved[2];
+ struct __darwin_fp_control __fpu_fcw;
+ struct __darwin_fp_status __fpu_fsw;
+ __uint8_t __fpu_ftw;
+ __uint8_t __fpu_rsrv1;
+ __uint16_t __fpu_fop;
+
+
+ __uint32_t __fpu_ip;
+ __uint16_t __fpu_cs;
+
+ __uint16_t __fpu_rsrv2;
+
+
+ __uint32_t __fpu_dp;
+ __uint16_t __fpu_ds;
+
+ __uint16_t __fpu_rsrv3;
+ __uint32_t __fpu_mxcsr;
+ __uint32_t __fpu_mxcsrmask;
+ struct __darwin_mmst_reg __fpu_stmm0;
+ struct __darwin_mmst_reg __fpu_stmm1;
+ struct __darwin_mmst_reg __fpu_stmm2;
+ struct __darwin_mmst_reg __fpu_stmm3;
+ struct __darwin_mmst_reg __fpu_stmm4;
+ struct __darwin_mmst_reg __fpu_stmm5;
+ struct __darwin_mmst_reg __fpu_stmm6;
+ struct __darwin_mmst_reg __fpu_stmm7;
+ struct __darwin_xmm_reg __fpu_xmm0;
+ struct __darwin_xmm_reg __fpu_xmm1;
+ struct __darwin_xmm_reg __fpu_xmm2;
+ struct __darwin_xmm_reg __fpu_xmm3;
+ struct __darwin_xmm_reg __fpu_xmm4;
+ struct __darwin_xmm_reg __fpu_xmm5;
+ struct __darwin_xmm_reg __fpu_xmm6;
+ struct __darwin_xmm_reg __fpu_xmm7;
+ struct __darwin_xmm_reg __fpu_xmm8;
+ struct __darwin_xmm_reg __fpu_xmm9;
+ struct __darwin_xmm_reg __fpu_xmm10;
+ struct __darwin_xmm_reg __fpu_xmm11;
+ struct __darwin_xmm_reg __fpu_xmm12;
+ struct __darwin_xmm_reg __fpu_xmm13;
+ struct __darwin_xmm_reg __fpu_xmm14;
+ struct __darwin_xmm_reg __fpu_xmm15;
+ char __fpu_rsrv4[6*16];
+ int __fpu_reserved1;
+};
+
+
+struct __darwin_x86_avx_state64
+{
+ int __fpu_reserved[2];
+ struct __darwin_fp_control __fpu_fcw;
+ struct __darwin_fp_status __fpu_fsw;
+ __uint8_t __fpu_ftw;
+ __uint8_t __fpu_rsrv1;
+ __uint16_t __fpu_fop;
+
+
+ __uint32_t __fpu_ip;
+ __uint16_t __fpu_cs;
+
+ __uint16_t __fpu_rsrv2;
+
+
+ __uint32_t __fpu_dp;
+ __uint16_t __fpu_ds;
+
+ __uint16_t __fpu_rsrv3;
+ __uint32_t __fpu_mxcsr;
+ __uint32_t __fpu_mxcsrmask;
+ struct __darwin_mmst_reg __fpu_stmm0;
+ struct __darwin_mmst_reg __fpu_stmm1;
+ struct __darwin_mmst_reg __fpu_stmm2;
+ struct __darwin_mmst_reg __fpu_stmm3;
+ struct __darwin_mmst_reg __fpu_stmm4;
+ struct __darwin_mmst_reg __fpu_stmm5;
+ struct __darwin_mmst_reg __fpu_stmm6;
+ struct __darwin_mmst_reg __fpu_stmm7;
+ struct __darwin_xmm_reg __fpu_xmm0;
+ struct __darwin_xmm_reg __fpu_xmm1;
+ struct __darwin_xmm_reg __fpu_xmm2;
+ struct __darwin_xmm_reg __fpu_xmm3;
+ struct __darwin_xmm_reg __fpu_xmm4;
+ struct __darwin_xmm_reg __fpu_xmm5;
+ struct __darwin_xmm_reg __fpu_xmm6;
+ struct __darwin_xmm_reg __fpu_xmm7;
+ struct __darwin_xmm_reg __fpu_xmm8;
+ struct __darwin_xmm_reg __fpu_xmm9;
+ struct __darwin_xmm_reg __fpu_xmm10;
+ struct __darwin_xmm_reg __fpu_xmm11;
+ struct __darwin_xmm_reg __fpu_xmm12;
+ struct __darwin_xmm_reg __fpu_xmm13;
+ struct __darwin_xmm_reg __fpu_xmm14;
+ struct __darwin_xmm_reg __fpu_xmm15;
+ char __fpu_rsrv4[6*16];
+ int __fpu_reserved1;
+ char __avx_reserved1[64];
+ struct __darwin_xmm_reg __fpu_ymmh0;
+ struct __darwin_xmm_reg __fpu_ymmh1;
+ struct __darwin_xmm_reg __fpu_ymmh2;
+ struct __darwin_xmm_reg __fpu_ymmh3;
+ struct __darwin_xmm_reg __fpu_ymmh4;
+ struct __darwin_xmm_reg __fpu_ymmh5;
+ struct __darwin_xmm_reg __fpu_ymmh6;
+ struct __darwin_xmm_reg __fpu_ymmh7;
+ struct __darwin_xmm_reg __fpu_ymmh8;
+ struct __darwin_xmm_reg __fpu_ymmh9;
+ struct __darwin_xmm_reg __fpu_ymmh10;
+ struct __darwin_xmm_reg __fpu_ymmh11;
+ struct __darwin_xmm_reg __fpu_ymmh12;
+ struct __darwin_xmm_reg __fpu_ymmh13;
+ struct __darwin_xmm_reg __fpu_ymmh14;
+ struct __darwin_xmm_reg __fpu_ymmh15;
+};
+# 751 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_x86_exception_state64
+{
+    __uint16_t __trapno;
+    __uint16_t __cpu;
+    __uint32_t __err;
+    __uint64_t __faultvaddr;
+};
+# 771 "/usr/include/mach/i386/_structs.h" 3 4
+struct __darwin_x86_debug_state64
+{
+ __uint64_t __dr0;
+ __uint64_t __dr1;
+ __uint64_t __dr2;
+ __uint64_t __dr3;
+ __uint64_t __dr4;
+ __uint64_t __dr5;
+ __uint64_t __dr6;
+ __uint64_t __dr7;
+};
+# 34 "/usr/include/i386/_mcontext.h" 2 3 4
+
+
+
+
+struct __darwin_mcontext32
+{
+ struct __darwin_i386_exception_state __es;
+ struct __darwin_i386_thread_state __ss;
+ struct __darwin_i386_float_state __fs;
+};
+
+
+struct __darwin_mcontext_avx32
+{
+ struct __darwin_i386_exception_state __es;
+ struct __darwin_i386_thread_state __ss;
+ struct __darwin_i386_avx_state __fs;
+};
+# 76 "/usr/include/i386/_mcontext.h" 3 4
+struct __darwin_mcontext64
+{
+ struct __darwin_x86_exception_state64 __es;
+ struct __darwin_x86_thread_state64 __ss;
+ struct __darwin_x86_float_state64 __fs;
+};
+
+
+struct __darwin_mcontext_avx64
+{
+ struct __darwin_x86_exception_state64 __es;
+ struct __darwin_x86_thread_state64 __ss;
+ struct __darwin_x86_avx_state64 __fs;
+};
+# 115 "/usr/include/i386/_mcontext.h" 3 4
+typedef struct __darwin_mcontext64 *mcontext_t;
+# 30 "/usr/include/machine/_mcontext.h" 2 3 4
+# 146 "/usr/include/sys/signal.h" 2 3 4
+# 1 "/usr/include/sys/_types/_sigaltstack.h" 1 3 4
+# 36 "/usr/include/sys/_types/_sigaltstack.h" 3 4
+struct __darwin_sigaltstack
+{
+ void *ss_sp;
+ __darwin_size_t ss_size;
+ int ss_flags;
+};
+typedef struct __darwin_sigaltstack stack_t;
+# 147 "/usr/include/sys/signal.h" 2 3 4
+# 1 "/usr/include/sys/_types/_ucontext.h" 1 3 4
+# 34 "/usr/include/sys/_types/_ucontext.h" 3 4
+struct __darwin_ucontext
+{
+ int uc_onstack;
+ __darwin_sigset_t uc_sigmask;
+ struct __darwin_sigaltstack uc_stack;
+ struct __darwin_ucontext *uc_link;
+ __darwin_size_t uc_mcsize;
+ struct __darwin_mcontext64 *uc_mcontext;
+
+
+
+};
+
+
+typedef struct __darwin_ucontext ucontext_t;
+# 148 "/usr/include/sys/signal.h" 2 3 4
+
+
+# 1 "/usr/include/sys/_types/_pthread_attr_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_pthread_attr_t.h" 3 4
+typedef __darwin_pthread_attr_t pthread_attr_t;
+# 151 "/usr/include/sys/signal.h" 2 3 4
+# 1 "/usr/include/sys/_types/_sigset_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_sigset_t.h" 3 4
+typedef __darwin_sigset_t sigset_t;
+# 152 "/usr/include/sys/signal.h" 2 3 4
+
+# 1 "/usr/include/sys/_types/_uid_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_uid_t.h" 3 4
+typedef __darwin_uid_t uid_t;
+# 154 "/usr/include/sys/signal.h" 2 3 4
+
+union sigval {
+
+ int sival_int;
+ void *sival_ptr;
+};
+
+
+
+
+
+struct sigevent {
+ int sigev_notify;
+ int sigev_signo;
+ union sigval sigev_value;
+ void (*sigev_notify_function)(union sigval);
+ pthread_attr_t *sigev_notify_attributes;
+};
+
+
+typedef struct __siginfo {
+ int si_signo;
+ int si_errno;
+ int si_code;
+ pid_t si_pid;
+ uid_t si_uid;
+ int si_status;
+ void *si_addr;
+ union sigval si_value;
+ long si_band;
+ unsigned long __pad[7];
+} siginfo_t;
+# 266 "/usr/include/sys/signal.h" 3 4
+union __sigaction_u {
+ void (*__sa_handler)(int);
+ void (*__sa_sigaction)(int, struct __siginfo *,
+         void *);
+};
+
+
+struct __sigaction {
+ union __sigaction_u __sigaction_u;
+ void (*sa_tramp)(void *, int, int, siginfo_t *, void *);
+ sigset_t sa_mask;
+ int sa_flags;
+};
+
+
+
+
+struct sigaction {
+ union __sigaction_u __sigaction_u;
+ sigset_t sa_mask;
+ int sa_flags;
+};
+# 328 "/usr/include/sys/signal.h" 3 4
+typedef void (*sig_t)(int);
+# 345 "/usr/include/sys/signal.h" 3 4
+struct sigvec {
+ void (*sv_handler)(int);
+ int sv_mask;
+ int sv_flags;
+};
+# 364 "/usr/include/sys/signal.h" 3 4
+struct sigstack {
+ char *ss_sp;
+ int ss_onstack;
+};
+# 387 "/usr/include/sys/signal.h" 3 4
+void (*signal(int, void (*)(int)))(int);
+# 110 "/usr/include/sys/wait.h" 2 3 4
+# 1 "/usr/include/sys/resource.h" 1 3 4
+# 72 "/usr/include/sys/resource.h" 3 4
+# 1 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.0/include/stdint.h" 1 3 4
+# 64 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.0/include/stdint.h" 3 4
+# 1 "/usr/include/stdint.h" 1 3 4
+# 18 "/usr/include/stdint.h" 3 4
+# 1 "/usr/include/sys/_types/_int8_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_int8_t.h" 3 4
+typedef signed char int8_t;
+# 19 "/usr/include/stdint.h" 2 3 4
+# 1 "/usr/include/sys/_types/_int16_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_int16_t.h" 3 4
+typedef short int16_t;
+# 20 "/usr/include/stdint.h" 2 3 4
+# 1 "/usr/include/sys/_types/_int32_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_int32_t.h" 3 4
+typedef int int32_t;
+# 21 "/usr/include/stdint.h" 2 3 4
+# 1 "/usr/include/sys/_types/_int64_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_int64_t.h" 3 4
+typedef long long int64_t;
+# 22 "/usr/include/stdint.h" 2 3 4
+
+# 1 "/usr/include/_types/_uint8_t.h" 1 3 4
+# 31 "/usr/include/_types/_uint8_t.h" 3 4
+typedef unsigned char uint8_t;
+# 24 "/usr/include/stdint.h" 2 3 4
+# 1 "/usr/include/_types/_uint16_t.h" 1 3 4
+# 31 "/usr/include/_types/_uint16_t.h" 3 4
+typedef unsigned short uint16_t;
+# 25 "/usr/include/stdint.h" 2 3 4
+# 1 "/usr/include/_types/_uint32_t.h" 1 3 4
+# 31 "/usr/include/_types/_uint32_t.h" 3 4
+typedef unsigned int uint32_t;
+# 26 "/usr/include/stdint.h" 2 3 4
+# 1 "/usr/include/_types/_uint64_t.h" 1 3 4
+# 31 "/usr/include/_types/_uint64_t.h" 3 4
+typedef unsigned long long uint64_t;
+# 27 "/usr/include/stdint.h" 2 3 4
+
+
+typedef int8_t int_least8_t;
+typedef int16_t int_least16_t;
+typedef int32_t int_least32_t;
+typedef int64_t int_least64_t;
+typedef uint8_t uint_least8_t;
+typedef uint16_t uint_least16_t;
+typedef uint32_t uint_least32_t;
+typedef uint64_t uint_least64_t;
+
+
+
+typedef int8_t int_fast8_t;
+typedef int16_t int_fast16_t;
+typedef int32_t int_fast32_t;
+typedef int64_t int_fast64_t;
+typedef uint8_t uint_fast8_t;
+typedef uint16_t uint_fast16_t;
+typedef uint32_t uint_fast32_t;
+typedef uint64_t uint_fast64_t;
+
+
+
+
+
+
+# 1 "/usr/include/sys/_types/_intptr_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_intptr_t.h" 3 4
+typedef __darwin_intptr_t intptr_t;
+# 54 "/usr/include/stdint.h" 2 3 4
+# 1 "/usr/include/sys/_types/_uintptr_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_uintptr_t.h" 3 4
+typedef unsigned long uintptr_t;
+# 55 "/usr/include/stdint.h" 2 3 4
+
+
+
+# 1 "/usr/include/_types/_intmax_t.h" 1 3 4
+# 32 "/usr/include/_types/_intmax_t.h" 3 4
+typedef long int intmax_t;
+# 59 "/usr/include/stdint.h" 2 3 4
+# 1 "/usr/include/_types/_uintmax_t.h" 1 3 4
+# 32 "/usr/include/_types/_uintmax_t.h" 3 4
+typedef long unsigned int uintmax_t;
+# 60 "/usr/include/stdint.h" 2 3 4
+# 65 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.0/include/stdint.h" 2 3 4
+# 73 "/usr/include/sys/resource.h" 2 3 4
+# 89 "/usr/include/sys/resource.h" 3 4
+typedef __uint64_t rlim_t;
+# 151 "/usr/include/sys/resource.h" 3 4
+struct rusage {
+ struct timeval ru_utime;
+ struct timeval ru_stime;
+# 162 "/usr/include/sys/resource.h" 3 4
+ long ru_maxrss;
+
+ long ru_ixrss;
+ long ru_idrss;
+ long ru_isrss;
+ long ru_minflt;
+ long ru_majflt;
+ long ru_nswap;
+ long ru_inblock;
+ long ru_oublock;
+ long ru_msgsnd;
+ long ru_msgrcv;
+ long ru_nsignals;
+ long ru_nvcsw;
+ long ru_nivcsw;
+
+
+};
+# 190 "/usr/include/sys/resource.h" 3 4
+typedef void *rusage_info_t;
+
+struct rusage_info_v0 {
+ uint8_t ri_uuid[16];
+ uint64_t ri_user_time;
+ uint64_t ri_system_time;
+ uint64_t ri_pkg_idle_wkups;
+ uint64_t ri_interrupt_wkups;
+ uint64_t ri_pageins;
+ uint64_t ri_wired_size;
+ uint64_t ri_resident_size;
+ uint64_t ri_phys_footprint;
+ uint64_t ri_proc_start_abstime;
+ uint64_t ri_proc_exit_abstime;
+};
+
+struct rusage_info_v1 {
+ uint8_t ri_uuid[16];
+ uint64_t ri_user_time;
+ uint64_t ri_system_time;
+ uint64_t ri_pkg_idle_wkups;
+ uint64_t ri_interrupt_wkups;
+ uint64_t ri_pageins;
+ uint64_t ri_wired_size;
+ uint64_t ri_resident_size;
+ uint64_t ri_phys_footprint;
+ uint64_t ri_proc_start_abstime;
+ uint64_t ri_proc_exit_abstime;
+ uint64_t ri_child_user_time;
+ uint64_t ri_child_system_time;
+ uint64_t ri_child_pkg_idle_wkups;
+ uint64_t ri_child_interrupt_wkups;
+ uint64_t ri_child_pageins;
+ uint64_t ri_child_elapsed_abstime;
+};
+
+struct rusage_info_v2 {
+ uint8_t ri_uuid[16];
+ uint64_t ri_user_time;
+ uint64_t ri_system_time;
+ uint64_t ri_pkg_idle_wkups;
+ uint64_t ri_interrupt_wkups;
+ uint64_t ri_pageins;
+ uint64_t ri_wired_size;
+ uint64_t ri_resident_size;
+ uint64_t ri_phys_footprint;
+ uint64_t ri_proc_start_abstime;
+ uint64_t ri_proc_exit_abstime;
+ uint64_t ri_child_user_time;
+ uint64_t ri_child_system_time;
+ uint64_t ri_child_pkg_idle_wkups;
+ uint64_t ri_child_interrupt_wkups;
+ uint64_t ri_child_pageins;
+ uint64_t ri_child_elapsed_abstime;
+ uint64_t ri_diskio_bytesread;
+ uint64_t ri_diskio_byteswritten;
+};
+# 290 "/usr/include/sys/resource.h" 3 4
+struct rlimit {
+ rlim_t rlim_cur;
+ rlim_t rlim_max;
+};
+# 317 "/usr/include/sys/resource.h" 3 4
+struct proc_rlimit_control_wakeupmon {
+ uint32_t wm_flags;
+ int32_t wm_rate;
+};
+# 347 "/usr/include/sys/resource.h" 3 4
+int getpriority(int, id_t);
+
+int getiopolicy_np(int, int) __attribute__((availability(macosx,introduced=10.5)));
+
+int getrlimit(int, struct rlimit *) __asm("_" "getrlimit") ;
+int getrusage(int, struct rusage *);
+int setpriority(int, id_t, int);
+
+int setiopolicy_np(int, int, int) __attribute__((availability(macosx,introduced=10.5)));
+
+int setrlimit(int, const struct rlimit *) __asm("_" "setrlimit") ;
+# 111 "/usr/include/sys/wait.h" 2 3 4
+# 186 "/usr/include/sys/wait.h" 3 4
+# 1 "/usr/include/machine/endian.h" 1 3 4
+# 35 "/usr/include/machine/endian.h" 3 4
+# 1 "/usr/include/i386/endian.h" 1 3 4
+# 99 "/usr/include/i386/endian.h" 3 4
+# 1 "/usr/include/sys/_endian.h" 1 3 4
+# 124 "/usr/include/sys/_endian.h" 3 4
+# 1 "/usr/include/libkern/_OSByteOrder.h" 1 3 4
+# 66 "/usr/include/libkern/_OSByteOrder.h" 3 4
+# 1 "/usr/include/libkern/i386/_OSByteOrder.h" 1 3 4
+# 44 "/usr/include/libkern/i386/_OSByteOrder.h" 3 4
+static inline
+__uint16_t
+_OSSwapInt16(
+    __uint16_t _data
+)
+{
+    return ((__uint16_t)((_data << 8) | (_data >> 8)));
+}
+
+static inline
+__uint32_t
+_OSSwapInt32(
+    __uint32_t _data
+)
+{
+
+    return __builtin_bswap32(_data);
+
+
+
+
+}
+
+
+static inline
+__uint64_t
+_OSSwapInt64(
+    __uint64_t _data
+)
+{
+    return __builtin_bswap64(_data);
+}
+# 67 "/usr/include/libkern/_OSByteOrder.h" 2 3 4
+# 125 "/usr/include/sys/_endian.h" 2 3 4
+# 100 "/usr/include/i386/endian.h" 2 3 4
+# 36 "/usr/include/machine/endian.h" 2 3 4
+# 187 "/usr/include/sys/wait.h" 2 3 4
+
+
+
+
+
+
+
+union wait {
+ int w_status;
+
+
+
+ struct {
+
+  unsigned int w_Termsig:7,
+    w_Coredump:1,
+    w_Retcode:8,
+    w_Filler:16;
+
+
+
+
+
+
+
+ } w_T;
+
+
+
+
+
+ struct {
+
+  unsigned int w_Stopval:8,
+    w_Stopsig:8,
+    w_Filler:16;
+
+
+
+
+
+
+ } w_S;
+};
+# 248 "/usr/include/sys/wait.h" 3 4
+pid_t wait(int *) __asm("_" "wait") ;
+pid_t waitpid(pid_t, int *, int) __asm("_" "waitpid") ;
+
+int waitid(idtype_t, id_t, siginfo_t *, int) __asm("_" "waitid") ;
+
+
+pid_t wait3(int *, int, struct rusage *);
+pid_t wait4(pid_t, int *, int, struct rusage *);
+# 66 "/usr/include/stdlib.h" 2 3 4
+
+# 1 "/usr/include/alloca.h" 1 3 4
+# 32 "/usr/include/alloca.h" 3 4
+void *alloca(size_t);
+# 68 "/usr/include/stdlib.h" 2 3 4
+
+
+
+
+
+
+
+
+# 1 "/usr/include/sys/_types/_ct_rune_t.h" 1 3 4
+# 31 "/usr/include/sys/_types/_ct_rune_t.h" 3 4
+typedef __darwin_ct_rune_t ct_rune_t;
+# 77 "/usr/include/stdlib.h" 2 3 4
+# 1 "/usr/include/sys/_types/_rune_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_rune_t.h" 3 4
+typedef __darwin_rune_t rune_t;
+# 78 "/usr/include/stdlib.h" 2 3 4
+
+
+# 1 "/usr/include/sys/_types/_wchar_t.h" 1 3 4
+# 33 "/usr/include/sys/_types/_wchar_t.h" 3 4
+typedef __darwin_wchar_t wchar_t;
+# 81 "/usr/include/stdlib.h" 2 3 4
+
+typedef struct {
+ int quot;
+ int rem;
+} div_t;
+
+typedef struct {
+ long quot;
+ long rem;
+} ldiv_t;
+
+
+typedef struct {
+ long long quot;
+ long long rem;
+} lldiv_t;
+# 117 "/usr/include/stdlib.h" 3 4
+extern int __mb_cur_max;
+# 128 "/usr/include/stdlib.h" 3 4
+void abort(void) __attribute__((noreturn));
+int abs(int) __attribute__((const));
+int atexit(void (*)(void));
+double atof(const char *);
+int atoi(const char *);
+long atol(const char *);
+
+long long
+  atoll(const char *);
+
+void *bsearch(const void *, const void *, size_t,
+     size_t, int (*)(const void *, const void *));
+void *calloc(size_t, size_t);
+div_t div(int, int) __attribute__((const));
+void exit(int) __attribute__((noreturn));
+void free(void *);
+char *getenv(const char *);
+long labs(long) __attribute__((const));
+ldiv_t ldiv(long, long) __attribute__((const));
+
+long long
+  llabs(long long);
+lldiv_t lldiv(long long, long long);
+
+void *malloc(size_t);
+int mblen(const char *, size_t);
+size_t mbstowcs(wchar_t * restrict , const char * restrict, size_t);
+int mbtowc(wchar_t * restrict, const char * restrict, size_t);
+int posix_memalign(void **, size_t, size_t) __attribute__((availability(macosx,introduced=10.6)));
+void qsort(void *, size_t, size_t,
+     int (*)(const void *, const void *));
+int rand(void);
+void *realloc(void *, size_t);
+void srand(unsigned);
+double strtod(const char *, char **) __asm("_" "strtod") ;
+float strtof(const char *, char **) __asm("_" "strtof") ;
+long strtol(const char *, char **, int);
+long double
+  strtold(const char *, char **);
+
+long long
+  strtoll(const char *, char **, int);
+
+unsigned long
+  strtoul(const char *, char **, int);
+
+unsigned long long
+  strtoull(const char *, char **, int);
+
+int system(const char *) __asm("_" "system") ;
+size_t wcstombs(char * restrict, const wchar_t * restrict, size_t);
+int wctomb(char *, wchar_t);
+
+
+void _Exit(int) __attribute__((noreturn));
+long a64l(const char *);
+double drand48(void);
+char *ecvt(double, int, int *restrict, int *restrict);
+double erand48(unsigned short[3]);
+char *fcvt(double, int, int *restrict, int *restrict);
+char *gcvt(double, int, char *);
+int getsubopt(char **, char * const *, char **);
+int grantpt(int);
+
+char *initstate(unsigned, char *, size_t);
+
+
+
+long jrand48(unsigned short[3]);
+char *l64a(long);
+void lcong48(unsigned short[7]);
+long lrand48(void);
+char *mktemp(char *);
+int mkstemp(char *);
+long mrand48(void);
+long nrand48(unsigned short[3]);
+int posix_openpt(int);
+char *ptsname(int);
+int putenv(char *) __asm("_" "putenv") ;
+long random(void);
+int rand_r(unsigned *);
+
+char *realpath(const char * restrict, char * restrict) __asm("_" "realpath" "$DARWIN_EXTSN");
+
+
+
+unsigned short
+ *seed48(unsigned short[3]);
+int setenv(const char *, const char *, int) __asm("_" "setenv") ;
+
+void setkey(const char *) __asm("_" "setkey") ;
+
+
+
+char *setstate(const char *);
+void srand48(long);
+
+void srandom(unsigned);
+
+
+
+int unlockpt(int);
+
+int unsetenv(const char *) __asm("_" "unsetenv") ;
+
+
+
+
+
+
+
+# 1 "/usr/include/machine/types.h" 1 3 4
+# 35 "/usr/include/machine/types.h" 3 4
+# 1 "/usr/include/i386/types.h" 1 3 4
+# 81 "/usr/include/i386/types.h" 3 4
+typedef unsigned char u_int8_t;
+typedef unsigned short u_int16_t;
+typedef unsigned int u_int32_t;
+typedef unsigned long long u_int64_t;
+
+
+typedef int64_t register_t;
+# 97 "/usr/include/i386/types.h" 3 4
+typedef u_int64_t user_addr_t;
+typedef u_int64_t user_size_t;
+typedef int64_t user_ssize_t;
+typedef int64_t user_long_t;
+typedef u_int64_t user_ulong_t;
+typedef int64_t user_time_t;
+typedef int64_t user_off_t;
+
+
+
+
+
+
+
+typedef u_int64_t syscall_arg_t;
+
+
+# 1 "/usr/include/sys/_types/___offsetof.h" 1 3 4
+# 114 "/usr/include/i386/types.h" 2 3 4
+# 36 "/usr/include/machine/types.h" 2 3 4
+# 239 "/usr/include/stdlib.h" 2 3 4
+
+# 1 "/usr/include/sys/_types/_dev_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_dev_t.h" 3 4
+typedef __darwin_dev_t dev_t;
+# 241 "/usr/include/stdlib.h" 2 3 4
+# 1 "/usr/include/sys/_types/_mode_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_mode_t.h" 3 4
+typedef __darwin_mode_t mode_t;
+# 242 "/usr/include/stdlib.h" 2 3 4
+
+u_int32_t arc4random(void);
+void arc4random_addrandom(unsigned char * , int );
+void arc4random_buf(void * , size_t ) __attribute__((availability(macosx,introduced=10.7)));
+void arc4random_stir(void);
+u_int32_t
+  arc4random_uniform(u_int32_t ) __attribute__((availability(macosx,introduced=10.7)));
+
+int atexit_b(void (^)(void)) __attribute__((availability(macosx,introduced=10.6)));
+void *bsearch_b(const void *, const void *, size_t,
+     size_t, int (^)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+
+
+
+char *cgetcap(char *, const char *, int);
+int cgetclose(void);
+int cgetent(char **, char **, const char *);
+int cgetfirst(char **, char **);
+int cgetmatch(const char *, const char *);
+int cgetnext(char **, char **);
+int cgetnum(char *, const char *, long *);
+int cgetset(const char *);
+int cgetstr(char *, const char *, char **);
+int cgetustr(char *, const char *, char **);
+
+int daemon(int, int) __asm("_" "daemon" "$1050") __attribute__((availability(macosx,introduced=10.0,deprecated=10.5)));
+char *devname(dev_t, mode_t);
+char *devname_r(dev_t, mode_t, char *buf, int len);
+char *getbsize(int *, long *);
+int getloadavg(double [], int);
+const char
+ *getprogname(void);
+
+int heapsort(void *, size_t, size_t,
+     int (*)(const void *, const void *));
+
+int heapsort_b(void *, size_t, size_t,
+     int (^)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+
+int mergesort(void *, size_t, size_t,
+     int (*)(const void *, const void *));
+
+int mergesort_b(void *, size_t, size_t,
+     int (^)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+
+void psort(void *, size_t, size_t,
+     int (*)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+
+void psort_b(void *, size_t, size_t,
+     int (^)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+
+void psort_r(void *, size_t, size_t, void *,
+     int (*)(void *, const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+
+void qsort_b(void *, size_t, size_t,
+     int (^)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+
+void qsort_r(void *, size_t, size_t, void *,
+     int (*)(void *, const void *, const void *));
+int radixsort(const unsigned char **, int, const unsigned char *,
+     unsigned);
+void setprogname(const char *);
+int sradixsort(const unsigned char **, int, const unsigned char *,
+     unsigned);
+void sranddev(void);
+void srandomdev(void);
+void *reallocf(void *, size_t);
+
+long long
+  strtoq(const char *, char **, int);
+unsigned long long
+  strtouq(const char *, char **, int);
+
+extern char *suboptarg;
+void *valloc(size_t);
+# 31 "dtls.c" 2
+
+# 1 "/usr/include/assert.h" 1 3 4
+# 76 "/usr/include/assert.h" 3 4
+void __assert_rtn(const char *, const char *, int, const char *) __attribute__((noreturn));
+# 33 "dtls.c" 2
+
+
+
+# 1 "./uthash.h" 1
+# 27 "./uthash.h"
+# 1 "/usr/include/string.h" 1 3 4
+# 70 "/usr/include/string.h" 3 4
+void *memchr(const void *, int, size_t);
+int memcmp(const void *, const void *, size_t);
+void *memcpy(void *, const void *, size_t);
+void *memmove(void *, const void *, size_t);
+void *memset(void *, int, size_t);
+char *strcat(char *, const char *);
+char *strchr(const char *, int);
+int strcmp(const char *, const char *);
+int strcoll(const char *, const char *);
+char *strcpy(char *, const char *);
+size_t strcspn(const char *, const char *);
+char *strerror(int) __asm("_" "strerror") ;
+size_t strlen(const char *);
+char *strncat(char *, const char *, size_t);
+int strncmp(const char *, const char *, size_t);
+char *strncpy(char *, const char *, size_t);
+char *strpbrk(const char *, const char *);
+char *strrchr(const char *, int);
+size_t strspn(const char *, const char *);
+char *strstr(const char *, const char *);
+char *strtok(char *, const char *);
+size_t strxfrm(char *, const char *, size_t);
+# 104 "/usr/include/string.h" 3 4
+char *strtok_r(char *, const char *, char **);
+# 116 "/usr/include/string.h" 3 4
+int strerror_r(int, char *, size_t);
+char *strdup(const char *);
+void *memccpy(void *, const void *, int, size_t);
+# 130 "/usr/include/string.h" 3 4
+char *stpcpy(char *, const char *);
+char *stpncpy(char *, const char *, size_t) __attribute__((availability(macosx,introduced=10.7)));
+char *strndup(const char *, size_t) __attribute__((availability(macosx,introduced=10.7)));
+size_t strnlen(const char *, size_t) __attribute__((availability(macosx,introduced=10.7)));
+char *strsignal(int sig);
+
+
+
+
+
+
+
+# 1 "/usr/include/sys/_types/_rsize_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_rsize_t.h" 3 4
+typedef __darwin_size_t rsize_t;
+# 142 "/usr/include/string.h" 2 3 4
+# 1 "/usr/include/sys/_types/_errno_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_errno_t.h" 3 4
+typedef int errno_t;
+# 143 "/usr/include/string.h" 2 3 4
+
+
+errno_t memset_s(void *, rsize_t, int, rsize_t) __attribute__((availability(macosx,introduced=10.9)));
+# 155 "/usr/include/string.h" 3 4
+void *memmem(const void *, size_t, const void *, size_t) __attribute__((availability(macosx,introduced=10.7)));
+void memset_pattern4(void *, const void *, size_t) __attribute__((availability(macosx,introduced=10.5)));
+void memset_pattern8(void *, const void *, size_t) __attribute__((availability(macosx,introduced=10.5)));
+void memset_pattern16(void *, const void *, size_t) __attribute__((availability(macosx,introduced=10.5)));
+
+char *strcasestr(const char *, const char *);
+char *strnstr(const char *, const char *, size_t);
+size_t strlcat(char *, const char *, size_t);
+size_t strlcpy(char *, const char *, size_t);
+void strmode(int, char *);
+char *strsep(char **, const char *);
+
+
+void swab(const void * restrict, void * restrict, ssize_t);
+
+
+
+
+
+
+
+
+# 1 "/usr/include/strings.h" 1 3 4
+# 70 "/usr/include/strings.h" 3 4
+int bcmp(const void *, const void *, size_t) ;
+void bcopy(const void *, void *, size_t) ;
+void bzero(void *, size_t) ;
+char *index(const char *, int) ;
+char *rindex(const char *, int) ;
+
+
+int ffs(int);
+int strcasecmp(const char *, const char *);
+int strncasecmp(const char *, const char *, size_t);
+
+
+
+
+
+int ffsl(long) __attribute__((availability(macosx,introduced=10.5)));
+int ffsll(long long) __attribute__((availability(macosx,introduced=10.9)));
+int fls(int) __attribute__((availability(macosx,introduced=10.5)));
+int flsl(long) __attribute__((availability(macosx,introduced=10.5)));
+int flsll(long long) __attribute__((availability(macosx,introduced=10.9)));
+
+
+
+# 1 "/usr/include/string.h" 1 3 4
+# 93 "/usr/include/strings.h" 2 3 4
+# 177 "/usr/include/string.h" 2 3 4
+# 186 "/usr/include/string.h" 3 4
+# 1 "/usr/include/secure/_string.h" 1 3 4
+# 187 "/usr/include/string.h" 2 3 4
+# 28 "./uthash.h" 2
+# 1 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.0/include/stddef.h" 1 3 4
+# 34 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.0/include/stddef.h" 3 4
+typedef long int ptrdiff_t;
+# 29 "./uthash.h" 2
+# 62 "./uthash.h"
+# 1 "/usr/include/inttypes.h" 1 3 4
+# 227 "/usr/include/inttypes.h" 3 4
+# 1 "/usr/include/sys/_types/_wchar_t.h" 1 3 4
+# 228 "/usr/include/inttypes.h" 2 3 4
+
+
+
+
+
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern intmax_t
+imaxabs(intmax_t j);
+
+
+typedef struct {
+ intmax_t quot;
+ intmax_t rem;
+} imaxdiv_t;
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern imaxdiv_t
+imaxdiv(intmax_t __numer, intmax_t __denom);
+
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern intmax_t
+strtoimax(const char * restrict __nptr,
+   char ** restrict __endptr,
+   int __base);
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern uintmax_t
+strtoumax(const char * restrict __nptr,
+   char ** restrict __endptr,
+   int __base);
+
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern intmax_t
+wcstoimax(const wchar_t * restrict __nptr,
+   wchar_t ** restrict __endptr,
+   int __base);
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern uintmax_t
+wcstoumax(const wchar_t * restrict __nptr,
+   wchar_t ** restrict __endptr,
+   int __base);
+# 63 "./uthash.h" 2
+# 904 "./uthash.h"
+typedef struct UT_hash_bucket {
+   struct UT_hash_handle *hh_head;
+   unsigned count;
+# 920 "./uthash.h"
+   unsigned expand_mult;
+
+} UT_hash_bucket;
+
+
+
+
+
+typedef struct UT_hash_table {
+   UT_hash_bucket *buckets;
+   unsigned num_buckets, log2_num_buckets;
+   unsigned num_items;
+   struct UT_hash_handle *tail;
+   ptrdiff_t hho;
+
+
+
+   unsigned ideal_chain_maxlen;
+
+
+
+
+   unsigned nonideal_items;
+
+
+
+
+
+
+
+   unsigned ineff_expands, noexpand;
+
+   uint32_t signature;
+
+
+
+
+
+
+} UT_hash_table;
+
+typedef struct UT_hash_handle {
+   struct UT_hash_table *tbl;
+   void *prev;
+   void *next;
+   struct UT_hash_handle *hh_prev;
+   struct UT_hash_handle *hh_next;
+   void *key;
+   unsigned keylen;
+   unsigned hashv;
+} UT_hash_handle;
+# 37 "dtls.c" 2
+
+
+
+
+
+
+
+# 1 "./debug.h" 1
+# 29 "./debug.h"
+# 1 "./config.h" 1
+# 30 "./debug.h" 2
+
+
+
+typedef enum { LOG_EMERG=0, LOG_ALERT, LOG_CRIT, LOG_WARNING,
+       LOG_NOTICE, LOG_INFO, LOG_DEBUG
+} log_t;
+
+
+
+
+
+
+log_t dtls_get_log_level();
+
+
+void dtls_set_log_level(log_t level);
+
+
+
+
+
+void dsrv_log(log_t level, char *format, ...);
+# 45 "dtls.c" 2
+# 1 "./numeric.h" 1
+# 46 "dtls.c" 2
+# 1 "./netq.h" 1
+# 12 "./netq.h"
+# 1 "./config.h" 1
+# 13 "./netq.h" 2
+# 1 "./global.h" 1
+# 29 "./global.h"
+# 1 "./config.h" 1
+# 30 "./global.h" 2
+
+
+# 1 "/usr/include/assert.h" 1 3 4
+# 76 "/usr/include/assert.h" 3 4
+void __assert_rtn(const char *, const char *, int, const char *) __attribute__((noreturn));
+# 33 "./global.h" 2
+# 42 "./global.h"
+# 1 "/usr/include/sys/socket.h" 1 3 4
+# 75 "/usr/include/sys/socket.h" 3 4
+# 1 "/usr/include/sys/types.h" 1 3 4
+# 84 "/usr/include/sys/types.h" 3 4
+typedef unsigned char u_char;
+typedef unsigned short u_short;
+typedef unsigned int u_int;
+
+typedef unsigned long u_long;
+
+
+typedef unsigned short ushort;
+typedef unsigned int uint;
+
+
+typedef u_int64_t u_quad_t;
+typedef int64_t quad_t;
+typedef quad_t * qaddr_t;
+
+typedef char * caddr_t;
+typedef int32_t daddr_t;
+
+
+
+typedef u_int32_t fixpt_t;
+
+
+# 1 "/usr/include/sys/_types/_blkcnt_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_blkcnt_t.h" 3 4
+typedef __darwin_blkcnt_t blkcnt_t;
+# 107 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_blksize_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_blksize_t.h" 3 4
+typedef __darwin_blksize_t blksize_t;
+# 108 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_gid_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_gid_t.h" 3 4
+typedef __darwin_gid_t gid_t;
+# 109 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_in_addr_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_in_addr_t.h" 3 4
+typedef __uint32_t in_addr_t;
+# 110 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_in_port_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_in_port_t.h" 3 4
+typedef __uint16_t in_port_t;
+# 111 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_ino_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_ino_t.h" 3 4
+typedef __darwin_ino_t ino_t;
+# 112 "/usr/include/sys/types.h" 2 3 4
+
+
+# 1 "/usr/include/sys/_types/_ino64_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_ino64_t.h" 3 4
+typedef __darwin_ino64_t ino64_t;
+# 115 "/usr/include/sys/types.h" 2 3 4
+
+
+# 1 "/usr/include/sys/_types/_key_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_key_t.h" 3 4
+typedef __int32_t key_t;
+# 118 "/usr/include/sys/types.h" 2 3 4
+
+# 1 "/usr/include/sys/_types/_nlink_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_nlink_t.h" 3 4
+typedef __uint16_t nlink_t;
+# 120 "/usr/include/sys/types.h" 2 3 4
+
+
+
+
+typedef int32_t segsz_t;
+typedef int32_t swblk_t;
+# 166 "/usr/include/sys/types.h" 3 4
+# 1 "/usr/include/sys/_types/_useconds_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_useconds_t.h" 3 4
+typedef __darwin_useconds_t useconds_t;
+# 167 "/usr/include/sys/types.h" 2 3 4
+# 185 "/usr/include/sys/types.h" 3 4
+typedef __int32_t fd_mask;
+# 211 "/usr/include/sys/types.h" 3 4
+# 1 "/usr/include/sys/_types/_pthread_cond_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_pthread_cond_t.h" 3 4
+typedef __darwin_pthread_cond_t pthread_cond_t;
+# 212 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_pthread_condattr_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_pthread_condattr_t.h" 3 4
+typedef __darwin_pthread_condattr_t pthread_condattr_t;
+# 213 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_pthread_mutex_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_pthread_mutex_t.h" 3 4
+typedef __darwin_pthread_mutex_t pthread_mutex_t;
+# 214 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_pthread_mutexattr_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_pthread_mutexattr_t.h" 3 4
+typedef __darwin_pthread_mutexattr_t pthread_mutexattr_t;
+# 215 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_pthread_once_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_pthread_once_t.h" 3 4
+typedef __darwin_pthread_once_t pthread_once_t;
+# 216 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_pthread_rwlock_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_pthread_rwlock_t.h" 3 4
+typedef __darwin_pthread_rwlock_t pthread_rwlock_t;
+# 217 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_pthread_rwlockattr_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_pthread_rwlockattr_t.h" 3 4
+typedef __darwin_pthread_rwlockattr_t pthread_rwlockattr_t;
+# 218 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_pthread_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_pthread_t.h" 3 4
+typedef __darwin_pthread_t pthread_t;
+# 219 "/usr/include/sys/types.h" 2 3 4
+
+
+
+# 1 "/usr/include/sys/_types/_pthread_key_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_pthread_key_t.h" 3 4
+typedef __darwin_pthread_key_t pthread_key_t;
+# 223 "/usr/include/sys/types.h" 2 3 4
+
+
+
+# 1 "/usr/include/sys/_types/_fsblkcnt_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_fsblkcnt_t.h" 3 4
+typedef __darwin_fsblkcnt_t fsblkcnt_t;
+# 227 "/usr/include/sys/types.h" 2 3 4
+# 1 "/usr/include/sys/_types/_fsfilcnt_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_fsfilcnt_t.h" 3 4
+typedef __darwin_fsfilcnt_t fsfilcnt_t;
+# 228 "/usr/include/sys/types.h" 2 3 4
+# 76 "/usr/include/sys/socket.h" 2 3 4
+
+# 1 "/usr/include/machine/_param.h" 1 3 4
+# 29 "/usr/include/machine/_param.h" 3 4
+# 1 "/usr/include/i386/_param.h" 1 3 4
+# 30 "/usr/include/machine/_param.h" 2 3 4
+# 78 "/usr/include/sys/socket.h" 2 3 4
+# 93 "/usr/include/sys/socket.h" 3 4
+# 1 "/usr/include/sys/_types/_sa_family_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_sa_family_t.h" 3 4
+typedef __uint8_t sa_family_t;
+# 94 "/usr/include/sys/socket.h" 2 3 4
+# 1 "/usr/include/sys/_types/_socklen_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_socklen_t.h" 3 4
+typedef __darwin_socklen_t socklen_t;
+# 95 "/usr/include/sys/socket.h" 2 3 4
+# 105 "/usr/include/sys/socket.h" 3 4
+# 1 "/usr/include/sys/_types/_iovec_t.h" 1 3 4
+# 30 "/usr/include/sys/_types/_iovec_t.h" 3 4
+struct iovec {
+ void * iov_base;
+ size_t iov_len;
+};
+# 106 "/usr/include/sys/socket.h" 2 3 4
+# 186 "/usr/include/sys/socket.h" 3 4
+struct linger {
+ int l_onoff;
+ int l_linger;
+};
+# 204 "/usr/include/sys/socket.h" 3 4
+struct so_np_extensions {
+ u_int32_t npx_flags;
+ u_int32_t npx_mask;
+};
+# 279 "/usr/include/sys/socket.h" 3 4
+struct sockaddr {
+ __uint8_t sa_len;
+ sa_family_t sa_family;
+ char sa_data[14];
+};
+# 292 "/usr/include/sys/socket.h" 3 4
+struct sockproto {
+ __uint16_t sp_family;
+ __uint16_t sp_protocol;
+};
+# 312 "/usr/include/sys/socket.h" 3 4
+struct sockaddr_storage {
+ __uint8_t ss_len;
+ sa_family_t ss_family;
+ char __ss_pad1[((sizeof(__int64_t)) - sizeof(__uint8_t) - sizeof(sa_family_t))];
+ __int64_t __ss_align;
+ char __ss_pad2[(128 - sizeof(__uint8_t) - sizeof(sa_family_t) - ((sizeof(__int64_t)) - sizeof(__uint8_t) - sizeof(sa_family_t)) - (sizeof(__int64_t)))];
+};
+# 412 "/usr/include/sys/socket.h" 3 4
+struct msghdr {
+ void *msg_name;
+ socklen_t msg_namelen;
+ struct iovec *msg_iov;
+ int msg_iovlen;
+ void *msg_control;
+ socklen_t msg_controllen;
+ int msg_flags;
+};
+# 452 "/usr/include/sys/socket.h" 3 4
+struct cmsghdr {
+ socklen_t cmsg_len;
+ int cmsg_level;
+ int cmsg_type;
+
+};
+# 543 "/usr/include/sys/socket.h" 3 4
+struct sf_hdtr {
+ struct iovec *headers;
+ int hdr_cnt;
+ struct iovec *trailers;
+ int trl_cnt;
+};
+
+
+
+
+
+
+int accept(int, struct sockaddr * restrict, socklen_t * restrict)
+  __asm("_" "accept") ;
+int bind(int, const struct sockaddr *, socklen_t) __asm("_" "bind") ;
+int connect(int, const struct sockaddr *, socklen_t) __asm("_" "connect") ;
+int getpeername(int, struct sockaddr * restrict, socklen_t * restrict)
+  __asm("_" "getpeername") ;
+int getsockname(int, struct sockaddr * restrict, socklen_t * restrict)
+  __asm("_" "getsockname") ;
+int getsockopt(int, int, int, void * restrict, socklen_t * restrict);
+int listen(int, int) __asm("_" "listen") ;
+ssize_t recv(int, void *, size_t, int) __asm("_" "recv") ;
+ssize_t recvfrom(int, void *, size_t, int, struct sockaddr * restrict,
+  socklen_t * restrict) __asm("_" "recvfrom") ;
+ssize_t recvmsg(int, struct msghdr *, int) __asm("_" "recvmsg") ;
+ssize_t send(int, const void *, size_t, int) __asm("_" "send") ;
+ssize_t sendmsg(int, const struct msghdr *, int) __asm("_" "sendmsg") ;
+ssize_t sendto(int, const void *, size_t,
+  int, const struct sockaddr *, socklen_t) __asm("_" "sendto") ;
+int setsockopt(int, int, int, const void *, socklen_t);
+int shutdown(int, int);
+int sockatmark(int) __attribute__((availability(macosx,introduced=10.5)));
+int socket(int, int, int);
+int socketpair(int, int, int, int *) __asm("_" "socketpair") ;
+
+
+int sendfile(int, int, off_t, off_t *, struct sf_hdtr *, int);
+
+
+
+void pfctlinput(int, struct sockaddr *);
+# 43 "./global.h" 2
+
+
+
+
+
+# 1 "/usr/include/netinet/in.h" 1 3 4
+# 301 "/usr/include/netinet/in.h" 3 4
+struct in_addr {
+ in_addr_t s_addr;
+};
+# 374 "/usr/include/netinet/in.h" 3 4
+struct sockaddr_in {
+ __uint8_t sin_len;
+ sa_family_t sin_family;
+ in_port_t sin_port;
+ struct in_addr sin_addr;
+ char sin_zero[8];
+};
+# 393 "/usr/include/netinet/in.h" 3 4
+struct ip_opts {
+ struct in_addr ip_dst;
+ char ip_opts[40];
+};
+# 501 "/usr/include/netinet/in.h" 3 4
+struct ip_mreq {
+ struct in_addr imr_multiaddr;
+ struct in_addr imr_interface;
+};
+
+
+
+
+
+
+struct ip_mreqn {
+ struct in_addr imr_multiaddr;
+ struct in_addr imr_address;
+ int imr_ifindex;
+};
+
+#pragma pack(4)
+
+
+
+struct ip_mreq_source {
+ struct in_addr imr_multiaddr;
+ struct in_addr imr_sourceaddr;
+ struct in_addr imr_interface;
+};
+
+
+
+
+
+struct group_req {
+ uint32_t gr_interface;
+ struct sockaddr_storage gr_group;
+};
+
+struct group_source_req {
+ uint32_t gsr_interface;
+ struct sockaddr_storage gsr_group;
+ struct sockaddr_storage gsr_source;
+};
+# 549 "/usr/include/netinet/in.h" 3 4
+struct __msfilterreq {
+ uint32_t msfr_ifindex;
+ uint32_t msfr_fmode;
+ uint32_t msfr_nsrcs;
+ uint32_t __msfr_align;
+ struct sockaddr_storage msfr_group;
+ struct sockaddr_storage *msfr_srcs;
+};
+
+
+
+#pragma pack()
+struct sockaddr;
+
+
+
+
+
+
+int setipv4sourcefilter(int, struct in_addr, struct in_addr, uint32_t,
+     uint32_t, struct in_addr *) __attribute__((availability(macosx,introduced=10.7)));
+int getipv4sourcefilter(int, struct in_addr, struct in_addr, uint32_t *,
+     uint32_t *, struct in_addr *) __attribute__((availability(macosx,introduced=10.7)));
+int setsourcefilter(int, uint32_t, struct sockaddr *, socklen_t,
+     uint32_t, uint32_t, struct sockaddr_storage *) __attribute__((availability(macosx,introduced=10.7)));
+int getsourcefilter(int, uint32_t, struct sockaddr *, socklen_t,
+     uint32_t *, uint32_t *, struct sockaddr_storage *) __attribute__((availability(macosx,introduced=10.7)));
+# 612 "/usr/include/netinet/in.h" 3 4
+struct in_pktinfo {
+ unsigned int ipi_ifindex;
+ struct in_addr ipi_spec_dst;
+ struct in_addr ipi_addr;
+};
+# 654 "/usr/include/netinet/in.h" 3 4
+# 1 "/usr/include/netinet6/in6.h" 1 3 4
+# 152 "/usr/include/netinet6/in6.h" 3 4
+struct in6_addr {
+ union {
+  __uint8_t __u6_addr8[16];
+  __uint16_t __u6_addr16[8];
+  __uint32_t __u6_addr32[4];
+ } __u6_addr;
+};
+# 170 "/usr/include/netinet6/in6.h" 3 4
+struct sockaddr_in6 {
+ __uint8_t sin6_len;
+ sa_family_t sin6_family;
+ in_port_t sin6_port;
+ __uint32_t sin6_flowinfo;
+ struct in6_addr sin6_addr;
+ __uint32_t sin6_scope_id;
+};
+# 212 "/usr/include/netinet6/in6.h" 3 4
+extern const struct in6_addr in6addr_any;
+extern const struct in6_addr in6addr_loopback;
+
+extern const struct in6_addr in6addr_nodelocal_allnodes;
+extern const struct in6_addr in6addr_linklocal_allnodes;
+extern const struct in6_addr in6addr_linklocal_allrouters;
+extern const struct in6_addr in6addr_linklocal_allv2routers;
+# 528 "/usr/include/netinet6/in6.h" 3 4
+struct ipv6_mreq {
+ struct in6_addr ipv6mr_multiaddr;
+ unsigned int ipv6mr_interface;
+};
+
+
+
+
+struct in6_pktinfo {
+ struct in6_addr ipi6_addr;
+ unsigned int ipi6_ifindex;
+};
+
+
+
+
+struct ip6_mtuinfo {
+ struct sockaddr_in6 ip6m_addr;
+ uint32_t ip6m_mtu;
+};
+# 625 "/usr/include/netinet6/in6.h" 3 4
+struct cmsghdr;
+
+extern int inet6_option_space(int);
+extern int inet6_option_init(void *, struct cmsghdr **, int);
+extern int inet6_option_append(struct cmsghdr *, const __uint8_t *, int, int);
+extern __uint8_t *inet6_option_alloc(struct cmsghdr *, int, int, int);
+extern int inet6_option_next(const struct cmsghdr *, __uint8_t **);
+extern int inet6_option_find(const struct cmsghdr *, __uint8_t **, int);
+
+extern size_t inet6_rthdr_space(int, int);
+extern struct cmsghdr *inet6_rthdr_init(void *, int);
+extern int inet6_rthdr_add(struct cmsghdr *, const struct in6_addr *,
+    unsigned int);
+extern int inet6_rthdr_lasthop(struct cmsghdr *, unsigned int);
+
+
+
+extern int inet6_rthdr_segments(const struct cmsghdr *);
+extern struct in6_addr *inet6_rthdr_getaddr(struct cmsghdr *, int);
+extern int inet6_rthdr_getflags(const struct cmsghdr *, int);
+
+extern int inet6_opt_init(void *, socklen_t);
+extern int inet6_opt_append(void *, socklen_t, int, __uint8_t, socklen_t,
+    __uint8_t, void **);
+extern int inet6_opt_finish(void *, socklen_t, int);
+extern int inet6_opt_set_val(void *, int, void *, socklen_t);
+
+extern int inet6_opt_next(void *, socklen_t, int, __uint8_t *, socklen_t *,
+    void **);
+extern int inet6_opt_find(void *, socklen_t, int, __uint8_t, socklen_t *,
+    void **);
+extern int inet6_opt_get_val(void *, int, void *, socklen_t);
+extern socklen_t inet6_rth_space(int, int);
+extern void *inet6_rth_init(void *, socklen_t, int, int);
+extern int inet6_rth_add(void *, const struct in6_addr *);
+extern int inet6_rth_reverse(const void *, void *);
+extern int inet6_rth_segments(const void *);
+extern struct in6_addr *inet6_rth_getaddr(const void *, int);
+extern void addrsel_policy_init(void);
+# 655 "/usr/include/netinet/in.h" 2 3 4
+
+
+
+
+
+int bindresvport(int, struct sockaddr_in *);
+struct sockaddr;
+int bindresvport_sa(int, struct sockaddr *);
+# 49 "./global.h" 2
+
+
+# 1 "/usr/include/arpa/inet.h" 1 3 4
+# 75 "/usr/include/arpa/inet.h" 3 4
+in_addr_t inet_addr(const char *);
+char *inet_ntoa(struct in_addr);
+const char *inet_ntop(int, const void *, char *, socklen_t);
+int inet_pton(int, const char *, void *);
+
+
+int ascii2addr(int, const char *, void *);
+char *addr2ascii(int, const void *, int, char *);
+int inet_aton(const char *, struct in_addr *);
+in_addr_t inet_lnaof(struct in_addr);
+struct in_addr inet_makeaddr(in_addr_t, in_addr_t);
+in_addr_t inet_netof(struct in_addr);
+in_addr_t inet_network(const char *);
+char *inet_net_ntop(int, const void *, int, char *, __darwin_size_t);
+int inet_net_pton(int, const char *, void *, __darwin_size_t);
+char *inet_neta(in_addr_t, char *, __darwin_size_t);
+unsigned int inet_nsap_addr(const char *, unsigned char *, int);
+char *inet_nsap_ntoa(int, const unsigned char *, char *);
+# 52 "./global.h" 2
+# 66 "./global.h"
+typedef unsigned int clock_time_t;
+# 87 "./global.h"
+typedef struct __session_t {
+  socklen_t size;
+  union {
+    struct sockaddr sa;
+    struct sockaddr_storage st;
+    struct sockaddr_in sin;
+    struct sockaddr_in6 sin6;
+  } addr;
+  int ifindex;
+} __session_t;
+
+
+
+static inline int
+_dtls_address_equals_impl(const __session_t *a,
+     const __session_t *b) {
+  if (a->ifindex != b->ifindex ||
+      a->size != b->size || a->addr.sa.sa_family != b->addr.sa.sa_family)
+    return 0;
+
+
+ switch (a->addr.sa.sa_family) {
+ case 2:
+   return
+     a->addr.sin.sin_port == b->addr.sin.sin_port &&
+     memcmp(&a->addr.sin.sin_addr, &b->addr.sin.sin_addr,
+     sizeof(struct in_addr)) == 0;
+ case 30:
+   return a->addr.sin6.sin6_port == b->addr.sin6.sin6_port &&
+     memcmp(&a->addr.sin6.sin6_addr, &b->addr.sin6.sin6_addr,
+     sizeof(struct in6_addr)) == 0;
+ default:
+   ;
+ }
+ return 0;
+}
+
+
+
+
+typedef unsigned char uint8;
+typedef unsigned char uint16[2];
+typedef unsigned char uint24[3];
+typedef unsigned char uint32[4];
+typedef unsigned char uint48[6];
+
+
+typedef struct {
+  size_t length;
+  unsigned char *s;
+} str;
+# 151 "./global.h"
+typedef enum {
+  TLS_NULL_WITH_NULL_NULL = 0x0000,
+  TLS_PSK_WITH_AES_128_CCM_8 = 0xC0A8
+} dtls_cipher_t;
+
+
+
+
+static inline void
+memxor(unsigned char *x, const unsigned char *y, size_t n) {
+  while(n--) {
+    *x ^= *y;
+    x++; y++;
+  }
+}
+# 186 "./global.h"
+static inline void
+dtls_session_init(__session_t *sess) {
+  (__builtin_expect(!(sess), 0) ? __assert_rtn(__func__, "./global.h", 188, "sess") : (void)0);
+  __builtin___memset_chk (sess, 0, sizeof(__session_t), __builtin_object_size (sess, 0));
+  sess->size = sizeof(sess->addr);
+}
+
+static inline int
+dtls_session_equals(const __session_t *a, const __session_t *b) {
+  (__builtin_expect(!(a), 0) ? __assert_rtn(__func__, "./global.h", 195, "a") : (void)0); (__builtin_expect(!(b), 0) ? __assert_rtn(__func__, "./global.h", 195, "b") : (void)0);
+  return _dtls_address_equals_impl(a, b);
+}
+# 14 "./netq.h" 2
+# 1 "./dtls.h" 1
+# 36 "./dtls.h"
+# 1 "./t_list.h" 1
+# 36 "./t_list.h"
+# 1 "./utlist.h" 1
+# 37 "./t_list.h" 2
+# 77 "./t_list.h"
+typedef void **list_t;
+struct list {
+  struct list *next;
+};
+# 93 "./t_list.h"
+static inline void *
+list_head(list_t list) {
+  return *list;
+}
+
+static inline void
+list_remove(list_t list, void *item) {
+  do { __typeof(*(struct list **)list) _tmp; if ((*(struct list **)list) == ((struct list *)item)) { (*(struct list **)list)=(*(struct list **)list)->next; } else { _tmp = *(struct list **)list; while (_tmp->next && (_tmp->next != ((struct list *)item))) { _tmp = _tmp->next; } if (_tmp->next) { _tmp->next = (((struct list *)item)->next); } } } while (0);
+}
+
+static inline void
+list_add(list_t list, void *item) {
+  list_remove(list, item);
+  do { __typeof(*(struct list **)list) _tmp; ((struct list *)item)->next=((void*)0); if (*(struct list **)list) { _tmp = *(struct list **)list; while (_tmp->next) { _tmp = _tmp->next; } _tmp->next=((struct list *)item); } else { (*(struct list **)list)=((struct list *)item); } } while (0);
+}
+
+static inline void
+list_push(list_t list, void *item) {
+  do { ((struct list *)item)->next = *(struct list **)list; *(struct list **)list = (struct list *)item; } while (0);
+}
+
+static inline void *
+list_pop(list_t list) {
+  struct list *l;
+  l = *list;
+  if(l)
+    list_remove(list, l);
+
+  return l;
+}
+
+static inline void
+list_insert(list_t list, void *previtem, void *newitem) {
+  if(previtem == ((void*)0)) {
+    list_push(list, newitem);
+  } else {
+    ((struct list *)newitem)->next = ((struct list *)previtem)->next;
+    ((struct list *)previtem)->next = newitem;
+  }
+}
+
+static inline void *
+list_item_next(void *item)
+{
+  return item == ((void*)0)? ((void*)0): ((struct list *)item)->next;
+}
+# 37 "./dtls.h" 2
+# 1 "./state.h" 1
+# 34 "./state.h"
+# 1 "./config.h" 1
+# 35 "./state.h" 2
+
+# 1 "./hmac.h" 1
+# 36 "./hmac.h"
+# 1 "./sha2/sha2.h" 1
+# 110 "./sha2/sha2.h"
+typedef struct _SHA256_CTX {
+ u_int32_t state[8];
+ u_int64_t bitcount;
+ u_int8_t buffer[64];
+} SHA256_CTX;
+typedef struct _SHA512_CTX {
+ u_int64_t state[8];
+ u_int64_t bitcount[2];
+ u_int8_t buffer[128];
+} SHA512_CTX;
+
+
+
+typedef SHA512_CTX SHA384_CTX;
+# 157 "./sha2/sha2.h"
+void SHA256_Init(SHA256_CTX *);
+void SHA256_Update(SHA256_CTX*, const u_int8_t*, size_t);
+void SHA256_Final(u_int8_t[32], SHA256_CTX*);
+char* SHA256_End(SHA256_CTX*, char[(32 * 2 + 1)]);
+char* SHA256_Data(const u_int8_t*, size_t, char[(32 * 2 + 1)]);
+# 37 "./hmac.h" 2
+
+typedef SHA256_CTX dtls_hash_ctx;
+typedef dtls_hash_ctx *dtls_hash_t;
+
+
+static inline void
+dtls_hash_init(dtls_hash_t ctx) {
+  SHA256_Init((SHA256_CTX *)ctx);
+}
+
+static inline void
+dtls_hash_update(dtls_hash_t ctx, const unsigned char *input, size_t len) {
+  SHA256_Update((SHA256_CTX *)ctx, input, len);
+}
+
+static inline size_t
+dtls_hash_finalize(unsigned char *buf, dtls_hash_t ctx) {
+  SHA256_Final(buf, (SHA256_CTX *)ctx);
+  return 32;
+}
+# 76 "./hmac.h"
+typedef enum {
+  HASH_NONE=0, HASH_MD5=1, HASH_SHA1=2, HASH_SHA224=3,
+  HASH_SHA256=4, HASH_SHA384=5, HASH_SHA512=6
+} dtls_hashfunc_t;
+# 88 "./hmac.h"
+typedef struct {
+  unsigned char pad[64];
+  dtls_hash_ctx data;
+} dtls_hmac_context_t;
+# 100 "./hmac.h"
+void dtls_hmac_init(dtls_hmac_context_t *ctx, const unsigned char *key, size_t klen);
+# 112 "./hmac.h"
+dtls_hmac_context_t *dtls_hmac_new(const unsigned char *key, size_t klen);
+
+
+
+
+
+
+
+void dtls_hmac_free(dtls_hmac_context_t *ctx);
+# 129 "./hmac.h"
+void dtls_hmac_update(dtls_hmac_context_t *ctx,
+        const unsigned char *input, size_t ilen);
+# 143 "./hmac.h"
+int dtls_hmac_finalize(dtls_hmac_context_t *ctx, unsigned char *result);
+# 37 "./state.h" 2
+
+typedef enum {
+  DTLS_STATE_INIT = 0, DTLS_STATE_SERVERHELLO, DTLS_STATE_KEYEXCHANGE,
+  DTLS_STATE_WAIT_FINISHED, DTLS_STATE_FINISHED,
+
+  DTLS_STATE_CLIENTHELLO, DTLS_STATE_WAIT_SERVERHELLODONE,
+  DTLS_STATE_WAIT_SERVERFINISHED,
+
+  DTLS_STATE_CONNECTED,
+  DTLS_STATE_CLOSING,
+  DTLS_STATE_CLOSED,
+} dtls_state_t;
+
+typedef struct {
+  uint24 mseq;
+
+
+
+
+
+  dtls_hash_ctx hs_hash;
+} dtls_hs_state_t;
+# 38 "./dtls.h" 2
+# 1 "./peer.h" 1
+# 34 "./peer.h"
+# 1 "./config.h" 1
+# 35 "./peer.h" 2
+
+
+
+# 1 "./crypto.h" 1
+# 29 "./crypto.h"
+# 1 "./config.h" 1
+# 30 "./crypto.h" 2
+
+
+
+# 1 "./aes/rijndael.h" 1
+# 38 "./aes/rijndael.h"
+typedef unsigned char u_char;
+typedef unsigned char aes_u8;
+typedef unsigned short aes_u16;
+typedef unsigned int aes_u32;
+
+
+typedef struct {
+
+
+
+ int Nr;
+ aes_u32 ek[4*(14 + 1)];
+
+
+
+} rijndael_ctx;
+
+int rijndael_set_key(rijndael_ctx *, const u_char *, int);
+int rijndael_set_key_enc_only(rijndael_ctx *, const u_char *, int);
+void rijndael_decrypt(rijndael_ctx *, const u_char *, u_char *);
+void rijndael_encrypt(rijndael_ctx *, const u_char *, u_char *);
+
+int rijndaelKeySetupEnc(unsigned int [], const unsigned char [], int);
+int rijndaelKeySetupDec(unsigned int [], const unsigned char [], int);
+void rijndaelEncrypt(const unsigned int [], int, const unsigned char [],
+     unsigned char []);
+# 34 "./crypto.h" 2
+
+# 1 "./prng.h" 1
+# 17 "./prng.h"
+# 1 "./config.h" 1
+# 18 "./prng.h" 2
+# 32 "./prng.h"
+static inline int
+dtls_prng_impl(unsigned char *buf, size_t len) {
+  while (len--)
+    *buf++ = rand() & 0xFF;
+  return 1;
+}
+# 36 "./crypto.h" 2
+
+
+
+# 1 "./ccm.h" 1
+# 29 "./ccm.h"
+# 1 "./config.h" 1
+# 30 "./ccm.h" 2
+# 58 "./ccm.h"
+long int
+dtls_ccm_encrypt_message(rijndael_ctx *ctx, size_t M, size_t L,
+    unsigned char N[16],
+    unsigned char *msg, size_t lm,
+    const unsigned char *aad, size_t la);
+
+long int
+dtls_ccm_decrypt_message(rijndael_ctx *ctx, size_t M, size_t L,
+    unsigned char N[16],
+    unsigned char *msg, size_t lm,
+    const unsigned char *aad, size_t la);
+# 40 "./crypto.h" 2
+# 63 "./crypto.h"
+typedef enum { AES128=0
+} dtls_crypto_alg;
+
+
+typedef struct {
+  rijndael_ctx ctx;
+  unsigned char N[16];
+} aes128_ccm_t;
+
+typedef struct dtls_cipher_context_t {
+
+  dtls_cipher_t code;
+  aes128_ccm_t data;
+} dtls_cipher_context_t;
+
+typedef enum { DTLS_CLIENT=0, DTLS_SERVER } dtls_peer_type;
+
+typedef struct {
+  uint8 client_random[32];
+
+  dtls_peer_type role;
+  unsigned char compression;
+
+  dtls_cipher_t cipher;
+
+
+  uint8 master_secret[48];
+
+
+
+
+
+
+
+  uint8 key_block[(2 * 0 + 2 * 16 + 2 * 4)];
+
+  dtls_cipher_context_t *read_cipher;
+  dtls_cipher_context_t *write_cipher;
+} dtls_security_parameters_t;
+# 168 "./crypto.h"
+size_t dtls_p_hash(dtls_hashfunc_t h,
+     const unsigned char *key, size_t keylen,
+     const unsigned char *label, size_t labellen,
+     const unsigned char *random1, size_t random1len,
+     const unsigned char *random2, size_t random2len,
+     unsigned char *buf, size_t buflen);
+
+
+
+
+
+
+size_t dtls_prf(const unsigned char *key, size_t keylen,
+  const unsigned char *label, size_t labellen,
+  const unsigned char *random1, size_t random1len,
+  const unsigned char *random2, size_t random2len,
+  unsigned char *buf, size_t buflen);
+# 202 "./crypto.h"
+void dtls_mac(dtls_hmac_context_t *hmac_ctx,
+       const unsigned char *record,
+       const unsigned char *packet, size_t length,
+       unsigned char *buf);
+# 227 "./crypto.h"
+int dtls_encrypt(dtls_cipher_context_t *ctx,
+   const unsigned char *src, size_t length,
+   unsigned char *buf,
+   const unsigned char *aad, size_t aad_length);
+# 250 "./crypto.h"
+int dtls_decrypt(dtls_cipher_context_t *ctx,
+   const unsigned char *src, size_t length,
+   unsigned char *buf,
+   const unsigned char *a_data, size_t a_data_length);
+# 267 "./crypto.h"
+size_t dtls_pre_master_secret(unsigned char *key, size_t keylen,
+         unsigned char *result);
+# 282 "./crypto.h"
+dtls_cipher_context_t *dtls_cipher_new(dtls_cipher_t code,
+           unsigned char *key, size_t keylen);
+
+
+
+
+void dtls_cipher_free(dtls_cipher_context_t *cipher_context);
+
+
+
+
+
+void dtls_cipher_set_iv(dtls_cipher_context_t *ctx,
+   unsigned char *iv, size_t length);
+# 39 "./peer.h" 2
+
+
+
+
+
+
+
+
+typedef struct dtls_peer_t {
+
+  UT_hash_handle hh;
+
+
+
+
+  __session_t session;
+
+  dtls_state_t state;
+  uint16 epoch;
+  uint48 rseq;
+
+  dtls_hs_state_t hs_state;
+
+  dtls_security_parameters_t security_params[2];
+  int config;
+
+} dtls_peer_t;
+# 78 "./peer.h"
+dtls_peer_t *dtls_new_peer(const __session_t *session);
+
+
+void dtls_free_peer(dtls_peer_t *peer);
+
+
+inline dtls_state_t dtls_peer_state(const dtls_peer_t *peer) {
+  return peer->state;
+}
+
+
+
+
+
+inline int dtls_peer_is_connected(const dtls_peer_t *peer) {
+  return peer->state == DTLS_STATE_CONNECTED;
+}
+# 39 "./dtls.h" 2
+
+
+
+
+
+# 1 "./alert.h" 1
+# 34 "./alert.h"
+# 1 "./config.h" 1
+# 35 "./alert.h" 2
+
+typedef enum {
+  DTLS_ALERT_LEVEL_WARNING=1,
+  DTLS_ALERT_LEVEL_FATAL=2
+} dtls_alert_level_t;
+
+typedef enum {
+  DTLS_ALERT_CLOSE=0,
+  DTLS_ALERT_UNEXPECTED_MESSAGE=10,
+  DTLS_ALERT_BAD_RECORD_MAC=20,
+  DTLS_ALERT_RECORD_OVERFLOW=22,
+  DTLS_ALERT_DECOMPRESSION_FAILURE=30,
+  DTLS_ALERT_HANDSHAKE_FAILURE=40,
+  DTLS_ALERT_ILLEGAL_PARAMETER=47,
+  DTLS_ALERT_ACCESS_DENIED=49,
+  DTLS_ALERT_DECODE_ERROR=50,
+  DTLS_ALERT_DECRYPT_ERROR=51,
+  DTLS_ALERT_PROTOCOL_VERSION=70,
+  DTLS_ALERT_INSUFFICIENT_SECURITY=70,
+  DTLS_ALERT_INTERNAL_ERROR=80,
+  DTLS_ALERT_USER_CANCELED=90,
+  DTLS_ALERT_NO_RENEGOTIATION=100,
+  DTLS_ALERT_UNSUPPORTED_EXTENSION=110
+} dtls_alert_t;
+# 45 "./dtls.h" 2
+
+
+
+# 1 "./config.h" 1
+# 49 "./dtls.h" 2
+# 64 "./dtls.h"
+typedef enum {
+  DTLS_KEY_INVALID=0, DTLS_KEY_PSK=1, DTLS_KEY_RPK=2
+} dtls_key_type_t;
+
+typedef struct dtls_key_t {
+  dtls_key_type_t type;
+  union {
+    struct dtls_psk_t {
+      unsigned char *id;
+      size_t id_length;
+      unsigned char *key;
+      size_t key_length;
+    } psk;
+  } key;
+} dtls_key_t;
+
+
+
+
+struct dtls_context_t;
+# 94 "./dtls.h"
+typedef struct {
+# 109 "./dtls.h"
+  int (*write)(struct dtls_context_t *ctx,
+        __session_t *session, uint8 *buf, size_t len);
+# 124 "./dtls.h"
+  int (*read)(struct dtls_context_t *ctx,
+        __session_t *session, uint8 *buf, size_t len);
+# 139 "./dtls.h"
+  int (*event)(struct dtls_context_t *ctx, __session_t *session,
+  dtls_alert_level_t level, unsigned short code);
+# 158 "./dtls.h"
+  int (*get_key)(struct dtls_context_t *ctx,
+   const __session_t *session,
+   const unsigned char *id, size_t id_len,
+   const dtls_key_t **result);
+} dtls_handler_t;
+
+
+typedef struct dtls_context_t {
+  unsigned char cookie_secret[12];
+  clock_time_t cookie_secret_age;
+
+
+  dtls_peer_t *peers;
+
+
+
+
+
+
+  void *sendqueue_list; list_t sendqueue;
+
+  void *app;
+
+  dtls_handler_t *h;
+
+  unsigned char readbuf[256];
+  unsigned char sendbuf[256];
+} dtls_context_t;
+
+
+
+
+
+void dtls_init();
+
+
+
+
+dtls_context_t *dtls_new_context(void *app_data);
+
+
+void dtls_free_context(dtls_context_t *ctx);
+
+
+
+
+
+static inline void dtls_set_handler(dtls_context_t *ctx, dtls_handler_t *h) {
+  ctx->h = h;
+}
+# 219 "./dtls.h"
+int dtls_connect(dtls_context_t *ctx, const __session_t *dst);
+# 231 "./dtls.h"
+int dtls_connect_peer(dtls_context_t *ctx, dtls_peer_t *peer);
+
+
+
+
+
+int dtls_close(dtls_context_t *ctx, const __session_t *remote);
+# 250 "./dtls.h"
+int dtls_write(struct dtls_context_t *ctx, __session_t *session,
+        uint8 *buf, size_t len);
+# 262 "./dtls.h"
+void dtls_check_retransmit(dtls_context_t *context, clock_time_t *next);
+# 272 "./dtls.h"
+typedef struct {
+  uint8 content_type;
+  uint16 version;
+  uint16 epoch;
+  uint48 sequence_number;
+  uint16 length;
+
+} dtls_record_header_t;
+# 296 "./dtls.h"
+typedef struct {
+  uint8 msg_type;
+  uint24 length;
+  uint16 message_seq;
+  uint24 fragment_offset;
+  uint24 fragment_length;
+
+} dtls_handshake_header_t;
+
+
+typedef struct {
+  uint16 version;
+  uint32 gmt_random;
+  unsigned char random[28];
+
+
+
+
+} dtls_client_hello_t;
+
+
+typedef struct {
+  uint16 version;
+  uint8 cookie_length;
+  uint8 cookie[];
+} dtls_hello_verify_t;
+# 345 "./dtls.h"
+int dtls_get_cookie(uint8 *hello_msg, int msglen, uint8 **cookie);
+# 356 "./dtls.h"
+int dtls_handle_message(dtls_context_t *ctx, __session_t *session,
+   uint8 *msg, int msglen);
+# 368 "./dtls.h"
+dtls_peer_t *dtls_get_peer(const dtls_context_t *context,
+      const __session_t *session);
+# 15 "./netq.h" 2
+# 32 "./netq.h"
+typedef unsigned char netq_packet_t[256];
+
+typedef struct netq_t {
+  struct netq_t *next;
+
+  clock_time_t t;
+  unsigned char retransmit_cnt;
+  unsigned int timeout;
+
+  dtls_peer_t *peer;
+
+  size_t length;
+  netq_packet_t data;
+} netq_t;
+# 56 "./netq.h"
+int netq_insert_node(netq_t **queue, netq_t *node);
+
+
+
+void netq_node_free(netq_t *node);
+
+
+void netq_delete_all(netq_t *queue);
+
+
+netq_t *netq_node_new();
+
+
+
+
+
+netq_t *netq_head(netq_t **queue);
+
+
+
+
+
+
+netq_t *netq_pop_first(netq_t **queue);
+# 47 "dtls.c" 2
+# 113 "dtls.c"
+uint8 _clear[256];
+uint8 _buf[256];
+
+
+void hexdump(const unsigned char *packet, int length);
+void dump(unsigned char *buf, size_t len);
+
+
+
+
+
+
+static const unsigned char prf_label_master[] = "master secret";
+static const unsigned char prf_label_key[] = "key expansion";
+static const unsigned char prf_label_client[] = "client";
+static const unsigned char prf_label_server[] = "server";
+static const unsigned char prf_label_finished[] = " finished";
+
+extern void netq_init();
+extern void crypto_init();
+extern void peer_init();
+
+dtls_context_t the_dtls_context;
+
+void
+dtls_init() {
+  dtls_clock_init();
+  netq_init();
+  crypto_init();
+  peer_init();
+}
+# 168 "dtls.c"
+int dtls_send(dtls_context_t *ctx, dtls_peer_t *peer, unsigned char type,
+       uint8 *buf, size_t buflen);
+
+
+
+
+void dtls_stop_retransmission(dtls_context_t *context, dtls_peer_t *peer);
+
+dtls_peer_t *
+dtls_get_peer(const dtls_context_t *ctx, const __session_t *session) {
+  dtls_peer_t *p = ((void*)0);
+
+
+  do { unsigned _hf_bkt,_hf_hashv; p=((void*)0); if (ctx->peers) { do { unsigned _hj_i,_hj_j,_hj_k; char *_hj_key=(char*)(session); _hf_hashv = 0xfeedbeef; _hj_i = _hj_j = 0x9e3779b9; _hj_k = sizeof(__session_t); while (_hj_k >= 12) { _hj_i += (_hj_key[0] + ( (unsigned)_hj_key[1] << 8 ) + ( (unsigned)_hj_key[2] << 16 ) + ( (unsigned)_hj_key[3] << 24 ) ); _hj_j += (_hj_key[4] + ( (unsigned)_hj_key[5] << 8 ) + ( (unsigned)_hj_key[6] << 16 ) + ( (unsigned)_hj_key[7] << 24 ) ); _hf_hashv += (_hj_key[8] + ( (unsigned)_hj_key[9] << 8 ) + ( (unsigned)_hj_key[10] << 16 ) + ( (unsigned)_hj_key[11] << 24 ) ); do { _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 13 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 12 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 3 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 15 ); } while (0); _hj_key += 12; _hj_k -= 12; } _hf_hashv += sizeof(__session_t); switch ( _hj_k ) { case 11: _hf_hashv += ( (unsigned)_hj_key[10] << 24 ); case 10: _hf_hashv += ( (unsigned)_hj_key[9] << 16 ); case 9: _hf_hashv += ( (unsigned)_hj_key[8] << 8 ); case 8: _hj_j += ( (unsigned)_hj_key[7] << 24 ); case 7: _hj_j += ( (unsigned)_hj_key[6] << 16 ); case 6: _hj_j += ( (unsigned)_hj_key[5] << 8 ); case 5: _hj_j += _hj_key[4]; case 4: _hj_i += ( (unsigned)_hj_key[3] << 24 ); case 3: _hj_i += ( (unsigned)_hj_key[2] << 16 ); case 2: _hj_i += ( (unsigned)_hj_key[1] << 8 ); case 1: _hj_i += _hj_key[0]; } do { _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 13 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 12 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 3 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 15 ); } while (0); _hf_bkt = _hf_hashv & ((ctx->peers)->hh.tbl->num_buckets-1); } while(0); if ((1)) { do { if ((ctx->peers)->hh.tbl->buckets[ _hf_bkt ].hh_head) do { (p) = (__typeof(p))(((void*)(((char*)((ctx->peers)->hh.tbl->buckets[ _hf_bkt ].hh_head)) - (((ctx->peers)->hh.tbl)->hho)))); } while(0); else p=((void*)0); while (p) { if (p->hh.keylen == sizeof(__session_t)) { if ((memcmp(p->hh.key,session,sizeof(__session_t))) == 0) break; } if (p->hh.hh_next) do { (p) = (__typeof(p))(((void*)(((char*)(p->hh.hh_next)) - (((ctx->peers)->hh.tbl)->hho)))); } while(0); else p = ((void*)0); } } while(0); } } } while (0);
+
+
+
+
+
+
+  return p;
+}
+
+void
+dtls_add_peer(dtls_context_t *ctx, dtls_peer_t *peer) {
+
+  do { unsigned _ha_bkt; (peer)->hh.next = ((void*)0); (peer)->hh.key = (char*)&peer->session; (peer)->hh.keylen = sizeof(__session_t); if (!(ctx->peers)) { ctx->peers = (peer); (ctx->peers)->hh.prev = ((void*)0); do { (ctx->peers)->hh.tbl = (UT_hash_table*)malloc(sizeof(UT_hash_table)); if (!((ctx->peers)->hh.tbl)) { exit(-1); } __builtin___memset_chk ((ctx->peers)->hh.tbl, 0, sizeof(UT_hash_table), __builtin_object_size ((ctx->peers)->hh.tbl, 0)); (ctx->peers)->hh.tbl->tail = &((ctx->peers)->hh); (ctx->peers)->hh.tbl->num_buckets = 32; (ctx->peers)->hh.tbl->log2_num_buckets = 5; (ctx->peers)->hh.tbl->hho = (char*)(&(ctx->peers)->hh) - (char*)(ctx->peers); (ctx->peers)->hh.tbl->buckets = (UT_hash_bucket*)malloc(32*sizeof(struct UT_hash_bucket)); if (! (ctx->peers)->hh.tbl->buckets) { exit(-1); } __builtin___memset_chk ((ctx->peers)->hh.tbl->buckets, 0, 32*sizeof(struct UT_hash_bucket), __builtin_object_size ((ctx->peers)->hh.tbl->buckets, 0));; (ctx->peers)->hh.tbl->signature = 0xa0111fe1; } while(0); } else { (ctx->peers)->hh.tbl->tail->next = (peer); (peer)->hh.prev = ((void*)(((char*)((ctx->peers)->hh.tbl->tail)) - (((ctx->peers)->hh.tbl)->hho))); (ctx->peers)->hh.tbl->tail = &((peer)->hh); } (ctx->peers)->hh.tbl->num_items++; (peer)->hh.tbl = (ctx->peers)->hh.tbl; do { unsigned _hj_i,_hj_j,_hj_k; char *_hj_key=(char*)(&peer->session); (peer)->hh.hashv = 0xfeedbeef; _hj_i = _hj_j = 0x9e3779b9; _hj_k = sizeof(__session_t); while (_hj_k >= 12) { _hj_i += (_hj_key[0] + ( (unsigned)_hj_key[1] << 8 ) + ( (unsigned)_hj_key[2] << 16 ) + ( (unsigned)_hj_key[3] << 24 ) ); _hj_j += (_hj_key[4] + ( (unsigned)_hj_key[5] << 8 ) + ( (unsigned)_hj_key[6] << 16 ) + ( (unsigned)_hj_key[7] << 24 ) ); (peer)->hh.hashv += (_hj_key[8] + ( (unsigned)_hj_key[9] << 8 ) + ( (unsigned)_hj_key[10] << 16 ) + ( (unsigned)_hj_key[11] << 24 ) ); do { _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 13 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 12 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 3 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 15 ); } while (0); _hj_key += 12; _hj_k -= 12; } (peer)->hh.hashv += sizeof(__session_t); switch ( _hj_k ) { case 11: (peer)->hh.hashv += ( (unsigned)_hj_key[10] << 24 ); case 10: (peer)->hh.hashv += ( (unsigned)_hj_key[9] << 16 ); case 9: (peer)->hh.hashv += ( (unsigned)_hj_key[8] << 8 ); case 8: _hj_j += ( (unsigned)_hj_key[7] << 24 ); case 7: _hj_j += ( (unsigned)_hj_key[6] << 16 ); case 6: _hj_j += ( (unsigned)_hj_key[5] << 8 ); case 5: _hj_j += _hj_key[4]; case 4: _hj_i += ( (unsigned)_hj_key[3] << 24 ); case 3: _hj_i += ( (unsigned)_hj_key[2] << 16 ); case 2: _hj_i += ( (unsigned)_hj_key[1] << 8 ); case 1: _hj_i += _hj_key[0]; } do { _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 13 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 12 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 3 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 15 ); } while (0); _ha_bkt = (peer)->hh.hashv & ((ctx->peers)->hh.tbl->num_buckets-1); } while(0); do { (ctx->peers)->hh.tbl->buckets[_ha_bkt].count++; (&(peer)->hh)->hh_next = (ctx->peers)->hh.tbl->buckets[_ha_bkt].hh_head; (&(peer)->hh)->hh_prev = ((void*)0); if ((ctx->peers)->hh.tbl->buckets[_ha_bkt].hh_head) { ((ctx->peers)->hh.tbl->buckets[_ha_bkt]).hh_head->hh_prev = (&(peer)->hh); } ((ctx->peers)->hh.tbl->buckets[_ha_bkt]).hh_head=&(peer)->hh; if ((ctx->peers)->hh.tbl->buckets[_ha_bkt].count >= (((ctx->peers)->hh.tbl->buckets[_ha_bkt].expand_mult+1) * 10) && (&(peer)->hh)->tbl->noexpand != 1) { do { unsigned _he_bkt; unsigned _he_bkt_i; struct UT_hash_handle *_he_thh, *_he_hh_nxt; UT_hash_bucket *_he_new_buckets, *_he_newbkt; _he_new_buckets = (UT_hash_bucket*)malloc(2 * (&(peer)->hh)->tbl->num_buckets * sizeof(struct UT_hash_bucket)); if (!_he_new_buckets) { exit(-1); } __builtin___memset_chk (_he_new_buckets, 0, 2 * (&(peer)->hh)->tbl->num_buckets * sizeof(struct UT_hash_bucket), __builtin_object_size (_he_new_buckets, 0)); (&(peer)->hh)->tbl->ideal_chain_maxlen = ((&(peer)->hh)->tbl->num_items >> ((&(peer)->hh)->tbl->log2_num_buckets+1)) + (((&(peer)->hh)->tbl->num_items & (((&(peer)->hh)->tbl->num_buckets*2)-1)) ? 1 : 0); (&(peer)->hh)->tbl->nonideal_items = 0; for(_he_bkt_i = 0; _he_bkt_i < (&(peer)->hh)->tbl->num_buckets; _he_bkt_i++) { _he_thh = (&(peer)->hh)->tbl->buckets[ _he_bkt_i ].hh_head; while (_he_thh) { _he_hh_nxt = _he_thh->hh_next; do { _he_bkt = ((_he_thh->hashv) & (((&(peer)->hh)->tbl->num_buckets*2) - 1)); } while(0); _he_newbkt = &(_he_new_buckets[ _he_bkt ]); if (++(_he_newbkt->count) > (&(peer)->hh)->tbl->ideal_chain_maxlen) { (&(peer)->hh)->tbl->nonideal_items++; _he_newbkt->expand_mult = _he_newbkt->count / (&(peer)->hh)->tbl->ideal_chain_maxlen; } _he_thh->hh_prev = ((void*)0); _he_thh->hh_next = _he_newbkt->hh_head; if (_he_newbkt->hh_head) _he_newbkt->hh_head->hh_prev = _he_thh; _he_newbkt->hh_head = _he_thh; _he_thh = _he_hh_nxt; } } free((&(peer)->hh)->tbl->buckets); (&(peer)->hh)->tbl->num_buckets *= 2; (&(peer)->hh)->tbl->log2_num_buckets++; (&(peer)->hh)->tbl->buckets = _he_new_buckets; (&(peer)->hh)->tbl->ineff_expands = ((&(peer)->hh)->tbl->nonideal_items > ((&(peer)->hh)->tbl->num_items >> 1)) ? ((&(peer)->hh)->tbl->ineff_expands+1) : 0; if ((&(peer)->hh)->tbl->ineff_expands > 1) { (&(peer)->hh)->tbl->noexpand=1;; }; } while(0); } } while(0);;;; } while(0) ;
+
+
+
+}
+
+int
+dtls_write(struct dtls_context_t *ctx,
+    __session_t *dst, uint8 *buf, size_t len) {
+
+  dtls_peer_t *peer = dtls_get_peer(ctx, dst);
+
+
+  if (!peer) {
+    int res;
+
+
+
+    res = dtls_connect(ctx, dst);
+
+    return (res >= 0) ? 0 : res;
+  } else {
+
+    if (peer->state != DTLS_STATE_CONNECTED) {
+      return 0;
+    } else {
+      return dtls_send(ctx, peer, 23, buf, len);
+    }
+  }
+}
+
+int
+dtls_get_cookie(uint8 *msg, int msglen, uint8 **cookie) {
+
+
+  if (msglen < sizeof(dtls_handshake_header_t) + sizeof(dtls_client_hello_t) + sizeof(uint8)
+      || (((*(unsigned char*)(msg + sizeof(dtls_handshake_header_t))) << 8) | (*(((unsigned char*)(msg + sizeof(dtls_handshake_header_t)))+1))) != 0xfefd)
+    return -1;
+  msglen -= sizeof(dtls_handshake_header_t) + sizeof(dtls_client_hello_t);
+  msg += sizeof(dtls_handshake_header_t) + sizeof(dtls_client_hello_t);
+
+  { if (msglen < (*(unsigned char*)(msg) & 0xFF) + sizeof(uint8)) goto error; msglen -= (*(unsigned char*)(msg) & 0xFF) + sizeof(uint8); msg += (*(unsigned char*)(msg) & 0xFF) + sizeof(uint8); };
+
+  if (msglen < (*msg & 0xff) + sizeof(uint8))
+    return -1;
+
+  *cookie = msg + sizeof(uint8);
+  return (*(unsigned char*)(msg) & 0xFF);
+
+ error:
+  return -1;
+}
+
+int
+dtls_create_cookie(dtls_context_t *ctx,
+     __session_t *session,
+     uint8 *msg, int msglen,
+     uint8 *cookie, int *clen) {
+  unsigned char buf[64];
+  size_t len, e;
+# 271 "dtls.c"
+  dtls_hmac_context_t hmac_context;
+  dtls_hmac_init(&hmac_context, ctx->cookie_secret, 12);
+
+  dtls_hmac_update(&hmac_context,
+     (unsigned char *)&session->addr, session->size);
+
+
+
+  e = sizeof(dtls_client_hello_t);
+  e += (*(msg + sizeof(dtls_handshake_header_t) + e) & 0xff) + sizeof(uint8);
+
+  dtls_hmac_update(&hmac_context, msg + sizeof(dtls_handshake_header_t), e);
+
+
+  e += *(uint8 *)(msg + sizeof(dtls_handshake_header_t) + e) & 0xff;
+  e += sizeof(uint8);
+
+  dtls_hmac_update(&hmac_context,
+     msg + sizeof(dtls_handshake_header_t) + e,
+     (((*(((unsigned char*)(&(((dtls_handshake_header_t *)(msg)))->fragment_length)))) << 16) | ((*(((unsigned char*)(&(((dtls_handshake_header_t *)(msg)))->fragment_length))+1)) << 8) | ((*(((unsigned char*)(&(((dtls_handshake_header_t *)(msg)))->fragment_length))+2)))) - e);
+
+  len = dtls_hmac_finalize(&hmac_context, buf);
+
+  if (len < *clen) {
+    __builtin___memset_chk (cookie + len, 0, *clen - len, __builtin_object_size (cookie + len, 0));
+    *clen = len;
+  }
+
+  __builtin___memcpy_chk (cookie, buf, *clen, __builtin_object_size (cookie, 0));
+  return 1;
+}
+# 318 "dtls.c"
+static unsigned int
+is_record(uint8 *msg, int msglen) {
+  unsigned int rlen = 0;
+
+  if (msglen >= sizeof(dtls_record_header_t)
+
+
+
+      && msg[1] == (((0xfefd) >> 8) & 0xff)
+      && msg[2] == ((0xfefd) & 0xff))
+    {
+      rlen = sizeof(dtls_record_header_t) +
+ (((*(unsigned char*)(((dtls_record_header_t *)(msg))->length)) << 8) | (*(((unsigned char*)(((dtls_record_header_t *)(msg))->length))+1)));
+
+
+      if (rlen > msglen)
+ rlen = 0;
+  }
+
+  return rlen;
+}
+
+
+
+
+
+
+
+static inline uint8 *
+dtls_set_record_header(uint8 type, dtls_peer_t *peer, uint8 *buf) {
+
+  do { *(unsigned char*)(buf) = (type) & 0xff; } while(0);
+  buf += sizeof(uint8);
+
+  do { *(unsigned char*)(buf) = ((0xfefd) >> 8) & 0xff; *(((unsigned char*)(buf))+1) = ((0xfefd) & 0xff); } while(0);
+  buf += sizeof(uint16);
+
+  if (peer) {
+    __builtin___memcpy_chk (buf, &peer->epoch, sizeof(uint16) + sizeof(uint48), __builtin_object_size (buf, 0));
+
+
+    { int i = sizeof(uint48); while (i && !++((peer->rseq)[--i])); };
+  } else {
+    __builtin___memset_chk (buf, 0, sizeof(uint16) + sizeof(uint48), __builtin_object_size (buf, 0));
+  }
+
+  buf += sizeof(uint16) + sizeof(uint48);
+
+  __builtin___memset_chk (buf, 0, sizeof(uint16), __builtin_object_size (buf, 0));
+  return buf + sizeof(uint16);
+}
+
+
+
+
+
+
+
+static inline uint8 *
+dtls_set_handshake_header(uint8 type, dtls_peer_t *peer,
+     int length,
+     int frag_offset, int frag_length,
+     uint8 *buf) {
+
+  do { *(unsigned char*)(buf) = (type) & 0xff; } while(0);
+  buf += sizeof(uint8);
+
+  do { *(unsigned char*)(buf) = ((length) >> 16) & 0xff; do { *(unsigned char*)((((unsigned char*)(buf))+1)) = ((length) >> 8) & 0xff; *(((unsigned char*)((((unsigned char*)(buf))+1)))+1) = ((length) & 0xff); } while(0); } while(0);
+  buf += sizeof(uint24);
+
+  if (peer) {
+
+    { int i = sizeof(uint16); while (i && !++((peer->hs_state.mseq)[--i])); };
+
+
+    __builtin___memcpy_chk (buf, &peer->hs_state.mseq, sizeof(uint16), __builtin_object_size (buf, 0));
+  } else {
+    __builtin___memset_chk (buf, 0, sizeof(uint16), __builtin_object_size (buf, 0));
+  }
+  buf += sizeof(uint16);
+
+  do { *(unsigned char*)(buf) = ((frag_offset) >> 16) & 0xff; do { *(unsigned char*)((((unsigned char*)(buf))+1)) = ((frag_offset) >> 8) & 0xff; *(((unsigned char*)((((unsigned char*)(buf))+1)))+1) = ((frag_offset) & 0xff); } while(0); } while(0);
+  buf += sizeof(uint24);
+
+  do { *(unsigned char*)(buf) = ((frag_length) >> 16) & 0xff; do { *(unsigned char*)((((unsigned char*)(buf))+1)) = ((frag_length) >> 8) & 0xff; *(((unsigned char*)((((unsigned char*)(buf))+1)))+1) = ((frag_length) & 0xff); } while(0); } while(0);
+  buf += sizeof(uint24);
+
+  return buf;
+}
+# 423 "dtls.c"
+int
+dtls_verify_peer(dtls_context_t *ctx,
+   dtls_peer_t *peer,
+   __session_t *session,
+   uint8 *record,
+   uint8 *data, size_t data_length) {
+
+  int len = 16;
+  uint8 *cookie, *p;
+
+
+
+
+  if (record[0] == 22
+      && data_length >= sizeof(dtls_handshake_header_t)
+      && data[0] == 1) {
+
+
+    if (dtls_create_cookie(ctx, session, data, data_length,
+      (ctx->sendbuf + sizeof(dtls_record_header_t) + sizeof(dtls_handshake_header_t) + sizeof(dtls_hello_verify_t)), &len) < 0)
+      return -1;
+
+
+
+
+
+    (__builtin_expect(!(len == 16), 0) ? __assert_rtn(__func__, "dtls.c", 449, "len == DTLS_COOKIE_LENGTH") : (void)0);
+
+
+    len = dtls_get_cookie(data, data_length, &cookie);
+# 461 "dtls.c"
+    if (len == 16 && memcmp(cookie, (ctx->sendbuf + sizeof(dtls_record_header_t) + sizeof(dtls_handshake_header_t) + sizeof(dtls_hello_verify_t)), len) == 0) {
+    dsrv_log(LOG_DEBUG, "found matching cookie\n");
+      return 1;
+    }
+    if (len > 0) {
+      dsrv_log(LOG_DEBUG, "invalid cookie");
+
+      dump(cookie, len);
+      printf("\n");
+
+    }
+
+
+
+    p = dtls_set_handshake_header(3,
+      peer, sizeof(dtls_hello_verify_t) + 16,
+      0, sizeof(dtls_hello_verify_t) + 16,
+      ctx->sendbuf + sizeof(dtls_record_header_t));
+
+    do { *(unsigned char*)(p) = ((0xfefd) >> 8) & 0xff; *(((unsigned char*)(p))+1) = ((0xfefd) & 0xff); } while(0);
+    p += sizeof(uint16);
+
+    do { *(unsigned char*)(p) = (16) & 0xff; } while(0);
+    p += sizeof(uint8);
+
+    (__builtin_expect(!(p == (ctx->sendbuf + sizeof(dtls_record_header_t) + sizeof(dtls_handshake_header_t) + sizeof(dtls_hello_verify_t))), 0) ? __assert_rtn(__func__, "dtls.c", 486, "p == mycookie") : (void)0);
+
+    p += 16;
+
+    if (!peer) {
+
+
+
+
+      dtls_set_record_header(22, ((void*)0), ctx->sendbuf);
+
+      do { *(unsigned char*)(ctx->sendbuf + 11) = ((p - (ctx->sendbuf + sizeof(dtls_record_header_t))) >> 8) & 0xff; *(((unsigned char*)(ctx->sendbuf + 11))+1) = ((p - (ctx->sendbuf + sizeof(dtls_record_header_t))) & 0xff); } while(0);
+
+
+      (void)((ctx)->h && (ctx)->h->write ? (ctx)->h->write((ctx), session, ctx->sendbuf, p - ctx->sendbuf) : -1);
+    } else {
+      if (peer->epoch) {
+ dsrv_log(LOG_DEBUG, "renegotiation, therefore we accept it anyway:");
+ return 1;
+      }
+
+      if (dtls_send(ctx, peer, 22,
+      ctx->sendbuf + sizeof(dtls_record_header_t),
+      p - (ctx->sendbuf + sizeof(dtls_record_header_t))) < 0) {
+ dsrv_log(LOG_WARNING, "cannot send HelloVerify request\n");
+ return -1;
+      }
+  }
+
+    return 0;
+  }
+
+  return -1;
+
+}
+
+
+uint8 compression_methods[] = {
+  0x00
+};
+# 534 "dtls.c"
+static inline int
+known_cipher(dtls_cipher_t code) {
+  return code == TLS_PSK_WITH_AES_128_CCM_8;
+}
+
+int
+calculate_key_block(dtls_context_t *ctx,
+      dtls_security_parameters_t *config,
+      const dtls_key_t *key,
+      unsigned char client_random[32],
+      unsigned char server_random[32]) {
+  unsigned char *pre_master_secret;
+  size_t pre_master_len = 0;
+  pre_master_secret = config->key_block;
+
+  (__builtin_expect(!(key), 0) ? __assert_rtn(__func__, "dtls.c", 549, "key") : (void)0);
+  switch (key->type) {
+  case DTLS_KEY_PSK: {
+
+    pre_master_len = dtls_pre_master_secret(key->key.psk.key, key->key.psk.key_length,
+       pre_master_secret);
+
+    break;
+  }
+  default:
+    dsrv_log(LOG_DEBUG, "calculate_key_block: unknown key type\n");
+    return 0;
+  }
+# 588 "dtls.c"
+  dtls_prf(pre_master_secret, pre_master_len,
+    prf_label_master, (sizeof(prf_label_master) - 1),
+    client_random, 32,
+    server_random, 32,
+    config->master_secret,
+    48);
+# 609 "dtls.c"
+  dtls_prf(config->master_secret,
+    48,
+    prf_label_key, (sizeof(prf_label_key) - 1),
+    server_random, 32,
+    client_random, 32,
+    config->key_block,
+    (2 * (0 + 16 + 4)));
+# 653 "dtls.c"
+  return 1;
+}
+# 669 "dtls.c"
+int
+dtls_update_parameters(dtls_context_t *ctx,
+         dtls_peer_t *peer,
+         uint8 *data, size_t data_length) {
+  int i, j;
+  int ok;
+  dtls_security_parameters_t *config = (&(peer)->security_params[!((peer)->config & 0x01)]);
+
+  (__builtin_expect(!(config), 0) ? __assert_rtn(__func__, "dtls.c", 677, "config") : (void)0);
+  (__builtin_expect(!(data_length > sizeof(dtls_handshake_header_t) + sizeof(dtls_client_hello_t)), 0) ? __assert_rtn(__func__, "dtls.c", 678, "data_length > DTLS_HS_LENGTH + DTLS_CH_LENGTH") : (void)0);
+
+
+
+
+  data += sizeof(dtls_handshake_header_t) + sizeof(uint16);
+  data_length -= sizeof(dtls_handshake_header_t) + sizeof(uint16);
+
+
+
+
+  __builtin___memcpy_chk (config->client_random, data, sizeof(config->client_random), __builtin_object_size (config->client_random, 0));
+  data += sizeof(config->client_random);
+  data_length -= sizeof(config->client_random);
+
+
+  { if (data_length < (*(unsigned char*)(data) & 0xFF) + sizeof(uint8)) goto error; data_length -= (*(unsigned char*)(data) & 0xFF) + sizeof(uint8); data += (*(unsigned char*)(data) & 0xFF) + sizeof(uint8); };
+  { if (data_length < (*(unsigned char*)(data) & 0xFF) + sizeof(uint8)) goto error; data_length -= (*(unsigned char*)(data) & 0xFF) + sizeof(uint8); data += (*(unsigned char*)(data) & 0xFF) + sizeof(uint8); };
+
+  i = (((*(unsigned char*)(data)) << 8) | (*(((unsigned char*)(data))+1)));
+  if (data_length < i + sizeof(uint16)) {
+
+
+
+    if ((&(peer)->security_params[(peer)->config])->cipher == TLS_NULL_WITH_NULL_NULL)
+      goto error;
+
+    config->cipher = (&(peer)->security_params[(peer)->config])->cipher;
+    config->compression = (&(peer)->security_params[(peer)->config])->compression;
+
+    return 1;
+  }
+
+  data += sizeof(uint16);
+  data_length -= sizeof(uint16) + i;
+
+  ok = 0;
+  while (i && !ok) {
+    config->cipher = (((*(unsigned char*)(data)) << 8) | (*(((unsigned char*)(data))+1)));
+    ok = known_cipher(config->cipher);
+    i -= sizeof(uint16);
+    data += sizeof(uint16);
+  }
+
+
+  data += i;
+
+  if (!ok) {
+
+    config->cipher = TLS_NULL_WITH_NULL_NULL;
+    return 0;
+  }
+
+  if (data_length < sizeof(uint8)) {
+
+    config->compression = (&(peer)->security_params[(peer)->config])->compression;
+    return 1;
+  }
+
+  i = (*(unsigned char*)(data) & 0xFF);
+  if (data_length < i + sizeof(uint8))
+    goto error;
+
+  data += sizeof(uint8);
+  data_length -= sizeof(uint8) + i;
+
+  ok = 0;
+  while (i && !ok) {
+    for (j = 0; j < sizeof(compression_methods) / sizeof(uint8); ++j)
+      if ((*(unsigned char*)(data) & 0xFF) == compression_methods[j]) {
+ config->compression = compression_methods[j];
+ ok = 1;
+      }
+    i -= sizeof(uint8);
+    data += sizeof(uint8);
+  }
+
+  return ok;
+ error:
+  dsrv_log(LOG_WARNING, "ClientHello too short (%d bytes)\n", data_length);
+  return 0;
+}
+
+static inline int
+check_client_keyexchange(dtls_context_t *ctx,
+    dtls_peer_t *peer,
+    uint8 *data, size_t length) {
+  return length >= 1 && data[0] == 16;
+}
+
+static int
+check_ccs(dtls_context_t *ctx,
+   dtls_peer_t *peer,
+   uint8 *record, uint8 *data, size_t data_length) {
+
+  if (((dtls_record_header_t *)(record))->content_type != 20
+      || data_length < 1 || data[0] != 1)
+    return 0;
+
+
+
+  dtls_cipher_free((&(peer)->security_params[!((peer)->config & 0x01)])->read_cipher);
+
+  (__builtin_expect(!((&(peer)->security_params[!((peer)->config & 0x01)])->cipher != TLS_NULL_WITH_NULL_NULL), 0) ? __assert_rtn(__func__, "dtls.c", 781, "OTHER_CONFIG(peer)->cipher != TLS_NULL_WITH_NULL_NULL") : (void)0);
+  (&(peer)->security_params[!((peer)->config & 0x01)])->read_cipher =
+    dtls_cipher_new((&(peer)->security_params[!((peer)->config & 0x01)])->cipher,
+      (((((&(peer)->security_params[!((peer)->config & 0x01)]))->key_block) + 0) + 0),
+      16);
+
+  if (!(&(peer)->security_params[!((peer)->config & 0x01)])->read_cipher) {
+    dsrv_log(LOG_WARNING, "cannot create read cipher\n");
+    return 0;
+  }
+
+  dtls_cipher_set_iv((&(peer)->security_params[!((peer)->config & 0x01)])->read_cipher,
+       (((((((&(peer)->security_params[!((peer)->config & 0x01)]))->key_block) + 0) + 0) + 16) + 16),
+       4);
+
+
+  dtls_cipher_free((&(peer)->security_params[!((peer)->config & 0x01)])->write_cipher);
+
+  (&(peer)->security_params[!((peer)->config & 0x01)])->write_cipher =
+    dtls_cipher_new((&(peer)->security_params[!((peer)->config & 0x01)])->cipher,
+      ((((((&(peer)->security_params[!((peer)->config & 0x01)]))->key_block) + 0) + 0) + 16),
+      16);
+
+  if (!(&(peer)->security_params[!((peer)->config & 0x01)])->write_cipher) {
+    dsrv_log(LOG_WARNING, "cannot create write cipher\n");
+    return 0;
+  }
+
+  dtls_cipher_set_iv((&(peer)->security_params[!((peer)->config & 0x01)])->write_cipher,
+       ((((((((&(peer)->security_params[!((peer)->config & 0x01)]))->key_block) + 0) + 0) + 16) + 16) + 4),
+       4);
+
+  return 1;
+}
+
+
+extern size_t dsrv_print_addr(const __session_t *, unsigned char *, size_t);
+
+
+static inline void
+update_hs_hash(dtls_peer_t *peer, uint8 *data, size_t length) {
+
+
+
+
+
+  dtls_hash_update(&peer->hs_state.hs_hash, data, length);
+}
+
+static inline size_t
+finalize_hs_hash(dtls_peer_t *peer, uint8 *buf) {
+  return dtls_hash_finalize(buf, &peer->hs_state.hs_hash);
+}
+
+static inline void
+clear_hs_hash(dtls_peer_t *peer) {
+  (__builtin_expect(!(peer), 0) ? __assert_rtn(__func__, "dtls.c", 837, "peer") : (void)0);
+  dtls_hash_init(&peer->hs_state.hs_hash);
+}
+# 853 "dtls.c"
+static int
+check_finished(dtls_context_t *ctx, dtls_peer_t *peer,
+        uint8 *record, uint8 *data, size_t data_length) {
+  size_t digest_length, label_size;
+  const unsigned char *label;
+  unsigned char buf[64];
+
+
+
+
+
+  union {
+    unsigned char statebuf[sizeof(SHA256_CTX)];
+    unsigned char verify_data[12];
+  } b;
+
+  dsrv_log(LOG_DEBUG, "check Finish message\n");
+  if (record[0] != 22 || !((data_length) >= sizeof(dtls_handshake_header_t) + 12 && (data)[0] == 20)) {
+    dsrv_log(LOG_DEBUG, "failed\n");
+    return 0;
+  }
+
+
+  __builtin___memcpy_chk (b.statebuf, &peer->hs_state.hs_hash, sizeof(SHA256_CTX), __builtin_object_size (b.statebuf, 0));
+
+  digest_length = finalize_hs_hash(peer, buf);
+
+
+
+  __builtin___memcpy_chk (&peer->hs_state.hs_hash, b.statebuf, sizeof(SHA256_CTX), __builtin_object_size (&peer->hs_state.hs_hash, 0));
+
+  if ((&(peer)->security_params[(peer)->config])->role == DTLS_SERVER) {
+    label = prf_label_server;
+    label_size = (sizeof(prf_label_server) - 1);
+  } else {
+    label = prf_label_client;
+    label_size = (sizeof(prf_label_client) - 1);
+  }
+
+  dtls_prf((&(peer)->security_params[(peer)->config])->master_secret,
+    48,
+    label, label_size,
+    prf_label_finished, (sizeof(prf_label_finished) - 1),
+    buf, digest_length,
+    b.verify_data, sizeof(b.verify_data));
+
+
+
+
+
+  return
+    memcmp(data + sizeof(dtls_handshake_header_t), b.verify_data, sizeof(b.verify_data)) == 0;
+}
+# 929 "dtls.c"
+int
+dtls_prepare_record(dtls_peer_t *peer,
+      unsigned char type,
+      uint8 *data, size_t data_length,
+      uint8 *sendbuf, size_t *rlen) {
+  uint8 *p;
+  int res;
+
+
+  if (*rlen < sizeof(dtls_record_header_t) + data_length) {
+    dsrv_log(LOG_DEBUG, "dtls_prepare_record: send buffer too small\n");
+    return -1;
+  }
+
+  p = dtls_set_record_header(type, peer, sendbuf);
+
+  if ((&(peer)->security_params[(peer)->config])->cipher == TLS_NULL_WITH_NULL_NULL) {
+
+    __builtin___memcpy_chk (p, data, data_length, __builtin_object_size (p, 0));
+    res = data_length;
+  } else {
+    dtls_cipher_context_t *cipher_context;
+
+
+
+
+
+
+
+    unsigned char N[((16) < (13) ? (13) : (16))];
+
+    if (*rlen < sizeof(dtls_record_header_t) + data_length + 8) {
+      dsrv_log(LOG_WARNING, "dtls_prepare_record(): send buffer too small\n");
+      return -1;
+    }
+
+    dsrv_log(LOG_DEBUG, "dtls_prepare_record(): encrypt using TLS_PSK_WITH_AES_128_CCM_8\n");
+# 981 "dtls.c"
+    __builtin___memcpy_chk (p, &((dtls_record_header_t *)(sendbuf))->epoch, 8, __builtin_object_size (p, 0));
+    __builtin___memcpy_chk (p + 8, data, data_length, __builtin_object_size (p + 8, 0));
+
+    __builtin___memset_chk (N, 0, 16, __builtin_object_size (N, 0));
+    __builtin___memcpy_chk (N, (((&(peer)->security_params[(peer)->config]))->role == DTLS_SERVER ? (((((((&(peer)->security_params[(peer)->config]))->key_block) + 0) + 0) + 16) + 16) : ((((((((&(peer)->security_params[(peer)->config]))->key_block) + 0) + 0) + 16) + 16) + 4)), 4, __builtin_object_size (N, 0));
+
+    __builtin___memcpy_chk (N + 4, p, 8, __builtin_object_size (N + 4, 0));
+
+    cipher_context = (&(peer)->security_params[(peer)->config])->write_cipher;
+
+    if (!cipher_context) {
+      dsrv_log(LOG_WARNING, "no write_cipher available!\n");
+      return -1;
+    }
+# 1003 "dtls.c"
+    dtls_cipher_set_iv(cipher_context, N, 16);
+
+
+
+
+
+
+    __builtin___memcpy_chk (N, &((dtls_record_header_t *)(sendbuf))->epoch, 8, __builtin_object_size (N, 0));
+    __builtin___memcpy_chk (N + 8, &((dtls_record_header_t *)(sendbuf))->content_type, 3, __builtin_object_size (N + 8, 0));
+    do { *(unsigned char*)(N + 11) = ((data_length) >> 8) & 0xff; *(((unsigned char*)(N + 11))+1) = ((data_length) & 0xff); } while(0);
+
+    res = dtls_encrypt(cipher_context, p + 8, data_length, p + 8,
+         N, 13);
+
+    if (res < 0)
+      return -1;
+
+
+
+
+
+    res += 8;
+  }
+
+
+  do { *(unsigned char*)(sendbuf + 11) = ((res) >> 8) & 0xff; *(((unsigned char*)(sendbuf + 11))+1) = ((res) & 0xff); } while(0);
+
+  *rlen = sizeof(dtls_record_header_t) + res;
+  return 1;
+}
+# 1070 "dtls.c"
+int
+dtls_send(dtls_context_t *ctx, dtls_peer_t *peer,
+   unsigned char type,
+   uint8 *buf, size_t buflen) {
+
+
+
+
+
+
+
+  unsigned char sendbuf[256];
+  size_t len = sizeof(sendbuf);
+  int res;
+
+  res = dtls_prepare_record(peer, type, buf, buflen, sendbuf, &len);
+
+  if (res < 0)
+    return res;
+# 1101 "dtls.c"
+  if (type == 22 && buf[0] != 3) {
+
+    netq_t *n = netq_node_new();
+    if (n) {
+      dtls_tick_t now;
+      dtls_ticks(&now);
+      n->t = now + 2 * 1000;
+      n->retransmit_cnt = 0;
+      n->timeout = 2 * 1000;
+      n->peer = peer;
+      n->length = buflen;
+      __builtin___memcpy_chk (n->data, buf, buflen, __builtin_object_size (n->data, 0));
+
+      if (!netq_insert_node((netq_t **)ctx->sendqueue, n)) {
+ dsrv_log(LOG_WARNING, "cannot add packet to retransmit buffer\n");
+ netq_node_free(n);
+
+
+
+
+
+
+
+ dsrv_log(LOG_DEBUG, "copied to sendqueue\n");
+
+      }
+    } else
+      dsrv_log(LOG_WARNING, "retransmit buffer full\n");
+  }
+
+
+
+  res = ((ctx)->h && (ctx)->h->write ? (ctx)->h->write((ctx), &peer->session, sendbuf, len) : -1);
+
+
+
+
+  return res <= 0 ? res : buflen - (len - res);
+}
+
+static inline int
+dtls_alert(dtls_context_t *ctx, dtls_peer_t *peer, dtls_alert_level_t level,
+    dtls_alert_t description) {
+  uint8_t msg[] = { level, description };
+
+  dtls_send(ctx, peer, 21, msg, sizeof(msg));
+  return 0;
+}
+
+int
+dtls_close(dtls_context_t *ctx, const __session_t *remote) {
+  int res = -1;
+  dtls_peer_t *peer;
+
+  peer = dtls_get_peer(ctx, remote);
+
+  if (peer) {
+    res = dtls_alert(ctx, peer, DTLS_ALERT_LEVEL_FATAL, DTLS_ALERT_CLOSE);
+
+    peer->state = DTLS_STATE_CLOSING;
+  }
+  return res;
+}
+
+int
+dtls_send_server_hello(dtls_context_t *ctx, dtls_peer_t *peer) {
+
+  static uint8 buf[256];
+  uint8 *p = buf, *q = ctx->sendbuf;
+  size_t qlen = sizeof(ctx->sendbuf);
+  int res;
+  const dtls_key_t *key;
+  dtls_tick_t now;
+
+
+
+
+  (__builtin_expect(!(sizeof(buf) >= sizeof(dtls_record_header_t) + sizeof(dtls_handshake_header_t) + (2 + 32 + 1 + 2 + 1) + 20), 0) ? __assert_rtn(__func__, "dtls.c", 1179, "sizeof(buf) >= DTLS_RH_LENGTH + DTLS_HS_LENGTH + DTLS_SH_LENGTH + 20") : (void)0);
+
+
+  if (((ctx)->h && (ctx)->h->get_key ? (ctx)->h->get_key((ctx), &peer->session, ((void*)0), 0, &key) : -1) < 0) {
+    dsrv_log(LOG_DEBUG, "dtls_send_server_hello(): no key for session available\n");
+    return -1;
+  }
+
+
+  p = dtls_set_handshake_header(2,
+    peer,
+    (2 + 32 + 1 + 2 + 1),
+    0, (2 + 32 + 1 + 2 + 1),
+    buf);
+
+
+  do { *(unsigned char*)(p) = ((0xfefd) >> 8) & 0xff; *(((unsigned char*)(p))+1) = ((0xfefd) & 0xff); } while(0);
+  p += sizeof(uint16);
+
+
+
+  dtls_ticks(&now);
+  do { *(unsigned char*)(p) = ((now / 1000) >> 24) & 0xff; *(((unsigned char*)(p))+1) = ((now / 1000) >> 16) & 0xff; *(((unsigned char*)(p))+2) = ((now / 1000) >> 8) & 0xff; *(((unsigned char*)(p))+3) = (now / 1000) & 0xff; } while(0);
+  dtls_prng_impl((p + 4), (28));
+
+  if (!calculate_key_block(ctx, (&(peer)->security_params[!((peer)->config & 0x01)]), key,
+      (&(peer)->security_params[!((peer)->config & 0x01)])->client_random, p))
+    return -1;
+
+  p += 32;
+
+  *p++ = 0;
+
+  if ((&(peer)->security_params[!((peer)->config & 0x01)])->cipher != TLS_NULL_WITH_NULL_NULL) {
+
+    do { *(unsigned char*)(p) = (((&(peer)->security_params[!((peer)->config & 0x01)])->cipher) >> 8) & 0xff; *(((unsigned char*)(p))+1) = (((&(peer)->security_params[!((peer)->config & 0x01)])->cipher) & 0xff); } while(0);
+    p += sizeof(uint16);
+
+
+    if ((&(peer)->security_params[!((peer)->config & 0x01)])->compression >= 0)
+      *p++ = compression_methods[(&(peer)->security_params[!((peer)->config & 0x01)])->compression];
+
+
+
+
+
+    update_hs_hash(peer, buf, p - buf);
+  }
+
+  res = dtls_prepare_record(peer, 22,
+       buf, p - buf,
+       q, &qlen);
+  if (res < 0) {
+    dsrv_log(LOG_DEBUG, "dtls_server_hello: cannot prepare ServerHello record\n");
+    return res;
+  }
+
+  q += qlen;
+  qlen = sizeof(ctx->sendbuf) - qlen;
+
+
+
+
+  p = dtls_set_handshake_header(14,
+    peer,
+    0,
+    0, 0,
+    buf);
+
+
+
+  update_hs_hash(peer, buf, p - buf);
+
+  res = dtls_prepare_record(peer, 22,
+       buf, p - buf,
+       q, &qlen);
+  if (res < 0) {
+    dsrv_log(LOG_DEBUG, "dtls_server_hello: cannot prepare ServerHelloDone record\n");
+    return res;
+  }
+
+  return ((ctx)->h && (ctx)->h->write ? (ctx)->h->write((ctx), &peer->session, ctx->sendbuf, (q + qlen) - ctx->sendbuf) : -1);
+
+}
+
+static inline int
+dtls_send_ccs(dtls_context_t *ctx, dtls_peer_t *peer) {
+  ctx->sendbuf[0] = 1;
+  return dtls_send(ctx, peer, 20, ctx->sendbuf, 1);
+}
+
+
+int
+dtls_send_kx(dtls_context_t *ctx, dtls_peer_t *peer, int is_client) {
+  const dtls_key_t *key;
+  uint8 *p = ctx->sendbuf;
+  size_t size;
+  int ht = is_client
+    ? 16
+    : 12;
+  unsigned char *id = ((void*)0);
+  size_t id_len = 0;
+
+  if (((ctx)->h && (ctx)->h->get_key ? (ctx)->h->get_key((ctx), &peer->session, ((void*)0), 0, &key) : -1) < 0) {
+    dsrv_log(LOG_CRIT, "no key to send in kx\n");
+    return -2;
+  }
+
+  (__builtin_expect(!(key), 0) ? __assert_rtn(__func__, "dtls.c", 1286, "key") : (void)0);
+
+  switch (key->type) {
+  case DTLS_KEY_PSK: {
+    id_len = key->key.psk.id_length;
+    id = key->key.psk.id;
+    break;
+  }
+  default:
+    dsrv_log(LOG_CRIT, "key type not supported\n");
+    return -3;
+  }
+
+  size = id_len + sizeof(uint16);
+  p = dtls_set_handshake_header(ht, peer, size, 0, size, p);
+
+  do { *(unsigned char*)(p) = ((id_len) >> 8) & 0xff; *(((unsigned char*)(p))+1) = ((id_len) & 0xff); } while(0);
+  __builtin___memcpy_chk (p + sizeof(uint16), id, id_len, __builtin_object_size (p + sizeof(uint16), 0));
+
+  p += size;
+
+  update_hs_hash(peer, ctx->sendbuf, p - ctx->sendbuf);
+  return dtls_send(ctx, peer, 22,
+     ctx->sendbuf, p - ctx->sendbuf);
+}
+
+
+
+
+
+
+int
+dtls_send_server_finished(dtls_context_t *ctx, dtls_peer_t *peer) {
+
+  int length;
+  uint8 buf[64];
+  uint8 *p = ctx->sendbuf;
+
+
+  (__builtin_expect(!((sizeof(dtls_record_header_t) + ((sizeof(dtls_handshake_header_t) + 12 + 4 + 32) / 16 + 1) * 16) < sizeof(ctx->sendbuf)), 0) ? __assert_rtn(__func__, "dtls.c", 1326, "msg_overhead(peer, DTLS_HS_LENGTH + DTLS_FIN_LENGTH) < sizeof(ctx->sendbuf)") : (void)0);
+
+
+  p = dtls_set_handshake_header(20,
+                                peer, 12, 0, 12, p);
+
+  length = finalize_hs_hash(peer, buf);
+
+  dtls_prf((&(peer)->security_params[(peer)->config])->master_secret,
+    48,
+    prf_label_server, (sizeof(prf_label_server) - 1),
+    prf_label_finished, (sizeof(prf_label_finished) - 1),
+    buf, length,
+    p, 12);
+
+
+
+
+
+
+
+  p += 12;
+
+  return dtls_send(ctx, peer, 22,
+     ctx->sendbuf, p - ctx->sendbuf);
+}
+
+static int
+check_server_hello(dtls_context_t *ctx,
+        dtls_peer_t *peer,
+        uint8 *data, size_t data_length) {
+  dtls_hello_verify_t *hv;
+  uint8 *p = ctx->sendbuf;
+  size_t size;
+  int res;
+  const dtls_key_t *key;
+
+
+
+
+
+
+
+  if (((data_length) >= sizeof(dtls_handshake_header_t) + 6 && (data)[0] == 2)) {
+    dsrv_log(LOG_DEBUG, "handle ServerHello\n");
+
+    update_hs_hash(peer, data, data_length);
+# 1381 "dtls.c"
+    data += sizeof(dtls_handshake_header_t);
+    data_length -= sizeof(dtls_handshake_header_t);
+
+    if ((((*(unsigned char*)(data)) << 8) | (*(((unsigned char*)(data))+1))) != 0xfefd) {
+      dsrv_log(LOG_ALERT, "unknown DTLS version\n");
+      goto error;
+    }
+
+    data += sizeof(uint16);
+    data_length -= sizeof(uint16);
+
+
+    if (((ctx)->h && (ctx)->h->get_key ? (ctx)->h->get_key((ctx), &peer->session, ((void*)0), 0, &key) : -1) < 0
+ || !calculate_key_block(ctx, (&(peer)->security_params[!((peer)->config & 0x01)]), key,
+    (&(peer)->security_params[!((peer)->config & 0x01)])->client_random, data)) {
+      goto error;
+    }
+
+
+
+
+    data += sizeof((&(peer)->security_params[!((peer)->config & 0x01)])->client_random);
+    data_length -= sizeof((&(peer)->security_params[!((peer)->config & 0x01)])->client_random);
+
+    { if (data_length < (*(unsigned char*)(data) & 0xFF) + sizeof(uint8)) goto error; data_length -= (*(unsigned char*)(data) & 0xFF) + sizeof(uint8); data += (*(unsigned char*)(data) & 0xFF) + sizeof(uint8); };
+
+
+
+
+    (&(peer)->security_params[!((peer)->config & 0x01)])->cipher = (((*(unsigned char*)(data)) << 8) | (*(((unsigned char*)(data))+1)));
+    if (!known_cipher((&(peer)->security_params[!((peer)->config & 0x01)])->cipher)) {
+      dsrv_log(LOG_ALERT, "unsupported cipher 0x%02x 0x%02x\n",
+        data[0], data[1]);
+      goto error;
+    }
+    data += sizeof(uint16);
+    data_length -= sizeof(uint16);
+
+
+    if ((*(unsigned char*)(data) & 0xFF) != 0x00) {
+      dsrv_log(LOG_ALERT, "unsupported compression method 0x%02x\n", data[0]);
+      goto error;
+    }
+
+    return 1;
+  }
+
+  if (!((data_length) >= sizeof(dtls_handshake_header_t) + sizeof(dtls_hello_verify_t) && (data)[0] == 3)) {
+    dsrv_log(LOG_DEBUG, "no HelloVerify\n");
+    return 0;
+  }
+
+  hv = (dtls_hello_verify_t *)(data + sizeof(dtls_handshake_header_t));
+
+
+  size = sizeof(dtls_client_hello_t) + 8 + (*(unsigned char*)(&hv->cookie_length) & 0xFF);
+
+  p = dtls_set_handshake_header(1, peer,
+    size, 0, size, p);
+
+  do { *(unsigned char*)(p) = ((0xfefd) >> 8) & 0xff; *(((unsigned char*)(p))+1) = ((0xfefd) & 0xff); } while(0);
+  p += sizeof(uint16);
+
+
+  __builtin___memcpy_chk (p, (&(peer)->security_params[!((peer)->config & 0x01)])->client_random, sizeof((&(peer)->security_params[!((peer)->config & 0x01)])->client_random), __builtin_object_size (p, 0));
+
+  p += sizeof((&(peer)->security_params[!((peer)->config & 0x01)])->client_random);
+
+
+  do { *(unsigned char*)(p) = (0) & 0xff; } while(0);
+  p += sizeof(uint8);
+
+  do { *(unsigned char*)(p) = ((*(unsigned char*)(&hv->cookie_length) & 0xFF)) & 0xff; } while(0);
+  p += sizeof(uint8);
+  __builtin___memcpy_chk (p, hv->cookie, (*(unsigned char*)(&hv->cookie_length) & 0xFF), __builtin_object_size (p, 0));
+  p += (*(unsigned char*)(&hv->cookie_length) & 0xFF);
+
+
+  do { *(unsigned char*)(p) = ((2) >> 8) & 0xff; *(((unsigned char*)(p))+1) = ((2) & 0xff); } while(0);
+  p += sizeof(uint16);
+
+  do { *(unsigned char*)(p) = ((TLS_PSK_WITH_AES_128_CCM_8) >> 8) & 0xff; *(((unsigned char*)(p))+1) = ((TLS_PSK_WITH_AES_128_CCM_8) & 0xff); } while(0);
+  p += sizeof(uint16);
+
+
+  do { *(unsigned char*)(p) = (1) & 0xff; } while(0);
+  p += sizeof(uint8);
+
+  do { *(unsigned char*)(p) = (0) & 0xff; } while(0);
+  p += sizeof(uint8);
+
+  update_hs_hash(peer, ctx->sendbuf, p - ctx->sendbuf);
+
+  res = dtls_send(ctx, peer, 22, ctx->sendbuf,
+    p - ctx->sendbuf);
+  if (res < 0)
+    dsrv_log(LOG_WARNING, "cannot send ClientHello\n");
+
+ error:
+  return 0;
+}
+
+static int
+check_server_hellodone(dtls_context_t *ctx,
+        dtls_peer_t *peer,
+        uint8 *data, size_t data_length) {
+
+
+  if (!((data_length) >= sizeof(dtls_handshake_header_t) && (data)[0] == 14))
+    return 0;
+
+  update_hs_hash(peer, data, data_length);
+
+
+
+  dtls_cipher_free((&(peer)->security_params[!((peer)->config & 0x01)])->read_cipher);
+
+  (__builtin_expect(!((&(peer)->security_params[!((peer)->config & 0x01)])->cipher != TLS_NULL_WITH_NULL_NULL), 0) ? __assert_rtn(__func__, "dtls.c", 1498, "OTHER_CONFIG(peer)->cipher != TLS_NULL_WITH_NULL_NULL") : (void)0);
+  (&(peer)->security_params[!((peer)->config & 0x01)])->read_cipher =
+    dtls_cipher_new((&(peer)->security_params[!((peer)->config & 0x01)])->cipher,
+      ((((((&(peer)->security_params[!((peer)->config & 0x01)]))->key_block) + 0) + 0) + 16),
+      16);
+
+  if (!(&(peer)->security_params[!((peer)->config & 0x01)])->read_cipher) {
+    dsrv_log(LOG_WARNING, "cannot create read cipher\n");
+    return 0;
+  }
+
+  dtls_cipher_set_iv((&(peer)->security_params[!((peer)->config & 0x01)])->read_cipher,
+       ((((((((&(peer)->security_params[!((peer)->config & 0x01)]))->key_block) + 0) + 0) + 16) + 16) + 4),
+       4);
+
+
+  dtls_cipher_free((&(peer)->security_params[!((peer)->config & 0x01)])->write_cipher);
+
+  (&(peer)->security_params[!((peer)->config & 0x01)])->write_cipher =
+    dtls_cipher_new((&(peer)->security_params[!((peer)->config & 0x01)])->cipher,
+      (((((&(peer)->security_params[!((peer)->config & 0x01)]))->key_block) + 0) + 0),
+      16);
+
+  if (!(&(peer)->security_params[!((peer)->config & 0x01)])->write_cipher) {
+    dtls_cipher_free((&(peer)->security_params[!((peer)->config & 0x01)])->read_cipher);
+    dsrv_log(LOG_WARNING, "cannot create write cipher\n");
+    return 0;
+  }
+
+  dtls_cipher_set_iv((&(peer)->security_params[!((peer)->config & 0x01)])->write_cipher,
+       (((((((&(peer)->security_params[!((peer)->config & 0x01)]))->key_block) + 0) + 0) + 16) + 16),
+       4);
+
+
+  if (dtls_send_kx(ctx, peer, 1) < 0) {
+    dsrv_log(LOG_DEBUG, "cannot send KeyExchange message\n");
+    return 0;
+  }
+
+
+  if (dtls_send_ccs(ctx, peer) < 0) {
+    dsrv_log(LOG_DEBUG, "cannot send CCS message\n");
+    return 0;
+  }
+
+  ((peer)->config = !((peer)->config & 0x01));
+  { int i = sizeof(uint16); while (i && !++((peer->epoch)[--i])); };
+  __builtin___memset_chk (peer->rseq, 0, sizeof(peer->rseq), __builtin_object_size (peer->rseq, 0));
+# 1584 "dtls.c"
+  {
+    dsrv_log(LOG_DEBUG, "send Finished\n");
+    int length;
+    uint8 buf[64];
+    uint8 *p = ctx->sendbuf;
+
+    unsigned char statebuf[sizeof(SHA256_CTX)];
+
+
+    (__builtin_expect(!((sizeof(dtls_record_header_t) + ((sizeof(dtls_handshake_header_t) + 12 + 4 + 32) / 16 + 1) * 16) < sizeof(ctx->sendbuf)), 0) ? __assert_rtn(__func__, "dtls.c", 1594, "msg_overhead(peer, DTLS_HS_LENGTH + DTLS_FIN_LENGTH) < sizeof(ctx->sendbuf)") : (void)0);
+
+
+    p = dtls_set_handshake_header(20,
+      peer, 12,
+      0, 12, p);
+
+
+    __builtin___memcpy_chk (statebuf, &peer->hs_state.hs_hash, sizeof(SHA256_CTX), __builtin_object_size (statebuf, 0));
+
+    length = finalize_hs_hash(peer, buf);
+
+
+    __builtin___memcpy_chk (&peer->hs_state.hs_hash, statebuf, sizeof(SHA256_CTX), __builtin_object_size (&peer->hs_state.hs_hash, 0));
+
+    dtls_prf((&(peer)->security_params[(peer)->config])->master_secret,
+      48,
+      prf_label_client, (sizeof(prf_label_client) - 1),
+      prf_label_finished, (sizeof(prf_label_finished) - 1),
+      buf, length,
+      p, 12);
+
+    p += 12;
+
+    update_hs_hash(peer, ctx->sendbuf, p - ctx->sendbuf);
+    if (dtls_send(ctx, peer, 22,
+    ctx->sendbuf, p - ctx->sendbuf) < 0) {
+      dsrv_log(LOG_ALERT, "cannot send Finished message\n");
+      return 0;
+    }
+  }
+  return 1;
+}
+
+int
+decrypt_verify(dtls_peer_t *peer,
+        uint8 *packet, size_t length,
+        uint8 **cleartext, size_t *clen) {
+  int ok = 0;
+
+  *cleartext = (uint8 *)packet + sizeof(dtls_record_header_t);
+  *clen = length - sizeof(dtls_record_header_t);
+
+  if ((&(peer)->security_params[(peer)->config])->cipher == TLS_NULL_WITH_NULL_NULL) {
+
+    return 1;
+  } else {
+    dtls_cipher_context_t *cipher_context;
+
+
+
+
+
+
+    unsigned char N[((16) < (13) ? (13) : (16))];
+    long int len;
+
+
+    if (*clen < 16)
+      return -1;
+
+    __builtin___memset_chk (N, 0, 16, __builtin_object_size (N, 0));
+    __builtin___memcpy_chk (N, (((&(peer)->security_params[(peer)->config]))->role == DTLS_CLIENT ? (((((((&(peer)->security_params[(peer)->config]))->key_block) + 0) + 0) + 16) + 16) : ((((((((&(peer)->security_params[(peer)->config]))->key_block) + 0) + 0) + 16) + 16) + 4)), 4, __builtin_object_size (N, 0));
+
+
+
+    __builtin___memcpy_chk (N + 4, *cleartext, 8, __builtin_object_size (N + 4, 0));
+    *cleartext += 8;
+    *clen -= 8;
+
+    cipher_context = (&(peer)->security_params[(peer)->config])->read_cipher;
+
+    if (!cipher_context) {
+      dsrv_log(LOG_WARNING, "no read_cipher available!\n");
+      return 0;
+    }
+# 1681 "dtls.c"
+    dtls_cipher_set_iv(cipher_context, N, 16);
+
+
+
+
+
+
+    __builtin___memcpy_chk (N, &((dtls_record_header_t *)(packet))->epoch, 8, __builtin_object_size (N, 0));
+    __builtin___memcpy_chk (N + 8, &((dtls_record_header_t *)(packet))->content_type, 3, __builtin_object_size (N + 8, 0));
+    do { *(unsigned char*)(N + 11) = ((*clen - 8) >> 8) & 0xff; *(((unsigned char*)(N + 11))+1) = ((*clen - 8) & 0xff); } while(0);
+
+    len = dtls_decrypt(cipher_context, *cleartext, *clen, *cleartext,
+         N, 13);
+
+    ok = len >= 0;
+    if (!ok)
+      dsrv_log(LOG_WARNING, "decryption failed\n");
+    else {
+
+
+
+      *clen = len;
+    }
+
+
+
+
+
+  }
+
+  return ok;
+}
+
+
+int
+handle_handshake(dtls_context_t *ctx, dtls_peer_t *peer,
+   uint8 *record_header, uint8 *data, size_t data_length) {
+
+
+
+
+
+  switch (peer->state) {
+
+
+
+
+
+  case DTLS_STATE_CLIENTHELLO:
+
+
+    dsrv_log(LOG_DEBUG, "DTLS_STATE_CLIENTHELLO\n");
+    if (check_server_hello(ctx, peer, data, data_length)) {
+      peer->state = DTLS_STATE_WAIT_SERVERHELLODONE;
+
+    }
+
+    break;
+
+  case DTLS_STATE_WAIT_SERVERHELLODONE:
+
+
+    dsrv_log(LOG_DEBUG, "DTLS_STATE_WAIT_SERVERHELLODONE\n");
+
+    if (check_server_hellodone(ctx, peer, data, data_length)) {
+      peer->state = DTLS_STATE_WAIT_SERVERFINISHED;
+
+    }
+
+    break;
+
+  case DTLS_STATE_WAIT_SERVERFINISHED:
+
+
+    dsrv_log(LOG_DEBUG, "DTLS_STATE_WAIT_SERVERFINISHED\n");
+    if (check_finished(ctx, peer, record_header, data, data_length)) {
+      dsrv_log(LOG_DEBUG, "finished!\n");
+      peer->state = DTLS_STATE_CONNECTED;
+    }
+
+    break;
+
+
+
+
+
+  case DTLS_STATE_SERVERHELLO:
+
+
+
+    dsrv_log(LOG_DEBUG, "DTLS_STATE_SERVERHELLO\n");
+    if (!check_client_keyexchange(ctx, peer, data, data_length)) {
+      dsrv_log(LOG_WARNING, "check_client_keyexchange failed (%d, %d)\n", data_length, data[0]);
+      return 0;
+    }
+
+    update_hs_hash(peer, data, data_length);
+    peer->state = DTLS_STATE_KEYEXCHANGE;
+    break;
+
+  case DTLS_STATE_WAIT_FINISHED:
+    dsrv_log(LOG_DEBUG, "DTLS_STATE_WAIT_FINISHED\n");
+    if (check_finished(ctx, peer, record_header, data, data_length)) {
+      dsrv_log(LOG_DEBUG, "finished!\n");
+
+
+      update_hs_hash(peer, data, data_length);
+
+      if (dtls_send_server_finished(ctx, peer) > 0) {
+ peer->state = DTLS_STATE_CONNECTED;
+      } else {
+ dsrv_log(LOG_WARNING, "sending server Finished failed\n");
+      }
+    } else {
+
+    }
+    break;
+
+  case DTLS_STATE_CONNECTED:
+
+
+
+    dsrv_log(LOG_DEBUG, "DTLS_STATE_CONNECTED\n");
+
+
+    if (dtls_verify_peer(ctx, peer, &peer->session,
+    record_header, data, data_length) > 0) {
+
+      clear_hs_hash(peer);
+
+      if (!dtls_update_parameters(ctx, peer, data, data_length)) {
+
+ dsrv_log(LOG_WARNING, "error updating security parameters\n");
+ dtls_alert(ctx, peer, DTLS_ALERT_LEVEL_WARNING,
+     DTLS_ALERT_NO_RENEGOTIATION);
+ return 0;
+      }
+
+
+      update_hs_hash(peer, data, data_length);
+
+      if (dtls_send_server_hello(ctx, peer) > 0)
+ peer->state = DTLS_STATE_SERVERHELLO;
+
+
+
+
+
+    }
+
+    break;
+
+  case DTLS_STATE_INIT:
+  case DTLS_STATE_KEYEXCHANGE:
+  default:
+    dsrv_log(LOG_CRIT, "unhandled state %d\n", peer->state);
+    (__builtin_expect(!(0), 0) ? __assert_rtn(__func__, "dtls.c", 1837, "0") : (void)0);
+  }
+
+  return 1;
+}
+
+int
+handle_ccs(dtls_context_t *ctx, dtls_peer_t *peer,
+    uint8 *record_header, uint8 *data, size_t data_length) {
+
+
+
+
+
+
+
+  if (peer->state != DTLS_STATE_KEYEXCHANGE
+      || !check_ccs(ctx, peer, record_header, data, data_length)) {
+
+    dsrv_log(LOG_WARNING, "expected ChangeCipherSpec during handshake\n");
+    return 0;
+
+  }
+
+
+  if (dtls_send_ccs(ctx, peer) < 0) {
+    dsrv_log(LOG_WARNING, "cannot send CCS message");
+    return 0;
+  }
+
+  ((peer)->config = !((peer)->config & 0x01));
+  { int i = sizeof(uint16); while (i && !++((peer->epoch)[--i])); };
+  __builtin___memset_chk (peer->rseq, 0, sizeof(peer->rseq), __builtin_object_size (peer->rseq, 0));
+
+  peer->state = DTLS_STATE_WAIT_FINISHED;
+# 1910 "dtls.c"
+  return 1;
+}
+
+
+
+
+
+int
+handle_alert(dtls_context_t *ctx, dtls_peer_t *peer,
+      uint8 *record_header, uint8 *data, size_t data_length) {
+  int free_peer = 0;
+
+  if (data_length < 2)
+    return 0;
+
+  dsrv_log(LOG_INFO, "** Alert: level %d, description %d\n", data[0], data[1]);
+
+
+
+
+
+
+
+  if (data[0] == DTLS_ALERT_LEVEL_FATAL || data[1] == DTLS_ALERT_CLOSE) {
+    dsrv_log(LOG_ALERT, "%d invalidate peer\n", data[1]);
+
+
+    do { unsigned _hd_bkt; struct UT_hash_handle *_hd_hh_del; if ( ((peer)->hh.prev == ((void*)0)) && ((peer)->hh.next == ((void*)0)) ) { free((ctx->peers)->hh.tbl->buckets);; free((ctx->peers)->hh.tbl); ctx->peers = ((void*)0); } else { _hd_hh_del = &((peer)->hh); if ((peer) == ((void*)(((char*)((ctx->peers)->hh.tbl->tail)) - (((ctx->peers)->hh.tbl)->hho)))) { (ctx->peers)->hh.tbl->tail = (UT_hash_handle*)((char*)((peer)->hh.prev) + (ctx->peers)->hh.tbl->hho); } if ((peer)->hh.prev) { ((UT_hash_handle*)((char*)((peer)->hh.prev) + (ctx->peers)->hh.tbl->hho))->next = (peer)->hh.next; } else { do { (ctx->peers) = (__typeof(ctx->peers))((peer)->hh.next); } while(0); } if (_hd_hh_del->next) { ((UT_hash_handle*)((char*)_hd_hh_del->next + (ctx->peers)->hh.tbl->hho))->prev = _hd_hh_del->prev; } do { _hd_bkt = ((_hd_hh_del->hashv) & (((ctx->peers)->hh.tbl->num_buckets) - 1)); } while(0); ((ctx->peers)->hh.tbl->buckets[_hd_bkt]).count--; if (((ctx->peers)->hh.tbl->buckets[_hd_bkt]).hh_head == _hd_hh_del) { ((ctx->peers)->hh.tbl->buckets[_hd_bkt]).hh_head = _hd_hh_del->hh_next; } if (_hd_hh_del->hh_prev) { _hd_hh_del->hh_prev->hh_next = _hd_hh_del->hh_next; } if (_hd_hh_del->hh_next) { _hd_hh_del->hh_next->hh_prev = _hd_hh_del->hh_prev; }; (ctx->peers)->hh.tbl->num_items--; }; } while (0) ;
+# 1948 "dtls.c"
+    free_peer = 1;
+
+  }
+
+  (void)((ctx)->h && (ctx)->h->event ? (ctx)->h->event((ctx), &peer->session, (dtls_alert_level_t)data[0], (unsigned short)data[1]) : -1);
+
+  switch (data[1]) {
+  case DTLS_ALERT_CLOSE:
+
+
+    if (peer->state != DTLS_STATE_CLOSING) {
+      peer->state = DTLS_STATE_CLOSING;
+      dtls_alert(ctx, peer, DTLS_ALERT_LEVEL_FATAL, DTLS_ALERT_CLOSE);
+    } else
+      peer->state = DTLS_STATE_CLOSED;
+    break;
+  default:
+    ;
+  }
+
+  if (free_peer) {
+    dtls_stop_retransmission(ctx, peer);
+    dtls_free_peer(peer);
+  }
+
+  return free_peer;
+}
+
+
+
+
+int
+dtls_handle_message(dtls_context_t *ctx,
+      __session_t *session,
+      uint8 *msg, int msglen) {
+  dtls_peer_t *peer = ((void*)0);
+  unsigned int rlen;
+  uint8 *data;
+  size_t data_length;
+
+
+
+  peer = dtls_get_peer(ctx, session);
+
+
+  if (peer) {
+    unsigned char addrbuf[72];
+
+    dsrv_print_addr(session, addrbuf, sizeof(addrbuf));
+    dsrv_log(LOG_DEBUG, "found peer %s\n", addrbuf);
+  }
+
+
+  if (!peer) {
+
+
+    rlen = is_record(msg, msglen);
+    (__builtin_expect(!(rlen <= msglen), 0) ? __assert_rtn(__func__, "dtls.c", 2005, "rlen <= msglen") : (void)0);
+
+    if (!rlen) {
+
+      if (msglen > 3)
+ dsrv_log(LOG_DEBUG, "dropped invalid message %02x%02x%02x%02x\n", msg[0], msg[1], msg[2], msg[3]);
+      else
+ dsrv_log(LOG_DEBUG, "dropped invalid message (less than four bytes)\n");
+
+      return 0;
+    }
+
+
+    data = msg + sizeof(dtls_record_header_t);
+    data_length = rlen - sizeof(dtls_record_header_t);
+# 2031 "dtls.c"
+    if (dtls_verify_peer(ctx, ((void*)0), session, msg, data, data_length) <= 0) {
+      dsrv_log(LOG_WARNING, "cannot verify peer\n");
+      return -1;
+    }
+
+
+
+
+
+    peer = dtls_new_peer(session);
+    if (!peer) {
+      dsrv_log(LOG_ALERT, "cannot create peer");
+
+      return -1;
+    }
+
+
+
+
+    peer->rseq[5] = 1;
+
+
+
+
+
+
+
+    if (!dtls_update_parameters(ctx, peer,
+   msg + sizeof(dtls_record_header_t), rlen - sizeof(dtls_record_header_t))) {
+
+      dsrv_log(LOG_WARNING, "error updating security parameters\n");
+
+      dtls_alert(ctx, peer, DTLS_ALERT_LEVEL_FATAL,
+   DTLS_ALERT_HANDSHAKE_FAILURE);
+      dtls_free_peer(peer);
+      return -1;
+    }
+
+
+    do { unsigned _ha_bkt; (peer)->hh.next = ((void*)0); (peer)->hh.key = (char*)&peer->session; (peer)->hh.keylen = sizeof(__session_t); if (!(ctx->peers)) { ctx->peers = (peer); (ctx->peers)->hh.prev = ((void*)0); do { (ctx->peers)->hh.tbl = (UT_hash_table*)malloc(sizeof(UT_hash_table)); if (!((ctx->peers)->hh.tbl)) { exit(-1); } __builtin___memset_chk ((ctx->peers)->hh.tbl, 0, sizeof(UT_hash_table), __builtin_object_size ((ctx->peers)->hh.tbl, 0)); (ctx->peers)->hh.tbl->tail = &((ctx->peers)->hh); (ctx->peers)->hh.tbl->num_buckets = 32; (ctx->peers)->hh.tbl->log2_num_buckets = 5; (ctx->peers)->hh.tbl->hho = (char*)(&(ctx->peers)->hh) - (char*)(ctx->peers); (ctx->peers)->hh.tbl->buckets = (UT_hash_bucket*)malloc(32*sizeof(struct UT_hash_bucket)); if (! (ctx->peers)->hh.tbl->buckets) { exit(-1); } __builtin___memset_chk ((ctx->peers)->hh.tbl->buckets, 0, 32*sizeof(struct UT_hash_bucket), __builtin_object_size ((ctx->peers)->hh.tbl->buckets, 0));; (ctx->peers)->hh.tbl->signature = 0xa0111fe1; } while(0); } else { (ctx->peers)->hh.tbl->tail->next = (peer); (peer)->hh.prev = ((void*)(((char*)((ctx->peers)->hh.tbl->tail)) - (((ctx->peers)->hh.tbl)->hho))); (ctx->peers)->hh.tbl->tail = &((peer)->hh); } (ctx->peers)->hh.tbl->num_items++; (peer)->hh.tbl = (ctx->peers)->hh.tbl; do { unsigned _hj_i,_hj_j,_hj_k; char *_hj_key=(char*)(&peer->session); (peer)->hh.hashv = 0xfeedbeef; _hj_i = _hj_j = 0x9e3779b9; _hj_k = sizeof(__session_t); while (_hj_k >= 12) { _hj_i += (_hj_key[0] + ( (unsigned)_hj_key[1] << 8 ) + ( (unsigned)_hj_key[2] << 16 ) + ( (unsigned)_hj_key[3] << 24 ) ); _hj_j += (_hj_key[4] + ( (unsigned)_hj_key[5] << 8 ) + ( (unsigned)_hj_key[6] << 16 ) + ( (unsigned)_hj_key[7] << 24 ) ); (peer)->hh.hashv += (_hj_key[8] + ( (unsigned)_hj_key[9] << 8 ) + ( (unsigned)_hj_key[10] << 16 ) + ( (unsigned)_hj_key[11] << 24 ) ); do { _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 13 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 12 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 3 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 15 ); } while (0); _hj_key += 12; _hj_k -= 12; } (peer)->hh.hashv += sizeof(__session_t); switch ( _hj_k ) { case 11: (peer)->hh.hashv += ( (unsigned)_hj_key[10] << 24 ); case 10: (peer)->hh.hashv += ( (unsigned)_hj_key[9] << 16 ); case 9: (peer)->hh.hashv += ( (unsigned)_hj_key[8] << 8 ); case 8: _hj_j += ( (unsigned)_hj_key[7] << 24 ); case 7: _hj_j += ( (unsigned)_hj_key[6] << 16 ); case 6: _hj_j += ( (unsigned)_hj_key[5] << 8 ); case 5: _hj_j += _hj_key[4]; case 4: _hj_i += ( (unsigned)_hj_key[3] << 24 ); case 3: _hj_i += ( (unsigned)_hj_key[2] << 16 ); case 2: _hj_i += ( (unsigned)_hj_key[1] << 8 ); case 1: _hj_i += _hj_key[0]; } do { _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 13 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 12 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= (peer)->hh.hashv; _hj_i ^= ( (peer)->hh.hashv >> 3 ); _hj_j -= (peer)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); (peer)->hh.hashv -= _hj_i; (peer)->hh.hashv -= _hj_j; (peer)->hh.hashv ^= ( _hj_j >> 15 ); } while (0); _ha_bkt = (peer)->hh.hashv & ((ctx->peers)->hh.tbl->num_buckets-1); } while(0); do { (ctx->peers)->hh.tbl->buckets[_ha_bkt].count++; (&(peer)->hh)->hh_next = (ctx->peers)->hh.tbl->buckets[_ha_bkt].hh_head; (&(peer)->hh)->hh_prev = ((void*)0); if ((ctx->peers)->hh.tbl->buckets[_ha_bkt].hh_head) { ((ctx->peers)->hh.tbl->buckets[_ha_bkt]).hh_head->hh_prev = (&(peer)->hh); } ((ctx->peers)->hh.tbl->buckets[_ha_bkt]).hh_head=&(peer)->hh; if ((ctx->peers)->hh.tbl->buckets[_ha_bkt].count >= (((ctx->peers)->hh.tbl->buckets[_ha_bkt].expand_mult+1) * 10) && (&(peer)->hh)->tbl->noexpand != 1) { do { unsigned _he_bkt; unsigned _he_bkt_i; struct UT_hash_handle *_he_thh, *_he_hh_nxt; UT_hash_bucket *_he_new_buckets, *_he_newbkt; _he_new_buckets = (UT_hash_bucket*)malloc(2 * (&(peer)->hh)->tbl->num_buckets * sizeof(struct UT_hash_bucket)); if (!_he_new_buckets) { exit(-1); } __builtin___memset_chk (_he_new_buckets, 0, 2 * (&(peer)->hh)->tbl->num_buckets * sizeof(struct UT_hash_bucket), __builtin_object_size (_he_new_buckets, 0)); (&(peer)->hh)->tbl->ideal_chain_maxlen = ((&(peer)->hh)->tbl->num_items >> ((&(peer)->hh)->tbl->log2_num_buckets+1)) + (((&(peer)->hh)->tbl->num_items & (((&(peer)->hh)->tbl->num_buckets*2)-1)) ? 1 : 0); (&(peer)->hh)->tbl->nonideal_items = 0; for(_he_bkt_i = 0; _he_bkt_i < (&(peer)->hh)->tbl->num_buckets; _he_bkt_i++) { _he_thh = (&(peer)->hh)->tbl->buckets[ _he_bkt_i ].hh_head; while (_he_thh) { _he_hh_nxt = _he_thh->hh_next; do { _he_bkt = ((_he_thh->hashv) & (((&(peer)->hh)->tbl->num_buckets*2) - 1)); } while(0); _he_newbkt = &(_he_new_buckets[ _he_bkt ]); if (++(_he_newbkt->count) > (&(peer)->hh)->tbl->ideal_chain_maxlen) { (&(peer)->hh)->tbl->nonideal_items++; _he_newbkt->expand_mult = _he_newbkt->count / (&(peer)->hh)->tbl->ideal_chain_maxlen; } _he_thh->hh_prev = ((void*)0); _he_thh->hh_next = _he_newbkt->hh_head; if (_he_newbkt->hh_head) _he_newbkt->hh_head->hh_prev = _he_thh; _he_newbkt->hh_head = _he_thh; _he_thh = _he_hh_nxt; } } free((&(peer)->hh)->tbl->buckets); (&(peer)->hh)->tbl->num_buckets *= 2; (&(peer)->hh)->tbl->log2_num_buckets++; (&(peer)->hh)->tbl->buckets = _he_new_buckets; (&(peer)->hh)->tbl->ineff_expands = ((&(peer)->hh)->tbl->nonideal_items > ((&(peer)->hh)->tbl->num_items >> 1)) ? ((&(peer)->hh)->tbl->ineff_expands+1) : 0; if ((&(peer)->hh)->tbl->ineff_expands > 1) { (&(peer)->hh)->tbl->noexpand=1;; }; } while(0); } } while(0);;;; } while(0) ;
+
+
+
+
+
+    update_hs_hash(peer, msg + sizeof(dtls_record_header_t), rlen - sizeof(dtls_record_header_t));
+
+    if (dtls_send_server_hello(ctx, peer) > 0)
+      peer->state = DTLS_STATE_SERVERHELLO;
+
+
+
+
+
+
+    msg += rlen;
+    msglen -= rlen;
+  } else {
+    dsrv_log(LOG_DEBUG, "found peer\n");
+  }
+
+
+
+
+  (__builtin_expect(!(peer), 0) ? __assert_rtn(__func__, "dtls.c", 2095, "peer") : (void)0);
+
+
+
+
+
+  dtls_stop_retransmission(ctx, peer);
+
+  while ((rlen = is_record(msg,msglen))) {
+
+    dsrv_log(LOG_DEBUG, "got packet %d (%d bytes)\n", msg[0], rlen);
+
+    if (memcmp(((dtls_record_header_t *)(msg))->epoch,
+        peer->epoch, sizeof(uint16)) != 0)
+      goto next;
+
+    if (!decrypt_verify(peer, msg, rlen, &data, &data_length)) {
+      dsrv_log(LOG_INFO, "decrypt_verify() failed\n");
+      goto next;
+    }
+# 2128 "dtls.c"
+    switch (msg[0]) {
+
+    case 20:
+      handle_ccs(ctx, peer, msg, data, data_length);
+      break;
+
+    case 21:
+      if (handle_alert(ctx, peer, msg, data, data_length)) {
+
+ peer = ((void*)0);
+ return 0;
+      }
+
+    case 22:
+      handle_handshake(ctx, peer, msg, data, data_length);
+      if (peer->state == DTLS_STATE_CONNECTED) {
+
+ dtls_stop_retransmission(ctx, peer);
+ ((ctx)->h && (ctx)->h->event ? (ctx)->h->event((ctx), &peer->session, 0, 0x01DE) : -1);
+      }
+      break;
+
+    case 23:
+      dsrv_log(LOG_INFO, "** application data:\n");
+      ((ctx)->h && (ctx)->h->read ? (ctx)->h->read((ctx), &peer->session, data, data_length) : -1);
+      break;
+    default:
+      dsrv_log(LOG_INFO, "dropped unknown message of type %d\n",msg[0]);
+    }
+
+  next:
+
+    msg += rlen;
+    msglen -= rlen;
+  }
+
+  return 0;
+}
+
+dtls_context_t *
+dtls_new_context(void *app_data) {
+  dtls_context_t *c;
+  dtls_tick_t now;
+
+  FILE *urandom = fopen("/dev/urandom", "r");
+  unsigned char buf[sizeof(unsigned long)];
+
+
+  dtls_ticks(&now);
+
+
+
+
+  if (!urandom) {
+    dsrv_log(LOG_EMERG, "cannot initialize PRNG\n");
+    return ((void*)0);
+  }
+
+  if (fread(buf, 1, sizeof(buf), urandom) != sizeof(buf)) {
+    dsrv_log(LOG_EMERG, "cannot initialize PRNG\n");
+    return ((void*)0);
+  }
+
+  fclose(urandom);
+  srand((unsigned long)((unsigned long)*buf));
+
+
+  c = &the_dtls_context;
+
+  __builtin___memset_chk (c, 0, sizeof(dtls_context_t), __builtin_object_size (c, 0));
+  c->app = app_data;
+
+  { (c)->sendqueue = &((c)->sendqueue_list); (c)->sendqueue_list = ((void*)0); };
+# 2213 "dtls.c"
+  if (dtls_prng_impl((c->cookie_secret), (12)))
+    c->cookie_secret_age = now;
+  else
+    goto error;
+
+  return c;
+
+ error:
+  dsrv_log(LOG_ALERT, "cannot create DTLS context");
+  if (c)
+    dtls_free_context(c);
+  return ((void*)0);
+}
+
+void dtls_free_context(dtls_context_t *ctx) {
+  dtls_peer_t *p;
+
+
+  dtls_peer_t *tmp;
+
+  if (ctx->peers) {
+    for((p)=(ctx->peers),(tmp)=(__typeof(p))((ctx->peers)?(ctx->peers)->hh.next:((void*)0)); p; (p)=(tmp),(tmp)=(__typeof(p))((tmp)?(tmp)->hh.next:((void*)0))) {
+      dtls_free_peer(p);
+    }
+  }
+# 2247 "dtls.c"
+}
+
+int
+dtls_connect_peer(dtls_context_t *ctx, dtls_peer_t *peer) {
+  uint8 *p = ctx->sendbuf;
+  size_t size;
+  int res;
+  dtls_tick_t now;
+
+  (__builtin_expect(!(peer), 0) ? __assert_rtn(__func__, "dtls.c", 2256, "peer") : (void)0);
+  if (!peer)
+    return -1;
+
+
+  if (peer == dtls_get_peer(ctx, &peer->session)) {
+    dsrv_log(LOG_DEBUG, "found peer, try to re-connect\n");
+
+
+    return 0;
+  }
+
+
+  (&(peer)->security_params[!((peer)->config & 0x01)])->role = DTLS_SERVER;
+  (&(peer)->security_params[(peer)->config])->role = DTLS_SERVER;
+
+  dtls_add_peer(ctx, peer);
+# 2282 "dtls.c"
+  size = sizeof(dtls_client_hello_t) + 8;
+
+
+
+  p = dtls_set_handshake_header(1, ((void*)0),
+    size, 0, size, p);
+
+  do { *(unsigned char*)(p) = ((0xfefd) >> 8) & 0xff; *(((unsigned char*)(p))+1) = ((0xfefd) & 0xff); } while(0);
+  p += sizeof(uint16);
+
+  dtls_ticks(&now);
+
+
+  do { *(unsigned char*)(&(&(peer)->security_params[!((peer)->config & 0x01)])->client_random) = ((now / 1000) >> 24) & 0xff; *(((unsigned char*)(&(&(peer)->security_params[!((peer)->config & 0x01)])->client_random))+1) = ((now / 1000) >> 16) & 0xff; *(((unsigned char*)(&(&(peer)->security_params[!((peer)->config & 0x01)])->client_random))+2) = ((now / 1000) >> 8) & 0xff; *(((unsigned char*)(&(&(peer)->security_params[!((peer)->config & 0x01)])->client_random))+3) = (now / 1000) & 0xff; } while(0);
+
+  dtls_prng_impl(((&(peer)->security_params[!((peer)->config & 0x01)])->client_random + sizeof(uint32)), (sizeof((&(peer)->security_params[!((peer)->config & 0x01)])->client_random) - sizeof(uint32)));
+
+  __builtin___memcpy_chk (p, (&(peer)->security_params[!((peer)->config & 0x01)])->client_random, sizeof((&(peer)->security_params[!((peer)->config & 0x01)])->client_random), __builtin_object_size (p, 0));
+
+  p += 32;
+
+
+  do { *(unsigned char*)(p) = (0) & 0xff; } while(0);
+  p += sizeof(uint8);
+
+  do { *(unsigned char*)(p) = (0) & 0xff; } while(0);
+  p += sizeof(uint8);
+
+
+  do { *(unsigned char*)(p) = ((2) >> 8) & 0xff; *(((unsigned char*)(p))+1) = ((2) & 0xff); } while(0);
+  p += sizeof(uint16);
+
+  do { *(unsigned char*)(p) = ((TLS_PSK_WITH_AES_128_CCM_8) >> 8) & 0xff; *(((unsigned char*)(p))+1) = ((TLS_PSK_WITH_AES_128_CCM_8) & 0xff); } while(0);
+  p += sizeof(uint16);
+
+
+  do { *(unsigned char*)(p) = (1) & 0xff; } while(0);
+  p += sizeof(uint8);
+
+  do { *(unsigned char*)(p) = (0x00) & 0xff; } while(0);
+  p += sizeof(uint8);
+
+  res = dtls_send(ctx, peer, 22, ctx->sendbuf,
+    p - ctx->sendbuf);
+  if (res < 0)
+    dsrv_log(LOG_WARNING, "cannot send ClientHello\n");
+  else
+    peer->state = DTLS_STATE_CLIENTHELLO;
+
+  return res;
+}
+
+int
+dtls_connect(dtls_context_t *ctx, const __session_t *dst) {
+  dtls_peer_t *peer;
+
+  peer = dtls_get_peer(ctx, dst);
+
+  if (!peer)
+    peer = dtls_new_peer(dst);
+
+  if (!peer) {
+    dsrv_log(LOG_CRIT, "cannot create new peer\n");
+    return -1;
+  }
+
+  return dtls_connect_peer(ctx, peer);
+}
+
+void
+dtls_retransmit(dtls_context_t *context, netq_t *node) {
+  if (!context || !node)
+    return;
+
+
+  if (node->retransmit_cnt < 5) {
+      unsigned char sendbuf[256];
+      size_t len = sizeof(sendbuf);
+
+      node->retransmit_cnt++;
+      node->t += (node->timeout << node->retransmit_cnt);
+      netq_insert_node((netq_t **)context->sendqueue, node);
+
+      dsrv_log(LOG_DEBUG, "** retransmit packet\n");
+
+      if (dtls_prepare_record(node->peer, 22,
+         node->data, node->length,
+         sendbuf, &len) > 0) {
+
+
+ if (dtls_get_log_level() >= LOG_DEBUG) {
+   dsrv_log(LOG_DEBUG, "retransmit %d bytes\n", len);
+   hexdump(sendbuf, sizeof(dtls_record_header_t));
+   printf("\n");
+   hexdump(node->data, node->length);
+   printf("\n");
+ }
+
+
+ (void)((context)->h && (context)->h->write ? (context)->h->write((context), &node->peer->session, sendbuf, len) : -1);
+      }
+      return;
+  }
+
+
+
+  dsrv_log(LOG_DEBUG, "** removed transaction\n");
+
+
+  netq_node_free(node);
+}
+
+void
+dtls_stop_retransmission(dtls_context_t *context, dtls_peer_t *peer) {
+  void *node;
+  node = list_head((list_t)context->sendqueue);
+
+  while (node) {
+    if (dtls_session_equals(&((netq_t *)node)->peer->session,
+       &peer->session)) {
+      void *tmp = node;
+      node = list_item_next(node);
+      list_remove((list_t)context->sendqueue, tmp);
+      netq_node_free((netq_t *)tmp);
+    } else
+      node = list_item_next(node);
+  }
+}
+
+void
+dtls_check_retransmit(dtls_context_t *context, clock_time_t *next) {
+  dtls_tick_t now;
+  netq_t *node = netq_head((netq_t **)context->sendqueue);
+
+  dtls_ticks(&now);
+  while (node && node->t <= now) {
+    netq_pop_first((netq_t **)context->sendqueue);
+    dtls_retransmit(context, node);
+    node = netq_head((netq_t **)context->sendqueue);
+  }
+
+  if (next && node)
+    *next = node->t;
+}
+# 2466 "dtls.c"
+void hexdump(const unsigned char *packet, int length) {
+  int n = 0;
+
+  while (length--) {
+    if (n % 16 == 0)
+      printf("%08X ",n);
+
+    printf("%02X ", *packet++);
+
+    n++;
+    if (n % 8 == 0) {
+      if (n % 16 == 0)
+ printf("\n");
+      else
+ printf(" ");
+    }
+  }
+}
+
+
+void dump(unsigned char *buf, size_t len) {
+  while (len--)
+    printf("%02x", *buf++);
+}

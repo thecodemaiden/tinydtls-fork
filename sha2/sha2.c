@@ -32,16 +32,10 @@
  * $Id: sha2.c,v 1.1 2001/11/08 00:01:51 adg Exp adg $
  */
 
-#include "tinydtls.h"
-#include "dtls_config.h"
+#include "../config.h"
 #include <string.h>	/* memcpy()/memset() or bcopy()/bzero() */
 #ifdef HAVE_ASSERT_H
 #include <assert.h>	/* assert() */
-#else
-#ifndef assert
-#warning "assertions are disabled"
-#  define assert(x)
-#endif
 #endif
 #include "sha2.h"
 
@@ -104,7 +98,7 @@
 #endif
 
 #ifndef BYTE_ORDER
-#  if defined(WORDS_BIGENDIAN) || (defined(AC_APPLE_UNIVERSAL_BUILD) && defined(__BIG_ENDIAN__))
+#  ifdef WORDS_BIGENDIAN
 #    define BYTE_ORDER BIG_ENDIAN
 #  else /* WORDS_BIGENDIAN */
 #    define BYTE_ORDER LITTLE_ENDIAN
@@ -658,7 +652,7 @@ void SHA256_Final(sha2_byte digest[], SHA256_CTX* context) {
 	}
 
 	/* Clean up state data: */
-	MEMSET_BZERO(context, sizeof(*context));
+	MEMSET_BZERO(context, sizeof(context));
 	usedspace = 0;
 }
 
@@ -679,7 +673,7 @@ char *SHA256_End(SHA256_CTX* context, char buffer[]) {
 		}
 		*buffer = (char)0;
 	} else {
-		MEMSET_BZERO(context, sizeof(*context));
+		MEMSET_BZERO(context, sizeof(context));
 	}
 	MEMSET_BZERO(digest, SHA256_DIGEST_LENGTH);
 	return buffer;

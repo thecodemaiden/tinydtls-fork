@@ -31,8 +31,6 @@
 #ifndef _DTLS_LIST_H_
 #define _DTLS_LIST_H_
 
-#include "tinydtls.h"
-
 #ifndef WITH_CONTIKI
 #include "uthash.h"
 #include "utlist.h"

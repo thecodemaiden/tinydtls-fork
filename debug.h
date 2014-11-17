@@ -35,7 +35,7 @@ typedef enum { LOG_EMERG=0, LOG_ALERT, LOG_CRIT, LOG_WARNING,
 } log_t;
 #else
  #include <syslog.h>
-typedef unsigned short log_t;
+typedef short log_t;
 #endif
 
 #define LOG_WARN LOG_WARNING

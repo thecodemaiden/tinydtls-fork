@@ -29,12 +29,13 @@
 #include "config.h"
 
 /** Pre-defined log levels akin to what is used in \b syslog. */
-#ifndef HAVE_SYSLOG
+#ifndef HAVE_SYSLOG_H
 typedef enum { LOG_EMERG=0, LOG_ALERT, LOG_CRIT, LOG_WARNING, 
        LOG_NOTICE, LOG_INFO, LOG_DEBUG
 } log_t;
 #else
  #include <syslog.h>
+typedef unsigned short log_t;
 #endif
 
 #define LOG_WARN LOG_WARNING

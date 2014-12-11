@@ -23,8 +23,8 @@
  * SOFTWARE.
  */
 
-#ifndef _DTLS_HMAC_H_
-#define _DTLS_HMAC_H_
+#ifndef _HMAC_H_
+#define _HMAC_H_
 
 #include <sys/types.h>
 
@@ -55,13 +55,6 @@ dtls_hash_finalize(unsigned char *buf, dtls_hash_t ctx) {
   return SHA256_DIGEST_LENGTH;
 }
 #endif /* WITH_SHA256 */
-
-#ifndef WITH_CONTIKI
-static inline void dtls_hmac_storage_init()
-{ }
-#else
-void dtls_hmac_storage_init();
-#endif
 
 /**
  * \defgroup HMAC Keyed-Hash Message Authentication Code (HMAC)
@@ -151,4 +144,4 @@ int dtls_hmac_finalize(dtls_hmac_context_t *ctx, unsigned char *result);
 
 /**@}*/
 
-#endif /* _DTLS_HMAC_H_ */
+#endif /* _HMAC_H_ */

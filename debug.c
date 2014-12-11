@@ -23,14 +23,14 @@
  * SOFTWARE.
  */
 
-#include "tinydtls.h"
-#include "dtls_config.h"
+#include "config.h"
 
 #if defined(HAVE_ASSERT_H) && !defined(assert)
 #include <assert.h>
 #endif
 
 #include <stdarg.h>
+#include <string.h>
 #include <stdio.h>
 
 #ifdef HAVE_ARPA_INET_H
@@ -44,15 +44,16 @@
 #include "global.h"
 #include "debug.h"
 
-static int maxlog = DTLS_LOG_WARN;	/* default maximum log level */
+#ifdef WITH_CONTIKI
+# ifndef DEBUG
+#  define DEBUG DEBUG_PRINT
+# endif /* DEBUG */
+#include "net/uip-debug.h"
+#else
+#define PRINTF(...)
+#endif
 
-const char *dtls_package_name() {
-  return PACKAGE_NAME;
-}
-
-const char *dtls_package_version() {
-  return PACKAGE_VERSION;
-}
+static int maxlog = LOG_WARN;	/* default maximum log level */
 
 log_t 
 dtls_get_log_level() {
@@ -94,6 +95,7 @@ print_timestamp(char *s, size_t len, clock_time_t t) {
 
 #endif /* HAVE_TIME_H */
 
+#ifndef HAVE_STRNLEN
 /** 
  * A length-safe strlen() fake. 
  * 
@@ -103,34 +105,32 @@ print_timestamp(char *s, size_t len, clock_time_t t) {
  * @return The length of @p s.
  */
 static inline size_t
-dtls_strnlen(const char *s, size_t maxlen) {
+strnlen(const char *s, size_t maxlen) {
   size_t n = 0;
   while(*s++ && n < maxlen)
     ++n;
   return n;
 }
+#endif /* HAVE_STRNLEN */
 
 #ifndef min
 #define min(a,b) ((a) < (b) ? (a) : (b))
 #endif
 
-static size_t
-dsrv_print_addr(const session_t *addr, char *buf, size_t len) {
+size_t
+dsrv_print_addr(const session_t *addr, unsigned char *buf, size_t len) {
 #ifdef HAVE_ARPA_INET_H
   const void *addrptr = NULL;
   in_port_t port;
-  char *p = buf;
+  unsigned char *p = buf;
 
   switch (addr->addr.sa.sa_family) {
   case AF_INET: 
-    if (len < INET_ADDRSTRLEN)
-      return 0;
-  
     addrptr = &addr->addr.sin.sin_addr;
     port = ntohs(addr->addr.sin.sin_port);
     break;
   case AF_INET6:
-    if (len < INET6_ADDRSTRLEN + 2)
+    if (len < 7) /* do not proceed if buffer is even too short for [::]:0 */
       return 0;
 
     *p++ = '[';
@@ -144,12 +144,12 @@ dsrv_print_addr(const session_t *addr, char *buf, size_t len) {
     return min(22, len);
   }
 
-  if (inet_ntop(addr->addr.sa.sa_family, addrptr, p, len) == 0) {
+  if (inet_ntop(addr->addr.sa.sa_family, addrptr, (char *)p, len) == 0) {
     perror("dsrv_print_addr");
     return 0;
   }
 
-  p += dtls_strnlen(p, len);
+  p += strnlen((char *)p, len);
 
   if (addr->addr.sa.sa_family == AF_INET6) {
     if (p < buf + len) {
@@ -158,15 +158,15 @@ dsrv_print_addr(const session_t *addr, char *buf, size_t len) {
       return 0;
   }
 
-  p += snprintf(p, buf + len - p + 1, ":%d", port);
+  p += snprintf((char *)p, buf + len - p + 1, ":%d", port);
 
-  return p - buf;
+  return buf + len - p;
 #else /* HAVE_ARPA_INET_H */
 # if WITH_CONTIKI
-  char *p = buf;
-#  if WITH_UIP6
+  unsigned char *p = buf;
   uint8_t i;
-  const char hex[] = "0123456789ABCDEF";
+#  if WITH_UIP6
+  const unsigned char hex[] = "0123456789ABCDEF";
 
   if (len < 41)
     return 0;
@@ -174,10 +174,10 @@ dsrv_print_addr(const session_t *addr, char *buf, size_t len) {
   *p++ = '[';
 
   for (i=0; i < 8; i += 4) {
-    *p++ = hex[((uint32_t)addr->addr.u16[i] & 0xf000) >> 24];
-    *p++ = hex[((uint32_t)addr->addr.u16[i] & 0x0f00) >> 16];
-    *p++ = hex[((uint32_t)addr->addr.u16[i] & 0x00f0) >> 8];
-    *p++ = hex[((uint32_t)addr->addr.u16[i] & 0x000f)];
+    *p++ = hex[(addr->addr.u16[i] & 0xf000) >> 24];
+    *p++ = hex[(addr->addr.u16[i] & 0x0f00) >> 16];
+    *p++ = hex[(addr->addr.u16[i] & 0x00f0) >> 8];
+    *p++ = hex[(addr->addr.u16[i] & 0x000f)];
     *p++ = ':';
   }
   *(p-1) = ']';
@@ -190,9 +190,13 @@ dsrv_print_addr(const session_t *addr, char *buf, size_t len) {
   if (buf + len - p < 6)
     return 0;
 
-  p += sprintf(p, ":%d", uip_htons(addr->port));
+#ifdef HAVE_SNPRINTF
+  p += snprintf((char *)p, buf + len - p + 1, ":%d", uip_htons(addr->port));
+#else /* HAVE_SNPRINTF */
+  /* @todo manual conversion of port number */
+#endif /* HAVE_SNPRINTF */
 
-  return p - buf;
+  return buf + len - p;
 # else /* WITH_CONTIKI */
   /* TODO: output addresses manually */
 #   warning "inet_ntop() not available, network addresses will not be included in debug output"
@@ -211,20 +215,20 @@ dsrv_log(log_t level, char *format, ...) {
   if (maxlog < level)
     return;
 
-  log_fd = level <= DTLS_LOG_CRIT ? stderr : stdout;
+  log_fd = level <= LOG_CRIT ? stderr : stdout;
 
   if (print_timestamp(timebuf,sizeof(timebuf), time(NULL)))
     fprintf(log_fd, "%s ", timebuf);
 
-  if (level <= DTLS_LOG_DEBUG) 
-    fprintf(log_fd, "%s ", loglevels[level]);
+  if (level >= 0 && level <= LOG_DEBUG) 
+    printf("%s ", loglevels[level]);
 
   va_start(ap, format);
-  vfprintf(log_fd, format, ap);
+  vprintf(format, ap);
   va_end(ap);
-  fflush(log_fd);
+  fflush(stdout);
 }
-#elif defined (HAVE_VPRINTF) /* WITH_CONTIKI */
+#else /* WITH_CONTIKI */
 void 
 dsrv_log(log_t level, char *format, ...) {
   static char timebuf[32];
@@ -236,136 +240,15 @@ dsrv_log(log_t level, char *format, ...) {
   if (print_timestamp(timebuf,sizeof(timebuf), clock_time()))
     PRINTF("%s ", timebuf);
 
-  if (level <= DTLS_LOG_DEBUG) 
+  if (level >= 0 && level <= LOG_DEBUG) 
     PRINTF("%s ", loglevels[level]);
 
   va_start(ap, format);
+#ifdef HAVE_VPRINTF
   vprintf(format, ap);
+#else
+  PRINTF(format, ap);
+#endif
   va_end(ap);
 }
 #endif /* WITH_CONTIKI */
-
-#ifndef NDEBUG
-/** dumps packets in usual hexdump format */
-void hexdump(const unsigned char *packet, int length) {
-  int n = 0;
-
-  while (length--) { 
-    if (n % 16 == 0)
-      printf("%08X ",n);
-
-    printf("%02X ", *packet++);
-    
-    n++;
-    if (n % 8 == 0) {
-      if (n % 16 == 0)
-	printf("\n");
-      else
-	printf(" ");
-    }
-  }
-}
-
-/** dump as narrow string of hex digits */
-void dump(unsigned char *buf, size_t len) {
-  while (len--) 
-    printf("%02x", *buf++);
-}
-
-void dtls_dsrv_log_addr(log_t level, const char *name, const session_t *addr)
-{
-  char addrbuf[73];
-  int len;
-
-  len = dsrv_print_addr(addr, addrbuf, sizeof(addrbuf));
-  if (!len)
-    return;
-  dsrv_log(level, "%s: %s\n", name, addrbuf);
-}
-
-#ifndef WITH_CONTIKI
-void 
-dtls_dsrv_hexdump_log(log_t level, const char *name, const unsigned char *buf, size_t length, int extend) {
-  static char timebuf[32];
-  FILE *log_fd;
-  int n = 0;
-
-  if (maxlog < level)
-    return;
-
-  log_fd = level <= DTLS_LOG_CRIT ? stderr : stdout;
-
-  if (print_timestamp(timebuf, sizeof(timebuf), time(NULL)))
-    fprintf(log_fd, "%s ", timebuf);
-
-  if (level <= DTLS_LOG_DEBUG) 
-    fprintf(log_fd, "%s ", loglevels[level]);
-
-  if (extend) {
-    fprintf(log_fd, "%s: (%zu bytes):\n", name, length);
-
-    while (length--) {
-      if (n % 16 == 0)
-	fprintf(log_fd, "%08X ", n);
-
-      fprintf(log_fd, "%02X ", *buf++);
-
-      n++;
-      if (n % 8 == 0) {
-	if (n % 16 == 0)
-	  fprintf(log_fd, "\n");
-	else
-	  fprintf(log_fd, " ");
-      }
-    }
-  } else {
-    fprintf(log_fd, "%s: (%zu bytes): ", name, length);
-    while (length--) 
-      fprintf(log_fd, "%02X", *buf++);
-  }
-  fprintf(log_fd, "\n");
-
-  fflush(log_fd);
-}
-#else /* WITH_CONTIKI */
-void 
-dtls_dsrv_hexdump_log(log_t level, const char *name, const unsigned char *buf, size_t length, int extend) {
-  static char timebuf[32];
-  int n = 0;
-
-  if (maxlog < level)
-    return;
-
-  if (print_timestamp(timebuf,sizeof(timebuf), clock_time()))
-    PRINTF("%s ", timebuf);
-
-  if (level >= 0 && level <= DTLS_LOG_DEBUG) 
-    PRINTF("%s ", loglevels[level]);
-
-  if (extend) {
-    PRINTF("%s: (%zu bytes):\n", name, length);
-
-    while (length--) {
-      if (n % 16 == 0)
-	PRINTF("%08X ", n);
-
-      PRINTF("%02X ", *buf++);
-
-      n++;
-      if (n % 8 == 0) {
-	if (n % 16 == 0)
-	  PRINTF("\n");
-	else
-	  PRINTF(" ");
-      }
-    }
-  } else {
-    PRINTF("%s: (%zu bytes): ", name, length);
-    while (length--) 
-      PRINTF("%02X", *buf++);
-  }
-  PRINTF("\n");
-}
-#endif /* WITH_CONTIKI */
-
-#endif /* NDEBUG */

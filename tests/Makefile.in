@@ -76,9 +76,5 @@ dist:	$(FILES)
 	test -d $(DISTDIR)/tests || mkdir $(DISTDIR)/tests
 	cp $(FILES) $(DISTDIR)/tests
 
-# this directory contains no installation candidates
-install:
-	:
-
 .gitignore:
 	echo "core\n*~\n*.[oa]\n*.gz\n*.cap\n$(PROGRAM)\n$(DISTDIR)\n.gitignore" >$@

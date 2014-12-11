@@ -28,13 +28,14 @@
  * @brief Clock Handling
  */
 
-#ifndef _DTLS_DTLS_TIME_H_
-#define _DTLS_DTLS_TIME_H_
+#ifndef _DTLS_TIME_H_
+#define _DTLS_TIME_H_
 
-#include <stdint.h>
+#include "config.h"
+
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
-
-#include "tinydtls.h"
+#endif /* HAVE_SYS_TIME_H */
 
 /**
  * @defgroup clock Clock Handling
@@ -45,17 +46,21 @@
 
 #ifdef WITH_CONTIKI
 #include "clock.h"
+
+typedef clock_time_t dtls_tick_t;
 #else /* WITH_CONTIKI */
+
+#ifdef HAVE_TIME_H
 #include <time.h>
+#endif
 
 #ifndef CLOCK_SECOND
 # define CLOCK_SECOND 1000
 #endif
 
-typedef uint32_t clock_time_t;
-#endif /* WITH_CONTIKI */
+typedef unsigned int dtls_tick_t; 
 
-typedef clock_time_t dtls_tick_t;
+#endif /* WITH_CONTIKI */
 
 #ifndef DTLS_TICKS_PER_SECOND
 #define DTLS_TICKS_PER_SECOND CLOCK_SECOND
@@ -66,4 +71,4 @@ void dtls_ticks(dtls_tick_t *t);
 
 /** @} */
 
-#endif /* _DTLS_DTLS_TIME_H_ */
+#endif /* _DTLS_TIME_H_ */

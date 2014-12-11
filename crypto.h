@@ -1,7 +1,6 @@
 /* dtls -- a very basic DTLS implementation
  *
  * Copyright (C) 2011--2012 Olaf Bergmann <bergmann@tzi.org>
- * Copyright (C) 2013 Hauke Mehrtens <hauke@hauke-m.de>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -24,18 +23,17 @@
  * SOFTWARE.
  */
 
-#ifndef _DTLS_CRYPTO_H_
-#define _DTLS_CRYPTO_H_
+#ifndef _CRYPTO_H_
+#define _CRYPTO_H_
+
+#include "config.h"
 
 #include <stdlib.h>		/* for rand() and srand() */
-#include <stdint.h>
-
-#include "t_list.h"
 
 #include "aes/rijndael.h"
 
+#include "prng.h"
 #include "global.h"
-#include "state.h"
 #include "numeric.h"
 #include "hmac.h"
 #include "ccm.h"
@@ -57,51 +55,38 @@
 
 /** Length of DTLS master_secret */
 #define DTLS_MASTER_SECRET_LENGTH 48
-#define DTLS_RANDOM_LENGTH 32
+
+#ifndef DTLS_CIPHER_CONTEXT_MAX
+#define DTLS_CIPHER_CONTEXT_MAX 4
+#endif
 
 typedef enum { AES128=0 
 } dtls_crypto_alg;
 
-typedef enum {
-  DTLS_ECDH_CURVE_SECP256R1
-} dtls_ecdh_curve;
-
 /** Crypto context for TLS_PSK_WITH_AES_128_CCM_8 cipher suite. */
 typedef struct {
   rijndael_ctx ctx;		       /**< AES-128 encryption context */
+  unsigned char N[DTLS_CCM_BLOCKSIZE]; /**< nonce */
 } aes128_ccm_t;
 
 typedef struct dtls_cipher_context_t {
   /** numeric identifier of this cipher suite in host byte order. */
+  dtls_cipher_t code;
   aes128_ccm_t data;		/**< The crypto context */
 } dtls_cipher_context_t;
 
-typedef struct {
-  uint8 own_eph_priv[32];
-  uint8 other_eph_pub_x[32];
-  uint8 other_eph_pub_y[32];
-  uint8 other_pub_x[32];
-  uint8 other_pub_y[32];
-} dtls_handshake_parameters_ecdsa_t;
-
-/* This is the maximal supported length of the psk client identity and psk
- * server identity hint */
-#define DTLS_PSK_MAX_CLIENT_IDENTITY_LEN   32
-
-/* This is the maximal supported length of the pre-shared key. */
-#define DTLS_PSK_MAX_KEY_LEN 32
+typedef enum { DTLS_CLIENT=0, DTLS_SERVER } dtls_peer_type;
 
 typedef struct {
-  uint16_t id_length;
-  unsigned char identity[DTLS_PSK_MAX_CLIENT_IDENTITY_LEN];
-} dtls_handshake_parameters_psk_t;
+  uint8  client_random[32];	/**< client random gmt and bytes */
 
-typedef struct {
-  dtls_compression_t compression;	/**< compression method */
+  dtls_peer_type role; /**< denotes if the remote peer is DTLS_CLIENT or DTLS_SERVER */
+  unsigned char compression;		/**< compression method */
 
   dtls_cipher_t cipher;		/**< cipher type */
-  uint16_t epoch;	     /**< counter for cipher state changes*/
-  uint64_t rseq;	     /**< sequence number of last record sent */
+
+  /** the session's master secret */
+  uint8 master_secret[DTLS_MASTER_SECRET_LENGTH];
 
   /** 
    * The key block generated from PRF applied to client and server
@@ -110,81 +95,59 @@ typedef struct {
    * access the components of the key block.
    */
   uint8 key_block[MAX_KEYBLOCK_LENGTH];
+
+  dtls_cipher_context_t *read_cipher;  /**< decryption context */
+  dtls_cipher_context_t *write_cipher; /**< encryption context */
 } dtls_security_parameters_t;
-
-typedef struct {
-  union {
-    struct random_t {
-      uint8 client[DTLS_RANDOM_LENGTH];	/**< client random gmt and bytes */
-      uint8 server[DTLS_RANDOM_LENGTH];	/**< server random gmt and bytes */
-    } random;
-    /** the session's master secret */
-    uint8 master_secret[DTLS_MASTER_SECRET_LENGTH];
-  } tmp;
-  LIST_STRUCT(reorder_queue);	/**< the packets to reorder */
-  dtls_hs_state_t hs_state;  /**< handshake protocol status */
-
-  dtls_compression_t compression;		/**< compression method */
-  dtls_cipher_t cipher;		/**< cipher type */
-  unsigned int do_client_auth:1;
-  union {
-#ifdef DTLS_ECC
-    dtls_handshake_parameters_ecdsa_t ecdsa;
-#endif /* DTLS_ECC */
-#ifdef DTLS_PSK
-    dtls_handshake_parameters_psk_t psk;
-#endif /* DTLS_PSK */
-  } keyx;
-} dtls_handshake_parameters_t;
 
 /* The following macros provide access to the components of the
  * key_block in the security parameters. */
 
-#define dtls_kb_client_mac_secret(Param, Role) ((Param)->key_block)
-#define dtls_kb_server_mac_secret(Param, Role)				\
-  (dtls_kb_client_mac_secret(Param, Role) + DTLS_MAC_KEY_LENGTH)
-#define dtls_kb_remote_mac_secret(Param, Role)				\
-  ((Role) == DTLS_SERVER						\
-   ? dtls_kb_client_mac_secret(Param, Role)				\
-   : dtls_kb_server_mac_secret(Param, Role))
-#define dtls_kb_local_mac_secret(Param, Role)				\
-  ((Role) == DTLS_CLIENT						\
-   ? dtls_kb_client_mac_secret(Param, Role)				\
-   : dtls_kb_server_mac_secret(Param, Role))
-#define dtls_kb_mac_secret_size(Param, Role) DTLS_MAC_KEY_LENGTH
-#define dtls_kb_client_write_key(Param, Role)				\
-  (dtls_kb_server_mac_secret(Param, Role) + DTLS_MAC_KEY_LENGTH)
-#define dtls_kb_server_write_key(Param, Role)				\
-  (dtls_kb_client_write_key(Param, Role) + DTLS_KEY_LENGTH)
-#define dtls_kb_remote_write_key(Param, Role)				\
-  ((Role) == DTLS_SERVER						\
-   ? dtls_kb_client_write_key(Param, Role)				\
-   : dtls_kb_server_write_key(Param, Role))
-#define dtls_kb_local_write_key(Param, Role)				\
-  ((Role) == DTLS_CLIENT						\
-   ? dtls_kb_client_write_key(Param, Role)				\
-   : dtls_kb_server_write_key(Param, Role))
-#define dtls_kb_key_size(Param, Role) DTLS_KEY_LENGTH
-#define dtls_kb_client_iv(Param, Role)					\
-  (dtls_kb_server_write_key(Param, Role) + DTLS_KEY_LENGTH)
-#define dtls_kb_server_iv(Param, Role)					\
-  (dtls_kb_client_iv(Param, Role) + DTLS_IV_LENGTH)
-#define dtls_kb_remote_iv(Param, Role)					\
-  ((Role) == DTLS_SERVER						\
-   ? dtls_kb_client_iv(Param, Role)					\
-   : dtls_kb_server_iv(Param, Role))
-#define dtls_kb_local_iv(Param, Role)					\
-  ((Role) == DTLS_CLIENT						\
-   ? dtls_kb_client_iv(Param, Role)					\
-   : dtls_kb_server_iv(Param, Role))
-#define dtls_kb_iv_size(Param, Role) DTLS_IV_LENGTH
+#define dtls_kb_client_mac_secret(Param) ((Param)->key_block)
+#define dtls_kb_server_mac_secret(Param)				\
+  (dtls_kb_client_mac_secret(Param) + DTLS_MAC_KEY_LENGTH)
+#define dtls_kb_remote_mac_secret(Param)				\
+  ((Param)->role == DTLS_CLIENT						\
+   ? dtls_kb_client_mac_secret(Param)					\
+   : dtls_kb_server_mac_secret(Param))
+#define dtls_kb_local_mac_secret(Param)					\
+  ((Param)->role == DTLS_SERVER						\
+   ? dtls_kb_client_mac_secret(Param)					\
+   : dtls_kb_server_mac_secret(Param))
+#define dtls_kb_mac_secret_size(Param) DTLS_MAC_KEY_LENGTH
+#define dtls_kb_client_write_key(Param)					\
+  (dtls_kb_server_mac_secret(Param) + DTLS_MAC_KEY_LENGTH)
+#define dtls_kb_server_write_key(Param)					\
+  (dtls_kb_client_write_key(Param) + DTLS_KEY_LENGTH)
+#define dtls_kb_remote_write_key(Param)				\
+  ((Param)->role == DTLS_CLIENT					\
+   ? dtls_kb_client_write_key(Param)				\
+   : dtls_kb_server_write_key(Param))
+#define dtls_kb_local_write_key(Param)				\
+  ((Param)->role == DTLS_SERVER					\
+   ? dtls_kb_client_write_key(Param)				\
+   : dtls_kb_server_write_key(Param))
+#define dtls_kb_key_size(Param) DTLS_KEY_LENGTH
+#define dtls_kb_client_iv(Param)					\
+  (dtls_kb_server_write_key(Param) + DTLS_KEY_LENGTH)
+#define dtls_kb_server_iv(Param)					\
+  (dtls_kb_client_iv(Param) + DTLS_IV_LENGTH)
+#define dtls_kb_remote_iv(Param)				\
+  ((Param)->role == DTLS_CLIENT					\
+   ? dtls_kb_client_iv(Param)					\
+   : dtls_kb_server_iv(Param))
+#define dtls_kb_local_iv(Param)					\
+  ((Param)->role == DTLS_SERVER					\
+   ? dtls_kb_client_iv(Param)					\
+   : dtls_kb_server_iv(Param))
+#define dtls_kb_iv_size(Param) DTLS_IV_LENGTH
 
-#define dtls_kb_size(Param, Role)					\
-  (2 * (dtls_kb_mac_secret_size(Param, Role) +				\
-	dtls_kb_key_size(Param, Role) + dtls_kb_iv_size(Param, Role)))
+#define dtls_kb_size(Param)					\
+  (2 * (dtls_kb_mac_secret_size(Param) +			\
+	dtls_kb_key_size(Param) + dtls_kb_iv_size(Param)))
 
 /* just for consistency */
-#define dtls_kb_digest_size(Param, Role) DTLS_MAC_LENGTH
+#define dtls_kb_digest_size(Param) DTLS_MAC_LENGTH
 
 /** 
  * Expands the secret and key to a block of DTLS_HMAC_MAX 
@@ -261,10 +224,9 @@ void dtls_mac(dtls_hmac_context_t *hmac_ctx,
  * \return The number of encrypted bytes on success, less than zero
  *         otherwise. 
  */
-int dtls_encrypt(const unsigned char *src, size_t length,
+int dtls_encrypt(dtls_cipher_context_t *ctx, 
+		 const unsigned char *src, size_t length,
 		 unsigned char *buf,
-		 unsigned char *nounce,
-		 unsigned char *key, size_t keylen,
 		 const unsigned char *aad, size_t aad_length);
 
 /** 
@@ -285,10 +247,9 @@ int dtls_encrypt(const unsigned char *src, size_t length,
  * \return Less than zero on error, the number of decrypted bytes 
  *         otherwise.
  */
-int dtls_decrypt(const unsigned char *src, size_t length,
+int dtls_decrypt(dtls_cipher_context_t *ctx, 
+		 const unsigned char *src, size_t length,
 		 unsigned char *buf,
-		 unsigned char *nounce,
-		 unsigned char *key, size_t keylen,
 		 const unsigned char *a_data, size_t a_data_length);
 
 /* helper functions */
@@ -303,57 +264,35 @@ int dtls_decrypt(const unsigned char *src, size_t length,
  * @param result The derived pre master secret.
  * @return The actual length of @p result.
  */
-int dtls_psk_pre_master_secret(unsigned char *key, size_t keylen,
-			       unsigned char *result, size_t result_len);
+size_t dtls_pre_master_secret(unsigned char *key, size_t keylen,
+			      unsigned char *result);
 
-#define DTLS_EC_KEY_SIZE 32
+/**
+ * Creates a new dtls_cipher_context_t object for given @c cipher.
+ * The storage allocated for this object must be released using 
+ * dtls_cipher_free().
+ *
+ * @param code  Code of the requested cipher (host byte order)
+ * @param key     The encryption and decryption key.
+ * @param keylen  Actual length of @p key.
+ * @return A new dtls_cipher_context_t object or @c NULL in case
+ *         something went wrong (e.g. insufficient memory or wrong
+ *         key length)
+ */
+dtls_cipher_context_t *dtls_cipher_new(dtls_cipher_t code,
+				       unsigned char *key, size_t keylen);
 
-int dtls_ecdh_pre_master_secret(unsigned char *priv_key,
-				unsigned char *pub_key_x,
-                                unsigned char *pub_key_y,
-                                size_t key_size,
-                                unsigned char *result,
-                                size_t result_len);
-
-void dtls_ecdsa_generate_key(unsigned char *priv_key,
-			     unsigned char *pub_key_x,
-			     unsigned char *pub_key_y,
-			     size_t key_size);
-
-void dtls_ecdsa_create_sig_hash(const unsigned char *priv_key, size_t key_size,
-				const unsigned char *sign_hash, size_t sign_hash_size,
-				uint32_t point_r[9], uint32_t point_s[9]);
-
-void dtls_ecdsa_create_sig(const unsigned char *priv_key, size_t key_size,
-			   const unsigned char *client_random, size_t client_random_size,
-			   const unsigned char *server_random, size_t server_random_size,
-			   const unsigned char *keyx_params, size_t keyx_params_size,
-			   uint32_t point_r[9], uint32_t point_s[9]);
-
-int dtls_ecdsa_verify_sig_hash(const unsigned char *pub_key_x,
-			       const unsigned char *pub_key_y, size_t key_size,
-			       const unsigned char *sign_hash, size_t sign_hash_size,
-			       unsigned char *result_r, unsigned char *result_s);
-
-int dtls_ecdsa_verify_sig(const unsigned char *pub_key_x,
-			  const unsigned char *pub_key_y, size_t key_size,
-			  const unsigned char *client_random, size_t client_random_size,
-			  const unsigned char *server_random, size_t server_random_size,
-			  const unsigned char *keyx_params, size_t keyx_params_size,
-			  unsigned char *result_r, unsigned char *result_s);
-
-int dtls_ec_key_from_uint32_asn1(const uint32_t *key, size_t key_size,
-				 unsigned char *buf);
+/** 
+ * Releases the storage allocated by dtls_cipher_new() for @p cipher_context 
+ */
+void dtls_cipher_free(dtls_cipher_context_t *cipher_context);
 
 
-dtls_handshake_parameters_t *dtls_handshake_new();
+/** 
+ * Initializes the given cipher context @p ctx with the initialization
+ * vector @p iv of length @p length. */
+void dtls_cipher_set_iv(dtls_cipher_context_t *ctx,
+			unsigned char *iv, size_t length);
 
-void dtls_handshake_free(dtls_handshake_parameters_t *handshake);
-
-dtls_security_parameters_t *dtls_security_new();
-
-void dtls_security_free(dtls_security_parameters_t *security);
-void crypto_init();
-
-#endif /* _DTLS_CRYPTO_H_ */
+#endif /* _CRYPTO_H_ */
 

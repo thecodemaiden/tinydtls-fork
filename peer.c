@@ -23,9 +23,15 @@
  * SOFTWARE.
  */
 
-#include "global.h"
 #include "peer.h"
 #include "debug.h"
+
+#ifndef NDEBUG
+#include <stdio.h>
+
+extern size_t dsrv_print_addr(const session_t *addr, unsigned char *buf, 
+			      size_t len);
+#endif /* NDEBUG */
 
 #ifndef WITH_CONTIKI
 void peer_init()
@@ -39,12 +45,10 @@ dtls_malloc_peer() {
 
 void
 dtls_free_peer(dtls_peer_t *peer) {
-  dtls_handshake_free(peer->handshake_params);
-  dtls_security_free(peer->security_params[0]);
-  dtls_security_free(peer->security_params[1]);
   free(peer);
 }
 #else /* WITH_CONTIKI */
+PROCESS(dtls_retransmit_process, "DTLS retransmit process");
 
 #include "memb.h"
 MEMB(peer_storage, dtls_peer_t, DTLS_PEER_MAX);
@@ -61,9 +65,6 @@ dtls_malloc_peer() {
 
 void
 dtls_free_peer(dtls_peer_t *peer) {
-  dtls_handshake_free(peer->handshake_params);
-  dtls_security_free(peer->security_params[0]);
-  dtls_security_free(peer->security_params[1]);
   memb_free(&peer_storage, peer);
 }
 #endif /* WITH_CONTIKI */
@@ -76,15 +77,25 @@ dtls_new_peer(const session_t *session) {
   if (peer) {
     memset(peer, 0, sizeof(dtls_peer_t));
     memcpy(&peer->session, session, sizeof(session_t));
-    peer->security_params[0] = dtls_security_new();
 
-    if (!peer->security_params[0]) {
-      dtls_free_peer(peer);
-      return NULL;
+#ifndef NDEBUG
+    if (dtls_get_log_level() >= LOG_DEBUG) {
+      unsigned char addrbuf[72];
+      dsrv_print_addr(session, addrbuf, sizeof(addrbuf));
+      printf("dtls_new_peer: %s\n", addrbuf);
     }
+#endif
+    /* initially allow the NULL cipher */
+    CURRENT_CONFIG(peer)->cipher = TLS_NULL_WITH_NULL_NULL;
 
-    dtls_dsrv_log_addr(DTLS_LOG_DEBUG, "dtls_new_peer", session);
+    /* initialize the handshake hash wrt. the hard-coded DTLS version */
+    debug("DTLSv12: initialize HASH_SHA256\n");
+    /* TLS 1.2:  PRF(secret, label, seed) = P_<hash>(secret, label + seed) */
+    /* FIXME: we use the default SHA256 here, might need to support other 
+              hash functions as well */
+    dtls_hash_init(&peer->hs_state.hs_hash);
   }
-
+  
   return peer;
 }
+

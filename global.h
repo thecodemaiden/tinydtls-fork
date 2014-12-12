@@ -131,6 +131,7 @@ typedef unsigned char uint32[4];
 typedef unsigned char uint48[6];
 
 #ifndef HAVE_STR
+#define HAVE_STR
 typedef struct {
   size_t length;		/* length of string */
   unsigned char *s;		/* string data */

@@ -29,10 +29,16 @@
 #include "config.h"
 
 /** Pre-defined log levels akin to what is used in \b syslog. */
-typedef enum { LOG_EMERG=0, LOG_ALERT, LOG_CRIT, LOG_WARN, 
+#ifndef HAVE_SYSLOG_H
+typedef enum { LOG_EMERG=0, LOG_ALERT, LOG_CRIT, LOG_WARNING, 
        LOG_NOTICE, LOG_INFO, LOG_DEBUG
 } log_t;
+#else
+ #include <syslog.h>
+typedef short log_t;
+#endif
 
+#define LOG_WARN LOG_WARNING
 /** Returns the current log level. */
 log_t dtls_get_log_level();
 
@@ -46,8 +52,16 @@ void dtls_set_log_level(log_t level);
 void dsrv_log(log_t level, char *format, ...);
 
 /* A set of convenience macros for common log levels. */
+#ifndef info
 #define info(...) dsrv_log(LOG_INFO, __VA_ARGS__)
+#endif
+
+#ifndef warn
 #define warn(...) dsrv_log(LOG_WARN, __VA_ARGS__)
+#endif
+
+#ifndef debug
 #define debug(...) dsrv_log(LOG_DEBUG, __VA_ARGS__)
+#endif
 
 #endif /* _DEBUG_H_ */

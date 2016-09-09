@@ -53,7 +53,7 @@
 #define PRINTF(...)
 #endif
 
-static int maxlog = LOG_WARN;	/* default maximum log level */
+static int maxlog = LOG_WARNING;	/* default maximum log level */
 
 log_t 
 dtls_get_log_level() {

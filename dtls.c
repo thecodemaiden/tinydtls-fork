@@ -459,11 +459,11 @@ dtls_verify_peer(dtls_context_t *ctx,
 
     /* check if cookies match */
     if (len == DTLS_COOKIE_LENGTH && memcmp(cookie, mycookie, len) == 0) {
-    debug("found matching cookie\n");
+    dtls_debug("found matching cookie\n");
       return 1;      
     }
     if (len > 0) {
-      debug("invalid cookie");
+      dtls_debug("invalid cookie");
 #ifndef NDEBUG
       dump(cookie, len);
       printf("\n");
@@ -500,14 +500,14 @@ dtls_verify_peer(dtls_context_t *ctx,
       (void)CALL(ctx, write, session, ctx->sendbuf, p - ctx->sendbuf);
     } else {
       if (peer->epoch) {
-	debug("renegotiation, therefore we accept it anyway:");
+	dtls_debug("renegotiation, therefore we accept it anyway:");
 	return 1;
       }
 
       if (dtls_send(ctx, peer, DTLS_CT_HANDSHAKE, 
 		    ctx->sendbuf + DTLS_RH_LENGTH, 
 		    p - (ctx->sendbuf + DTLS_RH_LENGTH)) < 0) {
-	warn("cannot send HelloVerify request\n");
+	dtls_warn("cannot send HelloVerify request\n");
 	return -1;
       }
   }
@@ -556,7 +556,7 @@ calculate_key_block(dtls_context_t *ctx,
     break;
   }
   default:
-    debug("calculate_key_block: unknown key type\n");
+    dtls_debug("calculate_key_block: unknown key type\n");
     return 0;
   }
 
@@ -754,7 +754,7 @@ dtls_update_parameters(dtls_context_t *ctx,
   
   return ok;
  error:
-  warn("ClientHello too short (%d bytes)\n", data_length);
+  dtls_warn("ClientHello too short (%d bytes)\n", data_length);
   return 0;
 }
 
@@ -785,7 +785,7 @@ check_ccs(dtls_context_t *ctx,
 		    dtls_kb_key_size(OTHER_CONFIG(peer)));
 
   if (!OTHER_CONFIG(peer)->read_cipher) {
-    warn("cannot create read cipher\n");
+    dtls_warn("cannot create read cipher\n");
     return 0;
   }
 
@@ -802,7 +802,7 @@ check_ccs(dtls_context_t *ctx,
 		    dtls_kb_key_size(OTHER_CONFIG(peer)));
 
   if (!OTHER_CONFIG(peer)->write_cipher) {
-    warn("cannot create write cipher\n");
+    dtls_warn("cannot create write cipher\n");
     return 0;
   }
 
@@ -866,9 +866,9 @@ check_finished(dtls_context_t *ctx, dtls_peer_t *peer,
     unsigned char verify_data[DTLS_FIN_LENGTH];
   } b;
 
-  debug("check Finish message\n");
+  dtls_debug("check Finish message\n");
   if (record[0] != DTLS_CT_HANDSHAKE || !IS_FINISHED(data, data_length)) {
-    debug("failed\n");
+    dtls_debug("failed\n");
     return 0;
   }
 
@@ -936,7 +936,7 @@ dtls_prepare_record(dtls_peer_t *peer,
   
   /* check the minimum that we need for packets that are not encrypted */
   if (*rlen < DTLS_RH_LENGTH + data_length) {
-    debug("dtls_prepare_record: send buffer too small\n");
+    dtls_debug("dtls_prepare_record: send buffer too small\n");
     return -1;
   }
 
@@ -958,11 +958,11 @@ dtls_prepare_record(dtls_peer_t *peer,
     unsigned char N[max(DTLS_CCM_BLOCKSIZE, A_DATA_LEN)];
     
     if (*rlen < sizeof(dtls_record_header_t) + data_length + 8) {
-      warn("dtls_prepare_record(): send buffer too small\n");
+      dtls_warn("dtls_prepare_record(): send buffer too small\n");
       return -1;
     }
 
-    debug("dtls_prepare_record(): encrypt using TLS_PSK_WITH_AES_128_CCM_8\n");
+    dtls_debug("dtls_prepare_record(): encrypt using TLS_PSK_WITH_AES_128_CCM_8\n");
 
     /* set nonce       
        from http://tools.ietf.org/html/draft-mcgrew-tls-aes-ccm-03:
@@ -989,7 +989,7 @@ dtls_prepare_record(dtls_peer_t *peer,
     cipher_context = CURRENT_CONFIG(peer)->write_cipher;
 
     if (!cipher_context) {
-      warn("no write_cipher available!\n");
+      dtls_warn("no write_cipher available!\n");
       return -1;
     }
 /* #ifndef NDEBUG */
@@ -1112,7 +1112,7 @@ dtls_send(dtls_context_t *ctx, dtls_peer_t *peer,
       memcpy(n->data, buf, buflen);
 
       if (!netq_insert_node((netq_t **)ctx->sendqueue, n)) {
-	warn("cannot add packet to retransmit buffer\n");
+	dtls_warn("cannot add packet to retransmit buffer\n");
 	netq_node_free(n);
 #ifdef WITH_CONTIKI
       } else {
@@ -1121,11 +1121,11 @@ dtls_send(dtls_context_t *ctx, dtls_peer_t *peer,
 	etimer_set(&ctx->retransmit_timer, n->timeout);
 	PROCESS_CONTEXT_END(&dtls_retransmit_process);
 #else /* WITH_CONTIKI */
-	debug("copied to sendqueue\n");
+	dtls_debug("copied to sendqueue\n");
 #endif /* WITH_CONTIKI */
       }
     } else 
-      warn("retransmit buffer full\n");
+      dtls_warn("retransmit buffer full\n");
   }
 
   /* FIXME: copy to peer's sendqueue (after fragmentation if
@@ -1179,7 +1179,7 @@ dtls_send_server_hello(dtls_context_t *ctx, dtls_peer_t *peer) {
 	 DTLS_RH_LENGTH + DTLS_HS_LENGTH + DTLS_SH_LENGTH + 20);
 
   if (CALL(ctx, get_key, &peer->session, NULL, 0, &key) < 0) {
-    debug("dtls_send_server_hello(): no key for session available\n");
+    dtls_debug("dtls_send_server_hello(): no key for session available\n");
     return -1;
   }
 
@@ -1228,7 +1228,7 @@ dtls_send_server_hello(dtls_context_t *ctx, dtls_peer_t *peer) {
 			    buf, p - buf,
 			    q, &qlen);
   if (res < 0) {
-    debug("dtls_server_hello: cannot prepare ServerHello record\n");
+    dtls_debug("dtls_server_hello: cannot prepare ServerHello record\n");
     return res;
   }
 
@@ -1252,7 +1252,7 @@ dtls_send_server_hello(dtls_context_t *ctx, dtls_peer_t *peer) {
 			    buf, p - buf,
 			    q, &qlen);
   if (res < 0) {
-    debug("dtls_server_hello: cannot prepare ServerHelloDone record\n");
+    dtls_debug("dtls_server_hello: cannot prepare ServerHelloDone record\n");
     return res;
   }
 
@@ -1366,7 +1366,7 @@ check_server_hello(dtls_context_t *ctx,
    */
 
   if (IS_SERVERHELLO(data, data_length)) {
-    debug("handle ServerHello\n");
+    dtls_debug("handle ServerHello\n");
 
     update_hs_hash(peer, data, data_length);
 
@@ -1426,7 +1426,7 @@ check_server_hello(dtls_context_t *ctx,
   }
 
   if (!IS_HELLOVERIFY(data, data_length)) {
-    debug("no HelloVerify\n");
+    dtls_debug("no HelloVerify\n");
     return 0;
   }
 
@@ -1474,7 +1474,7 @@ check_server_hello(dtls_context_t *ctx,
   res = dtls_send(ctx, peer, DTLS_CT_HANDSHAKE, ctx->sendbuf, 
 		  p - ctx->sendbuf);
   if (res < 0)
-    warn("cannot send ClientHello\n");
+    dtls_warn("cannot send ClientHello\n");
 
  error: 
   return 0;
@@ -1502,7 +1502,7 @@ check_server_hellodone(dtls_context_t *ctx,
 		    dtls_kb_key_size(OTHER_CONFIG(peer)));
 
   if (!OTHER_CONFIG(peer)->read_cipher) {
-    warn("cannot create read cipher\n");
+    dtls_warn("cannot create read cipher\n");
     return 0;
   }
 
@@ -1520,7 +1520,7 @@ check_server_hellodone(dtls_context_t *ctx,
   
   if (!OTHER_CONFIG(peer)->write_cipher) {
     dtls_cipher_free(OTHER_CONFIG(peer)->read_cipher);
-    warn("cannot create write cipher\n");
+    dtls_warn("cannot create write cipher\n");
     return 0;
   }
   
@@ -1530,13 +1530,13 @@ check_server_hellodone(dtls_context_t *ctx,
 
   /* send ClientKeyExchange */
   if (dtls_send_kx(ctx, peer, 1) < 0) {
-    debug("cannot send KeyExchange message\n");
+    dtls_debug("cannot send KeyExchange message\n");
     return 0;
   }
 
   /* and switch cipher suite */
   if (dtls_send_ccs(ctx, peer) < 0) {
-    debug("cannot send CCS message\n");
+    dtls_debug("cannot send CCS message\n");
     return 0;
   }
 
@@ -1582,7 +1582,7 @@ check_server_hellodone(dtls_context_t *ctx,
 
   /* Client Finished */
   {
-    debug ("send Finished\n");
+    dtls_debug ("send Finished\n");
     int length;
     uint8 buf[DTLS_HMAC_MAX];
     uint8 *p = ctx->sendbuf;
@@ -1663,7 +1663,7 @@ decrypt_verify(dtls_peer_t *peer,
     cipher_context = CURRENT_CONFIG(peer)->read_cipher;
     
     if (!cipher_context) {
-      warn("no read_cipher available!\n");
+      dtls_warn("no read_cipher available!\n");
       return 0;
     }
       
@@ -1694,7 +1694,7 @@ decrypt_verify(dtls_peer_t *peer,
 
     ok = len >= 0;
     if (!ok)
-      warn("decryption failed\n");
+      dtls_warn("decryption failed\n");
     else {
 /* #ifndef NDEBUG */
 /*       printf("decrypt_verify(): found %ld bytes cleartext\n", len); */
@@ -1729,7 +1729,7 @@ handle_handshake(dtls_context_t *ctx, dtls_peer_t *peer,
   case DTLS_STATE_CLIENTHELLO:
     /* here we expect a HelloVerify or ServerHello */
 
-    debug("DTLS_STATE_CLIENTHELLO\n");
+    dtls_debug("DTLS_STATE_CLIENTHELLO\n");
     if (check_server_hello(ctx, peer, data, data_length)) {
       peer->state = DTLS_STATE_WAIT_SERVERHELLODONE;
     /* update_hs_hash(peer, data, data_length); */
@@ -1740,7 +1740,7 @@ handle_handshake(dtls_context_t *ctx, dtls_peer_t *peer,
   case DTLS_STATE_WAIT_SERVERHELLODONE:
     /* expect a ServerHelloDone */
 
-    debug("DTLS_STATE_WAIT_SERVERHELLODONE\n");
+    dtls_debug("DTLS_STATE_WAIT_SERVERHELLODONE\n");
 
     if (check_server_hellodone(ctx, peer, data, data_length)) {
       peer->state = DTLS_STATE_WAIT_SERVERFINISHED;
@@ -1752,9 +1752,9 @@ handle_handshake(dtls_context_t *ctx, dtls_peer_t *peer,
   case DTLS_STATE_WAIT_SERVERFINISHED:
     /* expect a Finished message from server */
 
-    debug("DTLS_STATE_WAIT_SERVERFINISHED\n");
+    dtls_debug("DTLS_STATE_WAIT_SERVERFINISHED\n");
     if (check_finished(ctx, peer, record_header, data, data_length)) {
-      debug("finished!\n");
+      dtls_debug("finished!\n");
       peer->state = DTLS_STATE_CONNECTED;
     }
 
@@ -1768,9 +1768,9 @@ handle_handshake(dtls_context_t *ctx, dtls_peer_t *peer,
     /* here we expect a ClientHello */
     /* handle ClientHello, update msg and msglen and goto next if not finished */
 
-    debug("DTLS_STATE_SERVERHELLO\n");
+    dtls_debug("DTLS_STATE_SERVERHELLO\n");
     if (!check_client_keyexchange(ctx, peer, data, data_length)) {
-      warn("check_client_keyexchange failed (%d, %d)\n", data_length, data[0]);
+      dtls_warn("check_client_keyexchange failed (%d, %d)\n", data_length, data[0]);
       return 0;			/* drop it, whatever it is */
     }
     
@@ -1779,9 +1779,9 @@ handle_handshake(dtls_context_t *ctx, dtls_peer_t *peer,
     break;
 
   case DTLS_STATE_WAIT_FINISHED:
-    debug("DTLS_STATE_WAIT_FINISHED\n");
+    dtls_debug("DTLS_STATE_WAIT_FINISHED\n");
     if (check_finished(ctx, peer, record_header, data, data_length)) {
-      debug("finished!\n");
+      dtls_debug("finished!\n");
 	
       /* send ServerFinished */
       update_hs_hash(peer, data, data_length);
@@ -1789,7 +1789,7 @@ handle_handshake(dtls_context_t *ctx, dtls_peer_t *peer,
       if (dtls_send_server_finished(ctx, peer) > 0) {
 	peer->state = DTLS_STATE_CONNECTED;
       } else {
-	warn("sending server Finished failed\n");
+	dtls_warn("sending server Finished failed\n");
       }
     } else {
       /* send alert */
@@ -1800,7 +1800,7 @@ handle_handshake(dtls_context_t *ctx, dtls_peer_t *peer,
     /* At this point, we have a good relationship with this peer. This
      * state is left for re-negotiation of key material. */
     
-    debug("DTLS_STATE_CONNECTED\n");
+    dtls_debug("DTLS_STATE_CONNECTED\n");
 
     /* renegotiation */
     if (dtls_verify_peer(ctx, peer, &peer->session, 
@@ -1810,7 +1810,7 @@ handle_handshake(dtls_context_t *ctx, dtls_peer_t *peer,
 
       if (!dtls_update_parameters(ctx, peer, data, data_length)) {
 	
-	warn("error updating security parameters\n");
+	dtls_warn("error updating security parameters\n");
 	dtls_alert(ctx, peer, DTLS_ALERT_LEVEL_WARNING, 
 		   DTLS_ALERT_NO_RENEGOTIATION);
 	return 0;
@@ -1853,14 +1853,14 @@ handle_ccs(dtls_context_t *ctx, dtls_peer_t *peer,
   if (peer->state != DTLS_STATE_KEYEXCHANGE
       || !check_ccs(ctx, peer, record_header, data, data_length)) {
     /* signal error? */
-    warn("expected ChangeCipherSpec during handshake\n");
+    dtls_warn("expected ChangeCipherSpec during handshake\n");
     return 0;
 
   }
 
   /* send change cipher spec message and switch to new configuration */
   if (dtls_send_ccs(ctx, peer) < 0) {
-    warn("cannot send CCS message");
+    dtls_warn("cannot send CCS message");
     return 0;
   } 
   
@@ -1922,7 +1922,7 @@ handle_alert(dtls_context_t *ctx, dtls_peer_t *peer,
   if (data_length < 2)
     return 0;
 
-  info("** Alert: level %d, description %d\n", data[0], data[1]);
+  dtls_info("** Alert: level %d, description %d\n", data[0], data[1]);
 
   /* The peer object is invalidated for FATAL alerts and close
    * notifies. This is done in two steps.: First, remove the object
@@ -1994,7 +1994,7 @@ dtls_handle_message(dtls_context_t *ctx,
     unsigned char addrbuf[72];
 
     dsrv_print_addr(session, addrbuf, sizeof(addrbuf));
-    debug("found peer %s\n", addrbuf);
+    dtls_debug("found peer %s\n", addrbuf);
   }
 #endif /* NDEBUG */
 
@@ -2007,9 +2007,9 @@ dtls_handle_message(dtls_context_t *ctx,
     if (!rlen) {
 #ifndef NDEBUG
       if (msglen > 3) 
-	debug("dropped invalid message %02x%02x%02x%02x\n", msg[0], msg[1], msg[2], msg[3]);
+	dtls_debug("dropped invalid message %02x%02x%02x%02x\n", msg[0], msg[1], msg[2], msg[3]);
       else
-	debug("dropped invalid message (less than four bytes)\n");
+	dtls_debug("dropped invalid message (less than four bytes)\n");
 #endif
       return 0;
     }
@@ -2029,7 +2029,7 @@ dtls_handle_message(dtls_context_t *ctx,
     */
 
     if (dtls_verify_peer(ctx, NULL, session, msg, data, data_length) <= 0) {
-      warn("cannot verify peer\n");
+      dtls_warn("cannot verify peer\n");
       return -1;
     }
     
@@ -2058,7 +2058,7 @@ dtls_handle_message(dtls_context_t *ctx,
     if (!dtls_update_parameters(ctx, peer, 
 			msg + DTLS_RH_LENGTH, rlen - DTLS_RH_LENGTH)) {
 
-      warn("error updating security parameters\n");
+      dtls_warn("error updating security parameters\n");
       /* FIXME: send handshake failure Alert */
       dtls_alert(ctx, peer, DTLS_ALERT_LEVEL_FATAL, 
 		 DTLS_ALERT_HANDSHAKE_FAILURE);
@@ -2086,7 +2086,7 @@ dtls_handle_message(dtls_context_t *ctx,
     msg += rlen;
     msglen -= rlen;
   } else {
-    debug("found peer\n");
+    dtls_debug("found peer\n");
   }
 
   /* At this point peer contains a state machine to handle the
@@ -2102,14 +2102,14 @@ dtls_handle_message(dtls_context_t *ctx,
 
   while ((rlen = is_record(msg,msglen))) {
 
-    debug("got packet %d (%d bytes)\n", msg[0], rlen);
+    dtls_debug("got packet %d (%d bytes)\n", msg[0], rlen);
     /* skip packet if it is from a different epoch */
     if (memcmp(DTLS_RECORD_HEADER(msg)->epoch, 
 	       peer->epoch, sizeof(uint16)) != 0)
       goto next;
 
     if (!decrypt_verify(peer, msg, rlen, &data, &data_length)) {
-      info("decrypt_verify() failed\n");
+      dtls_info("decrypt_verify() failed\n");
       goto next;
     }
 
@@ -2148,11 +2148,11 @@ dtls_handle_message(dtls_context_t *ctx,
       break;
 
     case DTLS_CT_APPLICATION_DATA:
-      info("** application data:\n");
+      dtls_info("** application data:\n");
       CALL(ctx, read, &peer->session, data, data_length);
       break;
     default:
-      info("dropped unknown message of type %d\n",msg[0]);
+      dtls_info("dropped unknown message of type %d\n",msg[0]);
     }
 
   next:
@@ -2259,7 +2259,7 @@ dtls_connect_peer(dtls_context_t *ctx, dtls_peer_t *peer) {
 
   /* check if the same peer is already in our list */
   if (peer == dtls_get_peer(ctx, &peer->session)) {
-    debug("found peer, try to re-connect\n");
+    dtls_debug("found peer, try to re-connect\n");
     /* FIXME: send HelloRequest if we are server, 
        ClientHello with good cookie if client */
     return 0;
@@ -2324,7 +2324,7 @@ dtls_connect_peer(dtls_context_t *ctx, dtls_peer_t *peer) {
   res = dtls_send(ctx, peer, DTLS_CT_HANDSHAKE, ctx->sendbuf, 
 		  p - ctx->sendbuf);
   if (res < 0)
-    warn("cannot send ClientHello\n");
+    dtls_warn("cannot send ClientHello\n");
   else 
     peer->state = DTLS_STATE_CLIENTHELLO;
 
@@ -2362,7 +2362,7 @@ dtls_retransmit(dtls_context_t *context, netq_t *node) {
       node->t += (node->timeout << node->retransmit_cnt);
       netq_insert_node((netq_t **)context->sendqueue, node);
       
-      debug("** retransmit packet\n");
+      dtls_debug("** retransmit packet\n");
       
       if (dtls_prepare_record(node->peer, DTLS_CT_HANDSHAKE, 
 			      node->data, node->length, 
@@ -2370,7 +2370,7 @@ dtls_retransmit(dtls_context_t *context, netq_t *node) {
 	
 #ifndef NDEBUG
 	if (dtls_get_log_level() >= LOG_DEBUG) {
-	  debug("retransmit %d bytes\n", len);
+	  dtls_debug("retransmit %d bytes\n", len);
 	  hexdump(sendbuf, sizeof(dtls_record_header_t));
 	  printf("\n");
 	  hexdump(node->data, node->length);
@@ -2385,7 +2385,7 @@ dtls_retransmit(dtls_context_t *context, netq_t *node) {
 
   /* no more retransmissions, remove node from system */
   
-  debug("** removed transaction\n");
+  dtls_debug("** removed transaction\n");
 
   /* And finally delete the node */
   netq_node_free(node);
@@ -2435,7 +2435,7 @@ PROCESS_THREAD(dtls_retransmit_process, ev, data)
 
   PROCESS_BEGIN();
 
-  debug("Started DTLS retransmit process\r\n");
+  dtls_debug("Started DTLS retransmit process\r\n");
 
   while(1) {
     PROCESS_YIELD();
